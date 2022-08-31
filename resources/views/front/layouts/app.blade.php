@@ -24,7 +24,7 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <a href="index.php">
+                        <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
                                            style="width: 300px; height: 150px;" loop autoplay></lottie-player>
                         </a>
@@ -35,18 +35,18 @@
 
                             <div class="overlay-content">
                                 <ul class="">
-                                    <li class="active  nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="about-judiann.php">About Judiann</a>
+                                    <li class="active  nav-item"><a class="nav-link" href="{{route('front.home')}}">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}">About Judiann</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="about-us.php">About Us</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="judiann-portfolio.php">Judiann’s
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}">About Us</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.judiann-portfolio')}}">Judiann’s
                                             Portfolio</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="faqs.php">Faq’s</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="students-work.php">Student’s Work</a>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}">Services</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}">Faq’s</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s Work</a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="schedule.php">Schedule A Class</a>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
                                     </li>
                                 </ul>
                             </div>
@@ -77,23 +77,23 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-2">
-                <a href="index.php" class="ftrLogo"><img src="{{asset('front/images/logo.png')}}" class="img-fluid" alt="img"></a>
+                <a href="{{route('front.home')}}" class="ftrLogo"><img src="{{asset('front/images/logo.png')}}" class="img-fluid" alt="img"></a>
             </div>
             <div class="col-md-2">
                 <div class="ftrContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.php"><span>Home</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="about-judiann.php"><span>About Judiann</span></a>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.home')}}"><span>Home</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}"><span>About Judiann</span></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="about-us.php"><span>About Us</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="faqs.php"><span>Faq’s</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}"><span>About Us</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}"><span>Faq’s</span></a></li>
                         <li class="nav-item"><a class="nav-link"
-                                                href="judiann-portfolio.php"><span>Judiann’s Portfolio</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.php"><span>Services</span></a></li>
+                                                href="{{route('front.judiann-portfolio')}}"><span>Judiann’s Portfolio</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}"><span>Services</span></a></li>
                         <li class="nav-item"><a class="nav-link"
-                                                href="students-work.php"><span>Student’s Work</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.php"><span>Contact Us</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="schedule.php"><span>Schedule A Class</span></a>
+                                                href="{{route('front.students-work')}}"><span>Student’s Work</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}"><span>Contact Us</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}"><span>Schedule A Class</span></a>
                         </li>
                     </ul>
                 </div>

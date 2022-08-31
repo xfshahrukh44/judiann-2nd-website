@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{asset('front/css/all.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/css/custom.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}"/>
-    <title>@yield('title') | {{(isset($settings) && key_exists('site_title', $settings) && !is_null($settings['site_title'])) ? $settings['site_title'] : 'Judiann 2nd Website'}}</title>
+    <title>@yield('title') | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
     @yield('css')

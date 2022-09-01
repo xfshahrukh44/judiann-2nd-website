@@ -195,6 +195,13 @@
                                     <p>Course</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('customer')}}"
+                                   class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-angle-double-right"></i>
+                                    <p>Customer</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

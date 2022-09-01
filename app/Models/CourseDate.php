@@ -12,6 +12,8 @@ class CourseDate extends Model
     protected $fillable = [
         'course_id',
         'date',
+        'time_from',
+        'time_to',
     ];
 
     public function course()

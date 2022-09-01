@@ -108,12 +108,16 @@
                                                 @foreach($content->course_dates as $course_date)
                                                     <div>
                                                         <input type="date" class="input_custom_dates" name="custom_dates[]" value="{{$course_date->date}}" required>
+                                                        <input type="time" class="input_time_from" name="time_froms[]" value="{{$course_date->time_from}}" required>
+                                                        <input type="time" class="input_time_to" name="time_tos[]" value="{{$course_date->time_to}}" required>
                                                         <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
                                                     </div>
                                                 @endforeach
                                             @endif
                                             <div>
                                                 <input type="date" class="input_custom_dates" name="custom_dates[]" required>
+                                                <input type="time" class="input_time_from" name="time_froms[]" required>
+                                                <input type="time" class="input_time_to" name="time_tos[]" required>
                                                 <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
                                             </div>
                                         </div>
@@ -161,6 +165,8 @@
                 $('.custom_dates_inner_wrapper')
                 .append(`<div>
                             <input type="date" class="input_custom_dates" name="custom_dates[]" required>
+                            <input type="time" class="input_time_from" name="time_froms[]" required>
+                            <input type="time" class="input_time_to" name="time_tos[]" required>
                             <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
                         </div>`);
             });
@@ -195,6 +201,8 @@
                     custom_dates_inner_wrapper
                     .html(`<div>
                                 <input type="date" class="input_custom_dates" name="custom_dates[]" required>
+                                <input type="time" class="input_time_from" name="time_froms[]" required>
+                                <input type="time" class="input_time_to" name="time_tos[]" required>
                                 <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
                             </div>`);
                     date_range_wrapper.prop('hidden', true);

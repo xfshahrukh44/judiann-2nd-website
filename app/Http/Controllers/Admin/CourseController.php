@@ -62,10 +62,12 @@ class CourseController extends Controller
 
             //custom dates work
             if(!empty($request->custom_dates)) {
-                foreach ($request->custom_dates as $custom_date) {
+                foreach ($request->custom_dates as $key => $custom_date) {
                     CourseDate::create([
                         'course_id' => $course->id,
-                        'date' => $custom_date
+                        'date' => $custom_date,
+                        'time_from' => $request->time_froms[$key],
+                        'time_to' => $request->time_tos[$key]
                     ]);
                 }
             }
@@ -117,17 +119,18 @@ class CourseController extends Controller
                 }
             }
 
-
             //custom dates work
             if(!empty($request->custom_dates)) {
                 //delete old ones
                 foreach ($course->course_dates as $course_date) {
                     $course_date->delete();
                 }
-                foreach ($request->custom_dates as $custom_date) {
+                foreach ($request->custom_dates as $key => $custom_date) {
                     CourseDate::create([
                         'course_id' => $course->id,
-                        'date' => $custom_date
+                        'date' => $custom_date,
+                        'time_from' => $request->time_froms[$key],
+                        'time_to' => $request->time_tos[$key]
                     ]);
                 }
             }

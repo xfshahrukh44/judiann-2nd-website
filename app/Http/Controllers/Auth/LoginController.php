@@ -46,6 +46,10 @@ class LoginController extends Controller
             return redirect()->route('dashboard');
         }
 
+        if ( $user->role_id == 2 ) {// do your magic here
+            return redirect()->route('customer.dashboard');
+        }
+
         return redirect('/home');
     }
 }

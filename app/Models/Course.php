@@ -24,4 +24,9 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\CourseDate');
     }
+
+    public function course_sessions()
+    {
+        return $this->hasMany('App\Models\CourseSession');
+    }
 }

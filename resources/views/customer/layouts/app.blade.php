@@ -133,6 +133,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('customer.course_session')}}"
+                           class="nav-link {{ request()->IS('customer/course-session') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Registered Courses
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('customer.profile')}}"
                            class="nav-link {{ request()->IS('customer/profile') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user"></i>

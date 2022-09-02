@@ -25,7 +25,7 @@
                                         <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
                                         <p>Learn beginner, College level and industry professional<br>
                                             level skills through our Master Classes.</p>
-                                        <a href="#" class="themeBtn">Class Schedules</a>
+                                        <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                         <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
                                         <p>Learn beginner, College level and industry professional<br>
                                             level skills through our Master Classes.</p>
-                                        <a href="#" class="themeBtn">Class Schedules</a>
+                                        <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                         <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
                                         <p>Learn beginner, College level and industry professional<br>
                                             level skills through our Master Classes.</p>
-                                        <a href="#" class="themeBtn">Class Schedules</a>
+                                        <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
                                     </div>
                                 </div>
                             </div>

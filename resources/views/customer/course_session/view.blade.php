@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('customer.layouts.app')
 @section('title', (isset($content->name) ? $content->name : ''). ' Course')
 @section('page_css')
 <!-- Datatables -->
@@ -24,7 +24,7 @@
                 <div class="col-sm-6 offset-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Course Detail</li>
+                        <li class="breadcrumb-item active">Registered Course Detail</li>
                     </ol>
                 </div>
             </div>
@@ -39,7 +39,8 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Course Detail</h3>
+                            <h3 class="card-title">Registered Course Detail</h3>
+                            <button class="btn btn-primary" style="float: right;">asd</button>
                         </div>
 
                         <!-- /.card-header -->
@@ -54,17 +55,22 @@
 
                                     <tr>
                                         <th>Course Name</th>
-                                        <td>{{$content->name??''}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Course Description</th>
-                                        <td>{{$content->description??''}}</td>
+                                        <td>{{$content->course->name??''}}</td>
                                     </tr>
 
                                     <tr>
                                         <th>Course Fees</th>
-                                        <td>{{$content->fees??''}}</td>
+                                        <td>{{$content->course->fees??''}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Class Type</th>
+                                        <td>{{$content->class_type??''}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Physical Class Type</th>
+                                        <td>{{$content->physical_class_type??''}}</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,25 +92,25 @@
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                @if(!is_null($content->date_range))
-                                    <tr>
-                                        <th>Time</th>
-                                        <td>{{$content->date_range??''}}</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                    </tr>
-                                    @foreach($content->course_dates as $course_date)
+                                    @if(!is_null($content->course->date_range))
                                         <tr>
-                                            <td>{{$course_date->date}}</td>
-                                            <td>{{$course_date->time_from}}</td>
-                                            <td>{{$course_date->time_to}}</td>
+                                            <th>Time</th>
+                                            <td>{{$content->course->date_range??''}}</td>
                                         </tr>
-                                    @endforeach
-                                @endif
+                                    @else
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                        </tr>
+                                        @foreach($content->course->course_dates as $course_date)
+                                            <tr>
+                                                <td>{{$course_date->date}}</td>
+                                                <td>{{$course_date->time_from}}</td>
+                                                <td>{{$course_date->time_to}}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </thead>
                                 <tbody>
 
@@ -113,6 +119,7 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+
                 </div>
                 <!-- /.col -->
             </div>

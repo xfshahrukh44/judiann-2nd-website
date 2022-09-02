@@ -15,7 +15,6 @@ class CourseController extends Controller
 {
     public function index()
     {
-
         try {
             if (request()->ajax()) {
                 return datatables()->of(Course::get())

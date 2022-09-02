@@ -58,6 +58,10 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     route::get('/profile', [CustomerController::class, 'profile'])->name('customer.profile');
     route::post('/updateProfile', [CustomerController::class, 'updateProfile'])->name('customer.updateProfile');
 
+    //CourseSession (registered courses)
+    Route::get('course-session', 'CourseSessionController@index')->name('customer.course_session');
+    Route::get('/course-session-view/{id}', 'CourseSessionController@show')->name('customer.course_session.view');
+
 //    //course
 //    Route::get('course', 'CourseController@index')->name('course');
 //    Route::match(['get', 'post'], '/add-course', 'CourseController@addCourse')->name('admin.add-course');

@@ -113,7 +113,7 @@
                          alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                    <a href="{{route('customer.profile')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
                 </div>
             </div>
             <!-- SidebarSearch Form -->
@@ -125,10 +125,19 @@
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="{{url('customer/dashboard')}}"
-                           class="nav-link {{ request()->IS('admin/dashboard') ? 'active' : '' }}">
+                           class="nav-link {{ request()->IS('customer/dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('customer.profile')}}"
+                           class="nav-link {{ request()->IS('customer/profile') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Profile
                             </p>
                         </a>
                     </li>

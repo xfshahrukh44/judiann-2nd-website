@@ -20,8 +20,8 @@ class CustomerController extends Controller
                     ->addColumn('action', function ($data) {
                         return
                             $data->is_blocked == 1 ?
-                            '<a title="edit" href="customer-edit/' . $data->id . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>&nbsp;<button title="Delete" type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>'
-                            : '<button type="button" id="' . $data->id . '" title="Block" href="customer-block/' . $data->id . '" class="btn btn-danger btn-sm block"><i class="fas fa-stop"></i></button>&nbsp;<a title="edit" href="customer-edit/' . $data->id . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>&nbsp;<button title="Delete" type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>';
+                            '<button type="button" id="' . $data->id . '" title="Unblock" href="customer-block/' . $data->id . '" class="btn btn-success btn-sm block" data-block="0"><i class="fas fa-stop"></i></button>&nbsp;<a title="edit" href="customer-edit/' . $data->id . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>&nbsp;<button title="Delete" type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>'
+                            : '<button type="button" id="' . $data->id . '" title="Block" href="customer-block/' . $data->id . '" class="btn btn-danger btn-sm block" data-block="1"><i class="fas fa-stop"></i></button>&nbsp;<a title="edit" href="customer-edit/' . $data->id . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>&nbsp;<button title="Delete" type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>';
                     })->make(true);
             }
         } catch (\Exception $ex) {
@@ -72,7 +72,7 @@ class CustomerController extends Controller
     final public function block(int $id)
     {
         $content=User::find($id);
-        $content->is_blocked = 1;
+        $content->is_blocked = $content->is_blocked == 0 ? 1 : 0;
         $content->save();
         echo 1;
     }

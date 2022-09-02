@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Registered Course Detail</h3>
-                            <button class="btn btn-primary" style="float: right;">asd</button>
+                            <button class="btn btn-success" style="float: right;">Join</button>
                         </div>
 
                         <!-- /.card-header -->
@@ -94,8 +94,16 @@
                                 <thead>
                                     @if(!is_null($content->course->date_range))
                                         <tr>
-                                            <th>Time</th>
+                                            <th>Date</th>
                                             <td>{{$content->course->date_range??''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>From</th>
+                                            <td>{{Carbon\Carbon::parse($content->course->time_from)->format('g:i A')??''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>To</th>
+                                            <td>{{Carbon\Carbon::parse($content->course->time_to)->format('g:i A')??''}}</td>
                                         </tr>
                                     @else
                                         <tr>
@@ -106,8 +114,8 @@
                                         @foreach($content->course->course_dates as $course_date)
                                             <tr>
                                                 <td>{{$course_date->date}}</td>
-                                                <td>{{$course_date->time_from}}</td>
-                                                <td>{{$course_date->time_to}}</td>
+                                                <td>{{Carbon\Carbon::parse($course_date->time_from)->format('g:i A')}}</td>
+                                                <td>{{Carbon\Carbon::parse($course_date->time_to)->format('g:i A')}}</td>
                                             </tr>
                                         @endforeach
                                     @endif

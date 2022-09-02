@@ -93,6 +93,8 @@
                                     <div class="form-group date_range_wrapper" {!! !isset($content) ? 'hidden' : '' !!} {!! isset($content) && count($content->course_dates) > 0 ? 'hidden' : '' !!}>
                                         <label for="date_range">Date Range</label>
                                         <input type="text" class="@error('date_range') is-invalid @enderror input_date_range" name="date_range" id="date_range" value="{{$content->date_range?? old('date_range')}}" {!! isset($content) && $content->date_range == 1 ? 'checked' : '' !!}>
+                                        <input type="time" id="input_date_range_time_from" name="time_from" value="{{$content->time_from ?? old('time_from')}}">
+                                        <input type="time" id="input_date_range_time_to" name="time_to" value="{{$content->time_to ?? old('time_to')}}">
                                         @error('date_range')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -145,12 +147,16 @@
         $(document).ready(function(){
             //init daterange
             var date_range_el = $('#date_range');
+            var date_range_time_from_el = $('#input_date_range_time_from');
+            var date_range_time_to_el = $('#input_date_range_time_to');
             date_range_el.daterangepicker();
 
             //populate date_range
             var edit_check = `<?php echo(empty($content->id) || empty($content->date_range)); ?>`;
             if(edit_check) {
                 date_range_el.val('');
+                date_range_time_from_el.val('');
+                date_range_time_to_el.val('');
             }
 
             //populate schedule types
@@ -182,6 +188,8 @@
             $('.input_schedule_types').on('change', function() {
                 let val = $(this).val();
                 let date_range_input = $('#date_range');
+                let date_range_time_from_input = $('#input_date_range_time_from');
+                let date_range_time_to_input = $('#input_date_range_time_to');
                 let custom_date_inputs = $('.input_custom_dates');
                 let date_range_wrapper = $('.date_range_wrapper');
                 let custom_dates_wrapper = $('.custom_dates_wrapper');
@@ -189,7 +197,11 @@
 
                 if(val === 'date_range') {
                     date_range_input.prop('required', true);
+                    date_range_time_from_input.prop('required', true);
+                    date_range_time_to_input.prop('required', true);
                     date_range_el.val('')
+                    date_range_time_from_el.val('');
+                    date_range_time_to_el.val('');
                     custom_dates_inner_wrapper.html('');
                     date_range_wrapper.prop('hidden', false);
                     custom_dates_wrapper.prop('hidden', true);
@@ -197,7 +209,11 @@
 
                 if(val === 'custom_dates') {
                     date_range_input.prop('required', false);
+                    date_range_time_from_input.prop('required', false);
+                    date_range_time_to_input.prop('required', false);
                     date_range_el.val('')
+                    date_range_time_from_el.val('');
+                    date_range_time_to_el.val('');
                     custom_dates_inner_wrapper
                     .html(`<div>
                                 <input type="date" class="input_custom_dates" name="custom_dates[]" required>

@@ -88,8 +88,16 @@
                                 <thead>
                                 @if(!is_null($content->date_range))
                                     <tr>
-                                        <th>Time</th>
+                                        <th>Date</th>
                                         <td>{{$content->date_range??''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>From</th>
+                                        <td>{{Carbon\Carbon::parse($content->time_from)->format('g:i A')??''}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>To</th>
+                                        <td>{{Carbon\Carbon::parse($content->time_to)->format('g:i A')??''}}</td>
                                     </tr>
                                 @else
                                     <tr>
@@ -100,8 +108,8 @@
                                     @foreach($content->course_dates as $course_date)
                                         <tr>
                                             <td>{{$course_date->date}}</td>
-                                            <td>{{$course_date->time_from}}</td>
-                                            <td>{{$course_date->time_to}}</td>
+                                            <td>{{Carbon\Carbon::parse($course_date->time_from)->format('g:i A')}}</td>
+                                            <td>{{Carbon\Carbon::parse($course_date->time_to)->format('g:i A')}}</td>
                                         </tr>
                                     @endforeach
                                 @endif

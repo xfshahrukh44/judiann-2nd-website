@@ -57,6 +57,8 @@ class CourseController extends Controller
                 'date_range' => $request->input('date_range'),
                 'date_range_from' => $date_range_from,
                 'date_range_to' => $date_range_to,
+                'time_from' => $request->time_from,
+                'time_to' => $request->time_to,
             ]);
 
             //custom dates work
@@ -142,6 +144,8 @@ class CourseController extends Controller
             $course->date_range = $request->input('date_range');
             $course->date_range_from = $date_range_from;
             $course->date_range_to = $date_range_to;
+            $course->time_from = $request->time_from;
+            $course->time_to = $request->time_to;
 
             if ($course->save()) {
                 return redirect()->route('course')->with(['success' => 'Course Edit Successfully']);

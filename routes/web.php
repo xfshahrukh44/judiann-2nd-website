@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
 
     //setting
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
+    route::get('/changePassword', [SettingController::class, 'changePassword']);
+    route::post('/updateAdminPassword', [SettingController::class, 'updateAdminPassword']);
 });
 
 //Customer routes
@@ -49,6 +53,10 @@ Route::get('/customer/login', function () {
 Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middleware('customer')->group(function () {
     //Dashboard
     Route::get('dashboard', 'CustomerController@dashboard')->name('customer.dashboard');
+
+    //Profile
+    route::get('/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+    route::post('/updateProfile', [CustomerController::class, 'updateProfile'])->name('customer.updateProfile');
 
 //    //course
 //    Route::get('course', 'CourseController@index')->name('course');

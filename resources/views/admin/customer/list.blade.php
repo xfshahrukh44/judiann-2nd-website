@@ -132,8 +132,21 @@
 
             });
             var block_id;
+            var action = '';
+            var verb = '';
+            var color = '';
             $(document,this).on('click','.block',function(){
                 block_id = $(this).attr('id');
+
+                //block button text compute
+                var block_bool = $(this).data('block');
+                action = block_bool == 0 ? 'Unblock' : 'Block';
+                verb = block_bool == 0 ? 'Unblocking' : 'Blocking';
+                color = block_bool == 0 ? 'limegreen' : 'red';
+                $('#ok_block').text(action);
+                $('#ok_block').css('background-color', color);
+                $('#ok_block').css('border', color);
+
                 $('#confirmModal').modal('show');
             });
             $(document).on('click','#ok_block',function(){
@@ -144,7 +157,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     beforeSend: function(){
-                        $('#ok_block').text('Blocking...');
+                        $('#ok_block').text(verb + '...');
                         $('#ok_block').attr("disabled",true);
                     },
                     success: function (data) {
@@ -156,7 +169,7 @@
                         if(data==0) {
                             toastr.error('Exception Here ! Block');
                         }else{
-                            toastr.success('Record Block Successfully');
+                            toastr.success('Record '+action+'ed Successfully');
                         }
                     }
                 })

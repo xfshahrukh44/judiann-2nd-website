@@ -7,21 +7,59 @@ use App\Models\Customers;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductReview;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
     public function dashboard()
     {
-//        $data['orders'] = Order::where([
-//            ['status', 1],
-//            ['order_status', 'paid'],
-//        ])->count();
-//        $data['products'] = Product::where('status', 1)->count();
-//        $data['customers'] = Customers::count();
-//        $data['latestOrders'] = Order::with('customer')->orderBy('created_at', 'desc')->take(7)->get();
-//        $data['latestReviews'] = ProductReview::with('product', 'customer')->orderBy('created_at', 'desc')->take(7)->get();
-
         return view('customer.dashboard');
+    }
+
+    public function profile(Request $request)
+    {
+        $user = Auth::user();
+        return view('customer.auth.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $id = Auth::user()->id;
+        $content = User::find($id);
+
+        $this->validate($request, [
+            'name' => 'required|string|max:50',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone' => 'required',
+        ]);
+
+        if ($request->input('password')) {
+
+            $this->validate($request, [
+                'current_password' => 'required',
+                'password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            ]);
+
+            if (Hash::check($request->current_password, Auth::User()->password)) {
+                $content->password = Hash::make($request->password);
+            } else {
+                return back()->withErrors(['Sorry, your current Password not recognized. Please try again.']);
+            }
+        }
+
+        $content->name = $request->name;
+        $content->email = $request->email;
+        $content->phone = $request->phone;
+
+        if ($content->save()) {
+            return redirect('/customer/dashboard')->with('success', 'Profile Updated Successfully.');
+        }
+
+        return redirect('/customer/dashboard')->with('error', 'Could`nt update profile');
+
     }
 
 }

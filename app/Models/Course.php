@@ -18,6 +18,8 @@ class Course extends Model
         'date_range',
         'date_range_from',
         'date_range_to',
+        'time_from',
+        'time_to',
     ];
 
     public function course_dates()

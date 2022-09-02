@@ -37,7 +37,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/customer-edit/{id}', 'CustomerController@edit')->name('admin.edit-customer');
 //    Route::get('/customer-view/{id}', 'CustomerController@show')->name('customer-view');
     Route::post('/customer/block/{id}', 'CustomerController@block')->name('customer-block');
-    Route::delete('customer/destroy/{id}', 'CustomerController@destroy');
+    Route::delete('customer/delete/{id}', 'CustomerController@destroy');
 
     //setting
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');

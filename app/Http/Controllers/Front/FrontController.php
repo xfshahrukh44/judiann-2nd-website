@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseSession;
+use App\Models\LatestUpdate;
 use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,11 +15,19 @@ use Illuminate\Support\Facades\Validator;
 
 class FrontController extends Controller
 {
+    public function home(Request $request)
+    {
+        $latest_updates = LatestUpdate::orderBy('created_at', 'DESC')->get();
+
+        return view('front.home', compact('latest_updates'));
+    }
+
     public function schedule(Request $request)
     {
         $courses = Course::all();
+        $latest_updates = LatestUpdate::orderBy('created_at', 'DESC')->get();
 
-        return view('front.schedule', compact('courses'));
+        return view('front.schedule', compact('courses', 'latest_updates'));
     }
 
     public function schedule_class(Request $request)

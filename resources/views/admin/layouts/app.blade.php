@@ -151,31 +151,6 @@
                                     </p>
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="#"--}}
-{{--                                   class="nav-link {{ request()->IS('admin/paymentgatway') ? 'active' : '' }}">--}}
-{{--                                    <i class="nav-icon fas fa-hand-holding-usd"></i>--}}
-{{--                                    <p>--}}
-{{--                                        Payment Gateways--}}
-{{--                                    </p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-                            {{--                             <li class="nav-item">--}}
-                            {{--                                <a href="{{route('shippingServices')}}" class="nav-link {{ request()->IS('admin/shipping-services') ? 'active' : '' }}">--}}
-                            {{--                                    <i class="nav-icon fas fa-hand-holding-usd"></i>--}}
-                            {{--                                    <p>--}}
-                            {{--                                        Shipping Services--}}
-                            {{--                                    </p>--}}
-                            {{--                                </a>--}}
-                            {{--                            </li>--}}
-                            {{-- <li class="nav-item">
-                                <a href="{{route('emailsetting')}}" class="nav-link {{ request()->IS('admin/emailsetting') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-hand-holding-usd"></i>
-                                    <p>
-                                        Email Setting
-                                    </p>
-                                </a>
-                            </li> --}}
                         </ul>
                     </li>
 
@@ -202,55 +177,15 @@
                                     <p>Customer</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('latest-update')}}"
+                                   class="nav-link {{ request()->IS('admin/latest-update') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-angle-double-right"></i>
+                                    <p>Latest Updates</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="#"--}}
-{{--                           class="nav-link {{ request()->IS('admin/customers') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fas fa-user"></i>--}}
-{{--                            <p>Customers</p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="#"--}}
-{{--                           class="nav-link {{ request()->IS('admin/order') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fa fa-shopping-cart" aria-hidden="true"></i>--}}
-{{--                            <p>Orders</p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-                    {{--<li class="nav-item">
-                        <a href="{{route('sellwatch.index')}}" class="nav-link {{ request()->IS('admin/sellwatch') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-comments"></i>
-                            <p>Sell Watch List</p>
-                        </a>
-                    </li>--}}
-                    {{-- <li class="nav-item">
-                        <a href="{{route('blog.index')}}" class="nav-link {{ request()->IS('admin/blog') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-tags fw"></i>
-                            <p>Blog</p>
-                        </a>
-                    </li> --}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a href="{{route('review.index')}}"--}}
-{{--                           class="nav-link {{ request()->IS('admin/review') ? 'active' : '' }}">--}}
-{{--                            <i class="nav-icon fa fa-comments"></i>--}}
-{{--                            <p>Reviews</p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-                    {{-- <li class="nav-item">
-                        <a href="{{route('faq.index')}}" class="nav-link {{ request()->IS('admin/faq') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-comments"></i>
-                            <p>FAQ</p>
-                        </a>
-                    </li> --}}
-                    {{--<li class="nav-item">
-                        <a href="{{route('testimonial.index')}}" class="nav-link {{ request()->IS('admin/testimonial') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-comments"></i>
-                            <p>Testimonial</p>
-                        </a>
-                    </li>--}}
                     <li class="nav-item">
                         <a href="{{url('admin/changePassword')}}"
                            class="nav-link {{ request()->IS('admin/changePassword') ? 'active' : '' }}">

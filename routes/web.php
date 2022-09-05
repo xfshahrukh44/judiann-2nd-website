@@ -33,11 +33,16 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
 
     //customer
     Route::get('customer', 'CustomerController@index')->name('customer');
-//    Route::match(['get', 'post'], '/add-customer', 'CustomerController@addCustomer')->name('admin.add-customer');
     Route::match(['get', 'post'], '/customer-edit/{id}', 'CustomerController@edit')->name('admin.edit-customer');
-//    Route::get('/customer-view/{id}', 'CustomerController@show')->name('customer-view');
     Route::post('/customer/block/{id}', 'CustomerController@block')->name('customer-block');
     Route::delete('customer/delete/{id}', 'CustomerController@destroy');
+
+    //latest_update
+    Route::get('latest-update', 'LatestUpdateController@index')->name('latest-update');
+    Route::match(['get', 'post'], '/add-latest-update', 'LatestUpdateController@addLatestUpdate')->name('admin.add-latest-update');
+    Route::match(['get', 'post'], '/latest-update-edit/{id}', 'LatestUpdateController@edit')->name('admin.edit-latest-update');
+    Route::get('/latest-update-view/{id}', 'LatestUpdateController@show')->name('latest-update-view');
+    Route::delete('latest-update/destroy/{id}', 'LatestUpdateController@destroy');
 
     //setting
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
@@ -76,6 +81,10 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
 
 //Front routes
 Route::namespace('App\Http\Controllers\Front')->group(function () {
+
+    //home
+    Route::get('/', 'FrontController@home')->name('front.home');
+
     //schedule
     Route::get('/schedule', 'FrontController@schedule')->name('front.schedule');
     Route::post('/schedule-class', 'FrontController@schedule_class')->name('front.schedule_class');
@@ -83,10 +92,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
 });
-
-Route::get('/', function () {
-    return view('front.home');
-})->name('front.home');
 
 Route::get('/about-judiann', function () {
     return view('front.about-judiann');

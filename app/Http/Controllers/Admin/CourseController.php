@@ -81,16 +81,6 @@ class CourseController extends Controller
         return view('admin.course.add-course');
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
     final public function show(int $id){
         $content= Course::find($id);
         return view('admin.course.view',compact('content'));
@@ -154,11 +144,6 @@ class CourseController extends Controller
             $content=Course::findOrFail($id);
             return view('admin.course.add-course', compact('content'));
         }
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     final public function destroy(int $id)

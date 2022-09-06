@@ -40,7 +40,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Registered Course Detail</h3>
-                            <button class="btn btn-success" style="float: right;">Join</button>
+                            @if(course_is_joinable($content->course->id))
+                                <button class="btn btn-success" style="float: right;">Join</button>
+                            @endif
                         </div>
 
                         <!-- /.card-header -->

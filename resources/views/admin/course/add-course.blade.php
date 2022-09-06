@@ -116,12 +116,12 @@
                                                     </div>
                                                 @endforeach
                                             @endif
-                                            <div>
-                                                <input type="date" class="input_custom_dates" name="custom_dates[]" required>
-                                                <input type="time" class="input_time_from" name="time_froms[]" required>
-                                                <input type="time" class="input_time_to" name="time_tos[]" required>
-                                                <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
-                                            </div>
+{{--                                            <div>--}}
+{{--                                                <input type="date" class="input_custom_dates" name="custom_dates[]" required>--}}
+{{--                                                <input type="time" class="input_time_from" name="time_froms[]" required>--}}
+{{--                                                <input type="time" class="input_time_to" name="time_tos[]" required>--}}
+{{--                                                <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
 

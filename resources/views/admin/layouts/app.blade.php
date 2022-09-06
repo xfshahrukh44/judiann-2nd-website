@@ -154,37 +154,26 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item has-treeview {{ request()->IS('admin/catalog/attribute-groups') || request()->IS('admin/catalog/attributes') || request()->IS('admin/catalog/options') || request()->IS('admin/catalog/option-values') ||  request()->IS('admin/category') || request()->IS('admin/product') || request()->IS('admin/manufacturer') ||  request()->IS('admin/coupons') || request()->IS('admin/collection') || request()->IS('admin/collectionProducts') || request()->IS('admin/newsletter') || request()->IS('admin/shipping') ? 'menu-is-opening menu-open' : '' }}">
-                        <a href="#" class="nav-link ">
-                            <i class="nav-icon fas fa-tags fw"></i>
-                            <p>
-                                Catalog
-                            </p>
+                    <li class="nav-item">
+                        <a href="{{route('course')}}"
+                           class="nav-link {{ request()->IS('admin/course') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Course</p>
                         </a>
-                        <ul class="nav nav-treeview"
-                            style="{{ request()->IS('admin/catalog/attribute-groups') || request()->IS('admin/catalog/attributes') || request()->IS('admin/catalog/options') || request()->IS('admin/catalog/option-values') ||  request()->IS('admin/category') || request()->IS('admin/product') || request()->IS('admin/manufacturer') ||  request()->IS('admin/coupons') || request()->IS('admin/collection') || request()->IS('admin/collectionProducts') || request()->IS('admin/newsletter') || request()->IS('admin/shipping') ? 'display:block;' : '' }}">
-                            <li class="nav-item">
-                                <a href="{{route('course')}}"
-                                   class="nav-link {{ request()->IS('admin/course') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-angle-double-right"></i>
-                                    <p>Course</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('customer')}}"
-                                   class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-angle-double-right"></i>
-                                    <p>Customer</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('latest-update')}}"
-                                   class="nav-link {{ request()->IS('admin/latest-update') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-angle-double-right"></i>
-                                    <p>Latest Updates</p>
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('customer')}}"
+                           class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Customer</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('latest-update')}}"
+                           class="nav-link {{ request()->IS('admin/latest-update') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Latest Updates</p>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{url('admin/changePassword')}}"

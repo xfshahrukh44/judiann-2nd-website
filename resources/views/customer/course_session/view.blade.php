@@ -40,9 +40,10 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Registered Course Detail</h3>
-                            @if(course_is_joinable($content->course->id))
-                                <button class="btn btn-success" style="float: right;">Join</button>
-                            @endif
+{{--                            @if(course_is_joinable($content->course->id))--}}
+{{--                                <button class="btn btn-success" style="float: right;">Join</button>--}}
+{{--                            @endif--}}
+                            <a target="_blank" href="{{route('customer.stream', $content->course->id)}}" class="btn btn-success" style="float: right;">Join</a>
                         </div>
 
                         <!-- /.card-header -->

@@ -40,6 +40,10 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Course Detail</h3>
+{{--                            @if(course_is_joinable($content->id))--}}
+{{--                                <button class="btn btn-success" style="float: right;">Start streaming</button>--}}
+{{--                            @endif--}}
+                            <a target="_blank" href="{{route('admin.stream', $content->id)}}" class="btn btn-success" style="float: right;">Start streaming</a>
                         </div>
 
                         <!-- /.card-header -->

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Admin\StreamController;
+use App\Http\Controllers\Customer\StreamController as SC;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,9 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
     route::get('/changePassword', [SettingController::class, 'changePassword']);
     route::post('/updateAdminPassword', [SettingController::class, 'updateAdminPassword']);
+
+    //stream
+    route::get('/stream/{course_id}', [StreamController::class, 'stream'])->name('admin.stream');
 });
 
 //Customer routes
@@ -67,6 +72,8 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     Route::get('course-session', 'CourseSessionController@index')->name('customer.course_session');
     Route::get('/course-session-view/{id}', 'CourseSessionController@show')->name('customer.course_session.view');
 
+    //stream
+    route::get('/stream/{course_id}', [SC::class, 'stream'])->name('customer.stream');
 //    //course
 //    Route::get('course', 'CourseController@index')->name('course');
 //    Route::match(['get', 'post'], '/add-course', 'CourseController@addCourse')->name('admin.add-course');

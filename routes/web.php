@@ -74,6 +74,7 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
 
     //stream
     route::get('/stream/{course_id}', [SC::class, 'stream'])->name('customer.stream');
+    route::get('/raise-hand/{course_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
 //    //course
 //    Route::get('course', 'CourseController@index')->name('course');
 //    Route::match(['get', 'post'], '/add-course', 'CourseController@addCourse')->name('admin.add-course');

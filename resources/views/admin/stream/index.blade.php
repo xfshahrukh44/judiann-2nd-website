@@ -17,6 +17,7 @@
     {{--additional css--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -36,10 +37,7 @@
         </div>
         <div class="col-md-12">
             <div class="row lobby_viewers_wrapper">
-{{--                <div class="col-md-3 text-center py-4" style="border: 1px solid grey;">--}}
-{{--                    <h3>John doe</h3>--}}
-{{--                    <button class="btn btn-primary btn-sm">Allow screen share</button>--}}
-{{--                </div>--}}
+
             </div>
         </div>
     </main>
@@ -65,23 +63,28 @@
             //init socket channel listener
             window.Echo.channel('user-joined-' + course_id)
                 .listen('UserJoined', (e) => {
-                    // alert(e);
-                    // console.log(e.data);
-                    alertForViewerJoin(e.data.customer);
+                    toastr.info(e.data.customer.name + ' has joined the session.');
                     inserLobbyViewer(e.data.customer);
+                });
+
+            window.Echo.channel('user-raised-hand-' + course_id)
+                .listen('ViewerRaisedHand', (e) => {
+                    toastr.info('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
+                    showRaisedHand(e.data.customer.id);
                 });
 
             //insert newly joined viewer to lobby
             function inserLobbyViewer(viewer) {
                 $('.lobby_viewers_wrapper').append(`<div class="col-md-3 text-center py-4" style="border: 1px solid grey;">
+                                                        <i class="fa fa-hand-paper-o text-primary" id="raised_hand_`+viewer.id+`" hidden></i>
                                                         <h3>`+viewer.name+`</h3>
                                                         <button class="btn btn-primary btn-sm">Allow screen share</button>
                                                     </div>`);
             }
 
-            //toastr alert after viewer joins lobby
-            function alertForViewerJoin(viewer) {
-                toastr.info(viewer.name + ' has joined the session.');
+            //enable raised hand button
+            function showRaisedHand(viewer_id) {
+                $('#raised_hand_' + viewer_id).prop('hidden', false);
             }
         });
     </script>

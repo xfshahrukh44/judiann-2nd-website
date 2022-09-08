@@ -25,8 +25,10 @@ window.io = require('socket.io-client');
 
 if (typeof io !== 'undefined') {
     window.Echo = new Echo({
+        namespace: 'App.Events',
         broadcaster: 'socket.io',
         host: window.location.hostname + ':6001',
+        withCredentials: true
     });
 }
 

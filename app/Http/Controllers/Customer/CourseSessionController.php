@@ -12,7 +12,7 @@ class CourseSessionController extends Controller
     {
         try {
             if (request()->ajax()) {
-                return datatables()->of(CourseSession::with('course')->get())
+                return datatables()->of(CourseSession::with('course')->whereHas('course')->get())
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
                         return '<a title="View" href="course-session-view/' . $data->id . '" class="btn btn-dark btn-sm"><i class="fas fa-eye"></i></a>';

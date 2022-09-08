@@ -135,3 +135,8 @@ Route::get('/students-work', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/temp', function () {
+    event(new \App\Events\UserJoined(['name' => 'asd']));
+    dd('end');
+});

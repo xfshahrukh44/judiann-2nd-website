@@ -34,5 +34,12 @@
 
 <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
 <script src="{{asset('admin/stream/client.js')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
+<script>
+    window.Echo.channel('user-joined')
+        .listen('UserJoined', (e) => {
+            console.log(e);
+        });
+</script>
 </body>
 </html>

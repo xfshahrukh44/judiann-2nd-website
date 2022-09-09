@@ -125,6 +125,9 @@
 
                 //hide button
                 $(this).prop('hidden', true);
+                $('.btn_allow_user_screen').each(function() {
+                    $(this).prop('hidden', false);
+                });
 
                 //toggle session
                 toggleBack('47561291', session_id, token, 'test');

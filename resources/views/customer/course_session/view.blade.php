@@ -43,7 +43,9 @@
 {{--                            @if(course_is_joinable($content->course->id))--}}
 {{--                                <button class="btn btn-success" style="float: right;">Join</button>--}}
 {{--                            @endif--}}
-                            <a target="_blank" href="{{route('customer.stream', $content->course->id)}}" class="btn btn-success" style="float: right;">Join</a>
+                            @if($content->class_type == 'online')
+                                <a target="_blank" href="{{route('customer.stream', $content->course->id)}}" class="btn btn-success" style="float: right;">Join</a>
+                            @endif
                         </div>
 
                         <!-- /.card-header -->

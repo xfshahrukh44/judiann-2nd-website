@@ -97,6 +97,7 @@
                 });
 
                 //toggle session
+                $('#subscriber').html('');
                 toggleSession('47561291', session_id, token);
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);

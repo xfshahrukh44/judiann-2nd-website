@@ -76,6 +76,7 @@
             window.Echo.channel('revert-screen-' + course_id + '-' + user_id)
                 .listen('RevertStream', (e) => {
                     //toggle session
+                    $('#subscriber').html('');
                     toggleBack('47561291', session_id, token);
                     $('#publisher').prop('hidden', true);
                     $('#subscriber').prop('hidden', false);

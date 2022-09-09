@@ -38,6 +38,21 @@ function initializeSession(apiKey, sessionId, token, streamName) {
             session.publish(publisher, handleCallback);
         }
     });
+
+    // Subscribe to a newly created stream
+    session.on("streamCreated", event => {
+        session.subscribe(
+            event.stream,
+            "subscriber",
+            {
+                insertMode: "append",
+                width: "100%",
+                height: "100%",
+                name: event.stream.name
+            },
+            handleCallback
+        );
+    });
 }
 
 function toggleSession(apiKey, sessionId, token) {
@@ -51,22 +66,17 @@ function initializeSessionStream(apiKey, sessionId, token) {
 
     // Connect to the session
     session.connect(token, error => handleCallback(error));
-}
 
-// Subscribe to a newly created stream
-session.on("streamCreated", event => {
-    session.subscribe(
-        event.stream,
-        "subscriber",
-        {
+    // Subscribe to a newly created stream
+    session.on("streamCreated", event => {
+        session.subscribe(event.stream, "subscriber", {
             insertMode: "append",
-            width: "100%",
-            height: "100%",
+            width: "50%",
+            height: "50%",
             name: event.stream.name
-        },
-        handleCallback
-    );
-});
+        }, handleCallback);
+    });
+}
 
 // Callback handler
 function handleCallback(error) {

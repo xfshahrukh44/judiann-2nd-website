@@ -23,7 +23,7 @@
     "dependencies": {
         "laravel-echo": "^1.14.0",
         "laravel-echo-server": "^1.6.3",
-        "pusher-js": "^7.4.0",
+        "pusher-js": "^4.3.1",
         "socket.io-client": "2.3.0"
     }
 }

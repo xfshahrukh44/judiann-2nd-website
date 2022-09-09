@@ -9,8 +9,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="cofeHeading">
+                    <div class="cofeHeading text-warning">
                         <h2>Billing Info</h2>
+                        <h4>Amount: ${{session()->get('course_fees')}}</h4>
                     </div>
                     <div class="cofeList">
                         <div class="codeBox p-4">

@@ -69,6 +69,8 @@ class FrontController extends Controller
         session()->put('user', $user);
         session()->put('course_session_array', $course_session_array);
         session()->put('password', $password);
+        $course = Course::find($course_session_array['course_id']);
+        session()->put('course_fees', $course->fees);
 
         return view('front.payment');
     }
@@ -128,7 +130,7 @@ class FrontController extends Controller
                 $charge = \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
                 $charge = \Stripe\Charge::create([
-                    'amount' => intval(10 * 100),
+                    'amount' => intval(session()->get('course_fees') * 100),
                     'currency' => 'usd',
                     'customer' => $abc
                 ]);
@@ -152,6 +154,7 @@ class FrontController extends Controller
                     session()->remove('user');
                     session()->remove('course_session_array');
                     session()->remove('password');
+                    session()->remove('course_fees');
 
                     return [
                         "status" => true,

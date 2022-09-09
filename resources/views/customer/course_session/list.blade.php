@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('customer.layouts.app')
 @section('title', 'Courses')
 @section('page_css')
     <style>

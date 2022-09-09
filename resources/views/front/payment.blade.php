@@ -40,6 +40,23 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="paymentSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Payment Successful</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Pleasse check your email for Login Credentials
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -63,6 +80,7 @@
                     success: function (result) {
                         if (result?.status) {
                             themeButton.text('PAID!')
+                            $('#paymentSuccessModal').modal('show');
                             // window.location.href = home_link;
                             // modal band karke main form submit karna hai
                             // $('#paymentModal').modal('toggle');

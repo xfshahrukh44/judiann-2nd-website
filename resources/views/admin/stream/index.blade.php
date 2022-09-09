@@ -64,6 +64,7 @@
             var token = '{{$token}}';
 
             //init opentok session
+            init('47561291', session_id);
             initializeSession('47561291', session_id, token, 'test');
             $('#subscriber').prop('hidden', true);
 

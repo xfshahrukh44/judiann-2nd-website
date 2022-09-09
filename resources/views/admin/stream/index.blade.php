@@ -64,6 +64,7 @@
 
             //init opentok session
             initializeSession('47561291', session_id, token, 'test');
+            $('#subscriber').prop('hidden', true);
 
             //socket: on viewer join
             window.Echo.channel('user-joined-' + course_id)
@@ -92,6 +93,8 @@
 
                 //toggle session
                 toggleSession('47561291', session_id, token);
+                $('#publisher').prop('hidden', true);
+                $('#subscriber').prop('hidden', false);
 
                 //ajax to fire event
                 var customer_id = $(this).data('user');

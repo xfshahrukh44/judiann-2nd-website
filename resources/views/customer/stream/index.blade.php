@@ -30,6 +30,7 @@
 
     <main>
         <div id="subscriber" class="subscriber"></div>
+        <div id="publisher" class="publisher"></div>
     </main>
 
     <main class="container py-4" style="border: solid 1px lightgrey;">
@@ -59,12 +60,15 @@
 
             //init opentok session
             initializeSession('47561291', session_id, token);
+            $('#publisher').prop('hidden', true);
 
             //socket: on allow user screen
             window.Echo.channel('allow-user-screen-' + course_id + '-' + user_id)
                 .listen('AllowUserScreen', (e) => {
                     //toggle session
                     toggleSession('47561291', session_id, token, 'test');
+                    $('#publisher').prop('hidden', false);
+                    $('#subscriber').prop('hidden', true);
                 });
 
             //on raise hand click

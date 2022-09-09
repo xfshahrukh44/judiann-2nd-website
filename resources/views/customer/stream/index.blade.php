@@ -71,6 +71,15 @@
                     $('#subscriber').prop('hidden', true);
                 });
 
+            //socket: on revert stream
+            window.Echo.channel('revert-screen-' + course_id + '-' + user_id)
+                .listen('RevertStream', (e) => {
+                    //toggle session
+                    toggleBack('47561291', session_id, token);
+                    $('#publisher').prop('hidden', true);
+                    $('#subscriber').prop('hidden', false);
+                });
+
             //on raise hand click
             $('#btn_raise_hand').on('click', function() {
                 var url = "{{route('customer.raise_hand', 'temp')}}";

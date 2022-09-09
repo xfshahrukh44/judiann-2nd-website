@@ -54,6 +54,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     //stream
     route::get('/stream/{course_id}', [StreamController::class, 'stream'])->name('admin.stream');
     route::get('/allow-user-screen/{course_id}/{customer_id}', [StreamController::class, 'allowUserScreen'])->name('admin.allowUserScreen');
+    route::get('/revert-stream/{course_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
 });
 
 //Customer routes

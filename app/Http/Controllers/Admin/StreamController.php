@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\AllowUserScreen;
+use App\Events\RevertStream;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -25,5 +26,9 @@ class StreamController extends Controller
 
     public function allowUserScreen(Request $request, $course_id, $customer_id) {
         return event(new AllowUserScreen($course_id, $customer_id));
+    }
+
+    public function revertStream(Request $request, $course_id, $customer_id) {
+        return event(new RevertStream($course_id, $customer_id));
     }
 }

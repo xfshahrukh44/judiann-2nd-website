@@ -34,6 +34,7 @@
     <main class="container py-4" style="border: solid 1px lightgrey;">
         <div class="col-md-12 text-center">
             <h1>Viewer Lobby</h1>
+            <button class="btn btn-danger btn-sm" id="btn_revert_stream" data-user="" hidden>Revert stream</button>
         </div>
         <div class="col-md-12">
             <div class="row lobby_viewers_wrapper">
@@ -86,6 +87,9 @@
 
             //on allow screen click
             $('body').on('click', '.btn_allow_user_screen', function() {
+                //prep data
+                var customer_id = $(this).data('user');
+
                 //hide all buttons
                 $('.btn_allow_user_screen').each(function() {
                     $(this).prop('hidden', true);
@@ -95,10 +99,40 @@
                 toggleSession('47561291', session_id, token);
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
+                $('#btn_revert_stream').prop('hidden', false);
+                $('#btn_revert_stream').data('user', customer_id);
 
                 //ajax to fire event
-                var customer_id = $(this).data('user');
                 var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
+
+            //on revert stream click
+            $('body').on('click', '#btn_revert_stream', function() {
+                //prep data
+                var customer_id = $(this).data('user');
+
+                //hide button
+                $(this).prop('hidden', true);
+
+                //toggle session
+                toggleBack('47561291', session_id, token, 'test');
+                $('#publisher').prop('hidden', false);
+                $('#subscriber').prop('hidden', true);
+
+                //ajax to fire event
+                var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";
                 url = url.replace('temp', course_id);
                 url = url.replace('tump', customer_id);
                 $.ajax({

@@ -31,11 +31,6 @@ function initializeSession(apiKey, sessionId, token) {
     });
 }
 
-function toggleSession(apiKey, sessionId, token, streamName) {
-    session.disconnect();
-    initializeSessionStream(apiKey, sessionId, token, streamName)
-}
-
 function initializeSessionStream(apiKey, sessionId, token, streamName) {
     // Create a session object with the sessionId
     session = OT.initSession(apiKey, sessionId);
@@ -72,6 +67,16 @@ function initializeSessionStream(apiKey, sessionId, token, streamName) {
             handleCallback
         );
     });
+}
+
+function toggleSession(apiKey, sessionId, token, streamName) {
+    session.disconnect();
+    initializeSessionStream(apiKey, sessionId, token, streamName)
+}
+
+function toggleBack(apiKey, sessionId, token) {
+    session.disconnect();
+    initializeSession(apiKey, sessionId, token)
 }
 
 // Callback handler

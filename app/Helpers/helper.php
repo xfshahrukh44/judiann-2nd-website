@@ -2,6 +2,8 @@
 
 use App\Models\Course;
 use Carbon\Carbon;
+use OpenTok\OpenTok;
+use OpenTok\Session;
 
 function course_is_joinable($course_id) {
     $course = Course::find($course_id);
@@ -29,4 +31,16 @@ function get_readable_description($string) {
         $return_string .= '<p class="text-center">'.$string_bit.'</p>';
     }
     return $return_string;
+}
+
+function get_fresh_opentok_session_id() {
+    $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
+    $session = $opentok->createSession();
+    return $session->getSessionId();
+}
+
+function get_fresh_opentok_token($session_id) {
+    $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
+    $token = $opentok->generateToken($session_id);
+    return $token;
 }

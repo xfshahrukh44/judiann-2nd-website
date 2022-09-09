@@ -20,6 +20,7 @@ class Course extends Model
         'date_range_to',
         'time_from',
         'time_to',
+        'opentok_session_id'
     ];
 
     public function course_dates()

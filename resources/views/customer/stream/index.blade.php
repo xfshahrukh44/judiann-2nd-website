@@ -51,9 +51,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
-            //establish course_id
+            //establish course_id, session_id, token
             const course_id = window.location.href.split("/").pop();
+            const user_id = '{{\Illuminate\Support\Facades\Auth::id()}}';
+            var session_id = '{{$course->opentok_session_id}}';
+            var token = '{{$token}}';
 
+            //init opentok session
+            initializeSession('47561291', session_id, token);
+
+            //socket: on allow user screen
+            window.Echo.channel('allow-user-screen-' + course_id + '-' + user_id)
+                .listen('AllowUserScreen', (e) => {
+                    //toggle session
+                    toggleSession('47561291', session_id, token, 'test');
+                });
+
+            //on raise hand click
             $('#btn_raise_hand').on('click', function() {
                 var url = "{{route('customer.raise_hand', 'temp')}}";
                 url = url.replace('temp', course_id);

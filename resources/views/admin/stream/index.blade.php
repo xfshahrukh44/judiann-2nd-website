@@ -25,7 +25,7 @@
         <h1>Participant</h1>
     </header>
 
-    <main>
+    <main class="container">
         <div id="subscriber" class="subscriber"></div>
         <div id="publisher" class="publisher"></div>
     </main>
@@ -57,35 +57,58 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
-            //establish course_id
+            //establish course_id, session_id, token
             const course_id = window.location.href.split("/").pop();
+            var session_id = '{{$course->opentok_session_id}}';
+            var token = '{{$token}}';
 
-            //init socket channel listener
+            //init opentok session
+            initializeSession('47561291', session_id, token, 'test');
+
+            //socket: on viewer join
             window.Echo.channel('user-joined-' + course_id)
                 .listen('UserJoined', (e) => {
                     toastr.info(e.data.customer.name + ' has joined the session.');
-                    inserLobbyViewer(e.data.customer);
+                    $('.lobby_viewers_wrapper').append(`<div class="col-md-3 text-center py-4" style="border: 1px solid grey;">
+                                                        <i class="fa fa-hand-paper-o text-warning" id="raised_hand_`+e.data.customer.id+`" hidden></i>
+                                                        <h3>`+e.data.customer.name+`</h3>
+                                                        <button class="btn btn-primary btn-sm btn_allow_user_screen" data-user="`+e.data.customer.id+`">Allow screen share</button>
+                                                    </div>`);
                 });
 
+            //socket: on viewer raise hand
             window.Echo.channel('user-raised-hand-' + course_id)
                 .listen('ViewerRaisedHand', (e) => {
-                    toastr.info('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
-                    showRaisedHand(e.data.customer.id);
+                    toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
+                    $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
                 });
 
-            //insert newly joined viewer to lobby
-            function inserLobbyViewer(viewer) {
-                $('.lobby_viewers_wrapper').append(`<div class="col-md-3 text-center py-4" style="border: 1px solid grey;">
-                                                        <i class="fa fa-hand-paper-o text-primary" id="raised_hand_`+viewer.id+`" hidden></i>
-                                                        <h3>`+viewer.name+`</h3>
-                                                        <button class="btn btn-primary btn-sm">Allow screen share</button>
-                                                    </div>`);
-            }
+            //on allow screen click
+            $('body').on('click', '.btn_allow_user_screen', function() {
+                //hide all buttons
+                $('.btn_allow_user_screen').each(function() {
+                    $(this).prop('hidden', true);
+                });
 
-            //enable raised hand button
-            function showRaisedHand(viewer_id) {
-                $('#raised_hand_' + viewer_id).prop('hidden', false);
-            }
+                //toggle session
+                toggleSession('47561291', session_id, token);
+
+                //ajax to fire event
+                var customer_id = $(this).data('user');
+                var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
         });
     </script>
 </body>

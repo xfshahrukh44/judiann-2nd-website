@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Courses')
+@section('title', 'Customers')
 @section('page_css')
     <style>
         .addBtn{
@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Courses</h1>
+                        <h1>Customers</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -37,9 +37,9 @@
                         <!-- /.card -->
 
                         <div class="card">
-                            <div class="card-header">
-                                <a class="btn btn-primary pull-right addBtn" href="{{route('admin.add-course')}}">Add Course</a>
-                            </div>
+{{--                            <div class="card-header">--}}
+{{--                                <a class="btn btn-primary pull-right addBtn" href="{{route('admin.add-course')}}">Add Customer</a>--}}
+{{--                            </div>--}}
                             <div class="col-md-12">
 
                             </div>

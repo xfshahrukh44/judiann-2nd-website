@@ -50,6 +50,7 @@
                                         <th>Course Fees</th>
                                         <th>Class Type</th>
                                         <th>Physical Class Type</th>
+                                        <th>Registration Date</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -125,9 +126,11 @@
                     {data: 'course.fees', name: 'course_fees'},
                     {data: 'class_type', name: 'class_type'},
                     {data: 'physical_class_type', name: 'physical_class_type'},
+                    {data: 'created_at', name: 'created_at'},
 
                     {data: 'action', name: 'action', orderable: false}
-                ]
+                ],
+                order: []
 
             });
             var delete_id;

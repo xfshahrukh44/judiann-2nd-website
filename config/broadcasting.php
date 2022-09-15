@@ -40,7 +40,7 @@ return [
                 'useTLS' => env('APP_ENV') == 'production',
                 'encrypted' => env('APP_ENV') == 'production',
                 'host' => '127.0.0.1',
-                'port' => 6004,
+                'port' => 6002,
                 'scheme' => env('APP_ENV') == 'production' ? 'https' : 'http',
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,

@@ -12,7 +12,6 @@ class CustomerController extends Controller
 {
     public function index()
     {
-
         try {
             if (request()->ajax()) {
                 return datatables()->of(User::where('role_id', 2))

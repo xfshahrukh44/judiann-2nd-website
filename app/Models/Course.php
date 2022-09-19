@@ -23,6 +23,15 @@ class Course extends Model
         'opentok_session_id'
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        //while creating/inserting item into db
+        static::creating(function ($query) {
+            $query->opentok_session_id = get_fresh_opentok_session_id();
+        });
+    }
+
     public function course_dates()
     {
         return $this->hasMany('App\Models\CourseDate');

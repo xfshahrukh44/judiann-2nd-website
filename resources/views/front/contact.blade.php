@@ -44,11 +44,13 @@
                 <div class="col-md-9">
                     <h2 class="headOne text-center mb-5">Contact form</h2>
 
-                    <form method="post" class="hf-form hf-form-59 " data-id="59" data-title="Contact Form"
+                    <form action="{{route('front.send_front_mail')}}" method="POST" class="hf-form hf-form-59 " data-id="59" data-title="Contact Form"
                           data-slug="contact-form" data-message-success="Thank you! We will be in touch soon."
                           data-message-invalid-email="Sorry, that email address looks invalid."
                           data-message-required-field-missing="Please fill in the required fields."
-                          data-message-error="Oops. An error occurred."><input type="hidden" name="_hf_form_id"
+                          data-message-error="Oops. An error occurred.">
+                        @csrf
+                        <input type="hidden" name="_hf_form_id"
                                                                                value="59"/>
                         <div style="display: none;"><input type="text" name="_hf_h59" value=""/></div>
                         <div class="hf-fields-wrap">

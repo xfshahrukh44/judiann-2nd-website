@@ -92,6 +92,14 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
+
+    //contact us
+    Route::post('/contact', 'FrontController@send_front_mail')->name('front.send_front_mail');
+    Route::get('/contact', function () {
+        return view('front.contact');
+    })->name('front.contact');
+
+//    return view('front.contact');
 });
 
 Route::get('/about-judiann', function () {
@@ -101,10 +109,6 @@ Route::get('/about-judiann', function () {
 Route::get('/about-us', function () {
     return view('front.about-us');
 })->name('front.about-us');
-
-Route::get('/contact', function () {
-    return view('front.contact');
-})->name('front.contact');
 
 Route::get('/faqs', function () {
     return view('front.faqs');

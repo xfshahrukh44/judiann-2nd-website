@@ -220,4 +220,32 @@ class FrontController extends Controller
         }
         return $randomString;
     }
+
+    public function send_front_mail(Request $request)
+    {
+        try {
+            $name = $request['name'];
+            $email = $request['email'];
+            $phone = $request['phone'];
+            $msg = $request['msg'];
+            $message = 'Name: ' . $name . "\r\n";
+            $message .= 'Email: ' . $email . "\r\n";
+            $message .= 'Phone: ' . $phone . "\r\n";
+            $message .= 'Message: ' . $msg . "\r\n";
+
+            $email = (Settings::find(1))->email;
+
+//            \mail($email,"Contact Request From Website",$message);
+
+            Mail::send([], [], function ($msg) use ($email, $message) {
+                $msg->to($email)
+                    ->subject('Contact Request From Website')
+                    ->setBody($message);
+            });
+
+            return redirect()->route('front.home')->with('success', 'Email sent successfully!');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errors', $exception->getMessage());
+        }
+    }
 }

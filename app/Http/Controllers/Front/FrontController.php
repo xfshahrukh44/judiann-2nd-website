@@ -240,7 +240,7 @@ class FrontController extends Controller
 
 //            \mail($email,"Contact Request From Website",$message);
 
-            $this->customMail($email, $email, 'Contact Request From Website', $message);
+            $this->customMail('admin@judiann.com', $email, 'Contact Request From Website', $message);
 
 //            Mail::send([], [], function ($msg) use ($email, $message) {
 //                $msg->to($email)

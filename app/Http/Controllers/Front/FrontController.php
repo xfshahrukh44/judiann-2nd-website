@@ -231,10 +231,10 @@ class FrontController extends Controller
             $email = $request['email'];
             $phone = $request['phone'];
             $msg = $request['msg'];
-            $message = 'Name: ' . $name . "\r\n";
-            $message .= 'Email: ' . $email . "\r\n";
-            $message .= 'Phone: ' . $phone . "\r\n";
-            $message .= 'Message: ' . $msg . "\r\n";
+            $message = 'Name: ' . $name . "<br />";
+            $message .= 'Email: ' . $email . "<br />";
+            $message .= 'Phone: ' . $phone . "<br />";
+            $message .= 'Message: ' . $msg . "<br />";
 
             $email = (Settings::find(1))->email;
 

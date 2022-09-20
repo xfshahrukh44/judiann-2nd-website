@@ -12,9 +12,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\PHPCustomMail;
 
 class FrontController extends Controller
 {
+    use PHPCustomMail;
+
     public function home(Request $request)
     {
         $latest_updates = LatestUpdate::orderBy('created_at', 'DESC')->get();
@@ -237,11 +240,13 @@ class FrontController extends Controller
 
 //            \mail($email,"Contact Request From Website",$message);
 
-            Mail::send([], [], function ($msg) use ($email, $message) {
-                $msg->to($email)
-                    ->subject('Contact Request From Website')
-                    ->setBody($message);
-            });
+            $this->customMail('a@a.com', $email, 'subject', $message);
+
+//            Mail::send([], [], function ($msg) use ($email, $message) {
+//                $msg->to($email)
+//                    ->subject('Contact Request From Website')
+//                    ->setBody($message);
+//            });
 
             return redirect()->route('front.home')->with('success', 'Email sent successfully!');
         } catch (\Exception $exception) {

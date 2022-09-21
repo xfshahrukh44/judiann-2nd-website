@@ -3,6 +3,7 @@
 
     <div class="anloader">
         <video muted autoplay loop preload src="images/loader.mp4">
+            <source>
         </video>
     </div>
 

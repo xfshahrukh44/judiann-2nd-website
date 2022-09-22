@@ -202,11 +202,13 @@ class FrontController extends Controller
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
-            Mail::send([], [], function ($msg) use ($email, $message) {
-                $msg->to($email)
-                    ->subject('New order placed')
-                    ->setBody($message, 'text/html');
-            });
+            $this->customMail('admin@judiann.com', $email, 'New order placed', $message);
+
+//            Mail::send([], [], function ($msg) use ($email, $message) {
+//                $msg->to($email)
+//                    ->subject('New order placed')
+//                    ->setBody($message, 'text/html');
+//            });
 
             return 1;
         } catch (\Exception $exception) {

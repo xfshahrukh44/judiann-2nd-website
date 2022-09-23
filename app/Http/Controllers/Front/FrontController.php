@@ -58,8 +58,12 @@ class FrontController extends Controller
             ]);
         } else {
             $user = $user_check[0];
-            $user->password = hash::make($password);
-            $user->save();
+
+            //if user has already not yet registered a course (should generate password only then)
+            if(count($user->course_sessions) == 0) {
+                $user->password = hash::make($password);
+                $user->save();
+            }
         }
 
         $course_session_array = [
@@ -71,7 +75,7 @@ class FrontController extends Controller
 
         session()->put('user', $user);
         session()->put('course_session_array', $course_session_array);
-        session()->put('password', $password);
+        session()->put('password', (count($user->course_sessions) == 0) ? $password : null);
         $course = Course::find($course_session_array['course_id']);
         session()->put('course_fees', $course->fees);
 
@@ -197,7 +201,7 @@ class FrontController extends Controller
             $message = 'Dear ' . $name . "<br /><br />";
             $message .= 'Thank you for booking our '.$course_name.' course. Your system generated login details are below:' . "<br /><br />";
             $message .= 'Email: ' . $email . "<br />";
-            $message .= 'Password: ' . $password . "<br />";
+            $message .= (!is_null($password)) ? 'Password: ' . $password . "<br />" : '';
             $message .= 'Customer Portal Link: <a href="'.$customer_portal_link.'">'.$customer_portal_link.'</a>' . "<br /><br />";
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';

@@ -10,6 +10,7 @@ body {
     font-family: "Roboto", sans-serif;
     background: #0d0c05;
     overflow-x: hidden;
+    height: 100%;
 }
 
 .container {
@@ -1030,4 +1031,143 @@ footer {
 #paidTournamentForm label {
     color: #fff;
     margin-top: 1rem;
+}
+
+/*video chat css*/
+
+.videoBox {
+    position: relative;
+    height: 90vh;
+    background: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.chattingSec {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.videoControllers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 40px;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.videoControllers a {
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 1.25rem;
+    background: #DD1313;
+}
+
+.videoControllers a:hover {
+    background: #DD1313;
+}
+
+.videoControllers a i {
+    transform: rotate(-135deg);
+}
+
+.chattingSec .videoThumbMain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.chattingSec .videoThumbMain img {
+    width: 100%;
+    height: 100%;
+}
+
+.videoBox .headingCont {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+    z-index: 1;
+}
+
+/*.videoBox .headingCont .timer {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background: rgba(255, 255, 255, 0.2);*/
+/*    padding: 0.5rem 1rem;*/
+/*    border-radius: 40px;*/
+/*    gap: 0 .75rem;*/
+/*}*/
+
+/*.videoBox .headingCont .timer .count {*/
+/*    border: 5px solid #fff;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    border-radius: 100%;*/
+/*    animation: pop 1s infinite;*/
+/*}*/
+
+/*@keyframes pop {*/
+/*    0% {*/
+/*        background: #fff;*/
+/*    }*/
+/*    50% {*/
+/*        background: #E61A1A;*/
+/*    }*/
+/*    100% {*/
+/*        background: #fff;*/
+/*    }*/
+/*}*/
+
+/*.videoBox .headingCont .timer span {*/
+/*    color: #fff;*/
+/*    line-height: initial;*/
+/*    font-size: 1.125rem;*/
+/*    font-weight: 500;*/
+/*}*/
+
+.videoBox .headingCont h3 {
+    color: #fff;
+    margin: 0;
+    font-family: 'Roboto';
+    font-size: 1.375rem;
+}
+
+.thumbBox {
+    border-radius: 30px;
+    overflow: hidden;
+    margin-top: 1rem;
+    background: none;
+    border: 1px solid #fff;
+}
+
+.thumbBox img {
+    height: 250px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.chattingSec .row [class*='col-'] {
+    display: flex;
+    align-items: center;
+}
+
+.chattingSec .slick-arrow:before{
+    content: none;
 }

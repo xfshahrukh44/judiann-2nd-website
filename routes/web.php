@@ -130,6 +130,9 @@ Route::get('/students-work', function () {
     return view('front.students-work');
 })->name('front.students-work');
 
+Route::get('/video-chatting', function () {
+    return view('front.videoChatting');
+})->name('front.videoChatting');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

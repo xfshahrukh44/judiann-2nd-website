@@ -35,7 +35,7 @@
                 <div class="col-md-10">
                     <div class="videoBox" style="width: 100%">
                         <div class="headingCont">
-                            <h3>John Smith</h3>
+                            <h3></h3>
                         </div>
                         <div class="videoControllers" style="z-index: 1;">
                             <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-phone"></i></a>

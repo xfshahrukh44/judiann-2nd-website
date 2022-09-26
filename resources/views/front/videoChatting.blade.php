@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 
-@section('title', 'Schedule')
+@section('title', 'Classroom')
 @section('description', '')
 @section('keywords', '')
 

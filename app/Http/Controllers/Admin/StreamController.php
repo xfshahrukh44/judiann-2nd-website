@@ -15,8 +15,10 @@ class StreamController extends Controller
         $course = Course::find($course_id);
 
         //update session id of course (fresh)
-        $course->opentok_session_id = get_fresh_opentok_session_id();
-        $course->save();
+        if(is_null($course->opentok_session_id)) {
+            $course->opentok_session_id = get_fresh_opentok_session_id();
+            $course->save();
+        }
 
         //get token
         $token = get_fresh_opentok_token($course->opentok_session_id);

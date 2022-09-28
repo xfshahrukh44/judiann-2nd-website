@@ -118,6 +118,7 @@
 
                 //toggle session
                 // $('#subscriber').html('');
+                $('#subscriber').find(":first-child").remove();
                 setTimeout(function() {
                     toggleSession('47561291', session_id, token);
                 }, 5000);

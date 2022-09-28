@@ -134,14 +134,12 @@
                     url: url,
                     type: 'GET',
                     success: function (res) {
-                        console.log(res);
+                        viewerToggleBack();
                     },
                     error: function () {
 
                     }
                 })
-
-                viewerToggleBack();
             });
 
             //on revert stream click
@@ -168,14 +166,12 @@
                     url: url,
                     type: 'GET',
                     success: function (res) {
-                        console.log(res);
+                        viewerToggleBack();
                     },
                     error: function () {
 
                     }
                 })
-
-                viewerToggleBack();
             });
 
             function viewerToggleBack() {

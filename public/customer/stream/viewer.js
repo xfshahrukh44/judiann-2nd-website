@@ -28,7 +28,7 @@ function init(apiKey, sessionId) {
     // Subscribe to a newly created stream
     session.on("streamCreated", event => {
         session.subscribe(event.stream, "subscriber", {
-            insertMode: "append",
+            insertMode: "replace",
             width: "50%",
             height: "50%",
             name: event.stream.name
@@ -70,4 +70,44 @@ function handleCallback(error) {
     } else {
         console.log("callback success");
     }
+}
+
+function connectAsPublisher(apiKey, sessionId) {
+    session = OT.initSession(apiKey, sessionId);
+
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
+
+    session.connect(token, error => {
+        // If the connection is successful, initialize the publisher and publish to the session
+        if (error) {
+            handleCallback(error);
+        } else {
+            session.publish(publisher, handleCallback);
+        }
+    });
+}
+
+function connectAsSubscriber(apiKey, sessionId) {
+    session = OT.initSession(apiKey, sessionId);
+
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
+
+    session.connect(token, error => {
+        // If the connection is successful, initialize the publisher and publish to the session
+        if (error) {
+            handleCallback(error);
+        } else {
+            session.publish(publisher, handleCallback);
+        }
+    });
 }

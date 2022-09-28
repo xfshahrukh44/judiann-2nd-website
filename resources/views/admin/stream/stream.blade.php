@@ -74,8 +74,10 @@
             var toggle = false;
 
             //init opentok session
-            init('47561291', session_id);
-            initializeSession('47561291', session_id, token, 'test');
+            // init('47561291', session_id);
+            // initializeSession('47561291', session_id, token, 'test');
+            getPublisherToken(session_id);
+            connectAsPublisher('47561291', session_id, token);
             $('#subscriber').prop('hidden', true);
 
             //socket: on viewer join
@@ -112,9 +114,20 @@
                 .listen('ViewerToggleBack', (e) => {
                     if(toggle) {
                         // $('#subscriber').html('');
-                        setTimeout(function() {
-                            toggleBack('47561291', session_id, token);
-                        }, 5000);
+                        // setTimeout(function() {
+                        //     toggleBack('47561291', session_id, token);
+                        // }, 5000);
+
+
+                        $('#publisher').prop('hidden', false);
+                        $('#subscriber').prop('hidden', true);
+
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        getPublisherToken(session_id);
+                        connectAsPublisher('47561291', session_id, token);
+                        toggle = false;
+                        viewerToggleBack(e.customer_id);
                     }
                 });
 
@@ -135,6 +148,38 @@
                 })
             }
 
+            function getPublisherToken(session_id) {
+                var url = `{{route('admin.getPublisherToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        alert(res);
+                        token = res;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
+            function getSubscriberToken(session_id) {
+                var url = `{{route('admin.getSubscriberToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        alert(res);
+                        token = res;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
             //on allow screen click
             $('body').on('click', '.btn_allow_user_screen', function() {
                 //prep data
@@ -147,31 +192,37 @@
 
                 //toggle session
                 // $('#subscriber').html('');
-                // $('#subscriber').find(":first-child").remove();
-                setTimeout(function() {
-                    toggleSession('47561291', session_id, token);
-                }, 5000);
+                {{--setTimeout(function() {--}}
+                {{--    toggleSession('47561291', session_id, token);--}}
+                {{--}, 5000);--}}
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
-                $('#btn_revert_stream').prop('hidden', false);
-                $('#btn_revert_stream').data('user', customer_id);
+                {{--$('#btn_revert_stream').prop('hidden', false);--}}
+                {{--$('#btn_revert_stream').data('user', customer_id);--}}
 
-                //ajax to fire event
-                var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
-                url = url.replace('tump', customer_id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (res) {
-                        console.log(res);
-                        toggle = true;
-                        viewerToggleBack(customer_id);
-                    },
-                    error: function () {
+                {{--//ajax to fire event--}}
+                {{--var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";--}}
+                {{--url = url.replace('temp', course_id);--}}
+                {{--url = url.replace('tump', customer_id);--}}
+                {{--$.ajax({--}}
+                {{--    url: url,--}}
+                {{--    type: 'GET',--}}
+                {{--    success: function (res) {--}}
+                {{--        console.log(res);--}}
+                {{--        toggle = true;--}}
+                {{--        viewerToggleBack(customer_id);--}}
+                {{--    },--}}
+                {{--    error: function () {--}}
 
-                    }
-                })
+                {{--    }--}}
+                {{--})--}}
+
+                $('#publisher').html('');
+                $('#subscriber').html('');
+                getSubscriberToken(session_id);
+                connectAsSubscriber('47561291', session_id, token);
+                toggle = true;
+                viewerToggleBack(customer_id);
             });
 
             //on revert stream click
@@ -186,25 +237,32 @@
                 // });
 
                 //toggle session
-                toggleBack('47561291', session_id, token, 'test');
+                // toggleBack('47561291', session_id, token, 'test');
                 $('#publisher').prop('hidden', false);
                 $('#subscriber').prop('hidden', true);
 
                 //ajax to fire event
-                var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
-                url = url.replace('tump', customer_id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (res) {
-                        console.log(res);
-                        viewerToggleBack(customer_id)
-                    },
-                    error: function () {
+                {{--var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";--}}
+                {{--url = url.replace('temp', course_id);--}}
+                {{--url = url.replace('tump', customer_id);--}}
+                {{--$.ajax({--}}
+                {{--    url: url,--}}
+                {{--    type: 'GET',--}}
+                {{--    success: function (res) {--}}
+                {{--        console.log(res);--}}
+                {{--        viewerToggleBack(customer_id)--}}
+                {{--    },--}}
+                {{--    error: function () {--}}
 
-                    }
-                })
+                {{--    }--}}
+                {{--})--}}
+
+                $('#publisher').html('');
+                $('#subscriber').html('');
+                getPublisherToken(session_id);
+                connectAsPublisher('47561291', session_id, token);
+                toggle = false;
+                viewerToggleBack(customer_id);
             });
         });
     </script>

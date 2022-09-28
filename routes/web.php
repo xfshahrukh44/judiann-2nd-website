@@ -56,6 +56,12 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     route::get('/allow-user-screen/{course_id}/{customer_id}', [StreamController::class, 'allowUserScreen'])->name('admin.allowUserScreen');
     route::get('/revert-stream/{course_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
     route::get('/viewer-toggle-back/{course_id}/{customer_id}', [StreamController::class, 'viewerToggleBack'])->name('admin.viewerToggleBack');
+    route::get('/stream/get-publisher-token/{session_id}', function($session_id) {
+        return get_fresh_publisher_opentok_token($session_id);
+    })->name('admin.getPublisherToken');
+    route::get('/stream/get-subscriber-token/{session_id}', function($session_id) {
+        return get_fresh_subscriber_opentok_token($session_id);
+    })->name('admin.getSubscriberToken');
 });
 
 //Customer routes
@@ -78,6 +84,12 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     //stream
     route::get('/stream/{course_id}', [SC::class, 'stream'])->name('customer.stream');
     route::get('/raise-hand/{course_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
+    route::get('/stream/get-publisher-token/{session_id}', function($session_id) {
+        return get_fresh_publisher_opentok_token($session_id);
+    })->name('customer.getPublisherToken');
+    route::get('/stream/get-subscriber-token/{session_id}', function($session_id) {
+        return get_fresh_subscriber_opentok_token($session_id);
+    })->name('customer.getSubscriberToken');
 });
 
 

@@ -54,6 +54,12 @@ function initializeSessionStream(apiKey, sessionId, token, streamName) {
 }
 
 function toggleSession(apiKey, sessionId, token, streamName) {
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
     initializeSessionStream(apiKey, sessionId, token, streamName)
 }
 

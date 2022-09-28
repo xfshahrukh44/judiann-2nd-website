@@ -68,6 +68,12 @@ function toggleSession(apiKey, sessionId, token) {
 }
 
 function toggleBack(apiKey, sessionId, token, streamName) {
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
     initializeSession(apiKey, sessionId, token, streamName)
 }
 

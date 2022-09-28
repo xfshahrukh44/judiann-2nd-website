@@ -106,7 +106,7 @@
             window.Echo.channel('viewer-toggle-back-' + course_id)
                 .listen('ViewerToggleBack', (e) => {
                     if(e.customer_id != user_id) {
-                        alert('non publisher');
+                        $('#subscriber').html('');
                         setTimeout(function() {
                             toggleBack('47561291', session_id, token);
                         }, 5000);

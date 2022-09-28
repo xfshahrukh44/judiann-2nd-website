@@ -71,6 +71,7 @@
             const course_id = window.location.href.split("/").pop();
             var session_id = '{{$course->opentok_session_id}}';
             var token = '{{$token}}';
+            var toggle = false;
 
             //init opentok session
             init('47561291', session_id);
@@ -106,6 +107,17 @@
                     $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
                 });
 
+            //socket: on viewer toggle back
+            window.Echo.channel('viewer-toggle-back-' + course_id)
+                .listen('ViewerToggleBack', (e) => {
+                    if(toggle) {
+                        $('#subscriber').html('');
+                        setTimeout(function() {
+                            toggleBack('47561291', session_id, token);
+                        }, 5000);
+                    }
+                });
+
             function viewerToggleBack(customer_id) {
                 //ajax to fire event
                 var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
@@ -127,21 +139,6 @@
             $('body').on('click', '.btn_allow_user_screen', function() {
                 //prep data
                 var customer_id = $(this).data('user');
-
-                //ajax to fire event
-                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
-                url = url.replace('tump', customer_id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (res) {
-                        console.log(res);
-                    },
-                    error: function () {
-
-                    }
-                })
 
                 //hide all buttons
                 $('.btn_allow_user_screen').each(function() {
@@ -168,6 +165,8 @@
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
+                        toggle = true;
+                        viewerToggleBack(customer_id);
                     },
                     error: function () {
 
@@ -179,21 +178,6 @@
             $('body').on('click', '#btn_revert_stream', function() {
                 //prep data
                 var customer_id = $(this).data('user');
-
-                //ajax to fire event
-                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
-                url = url.replace('tump', customer_id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (res) {
-                        console.log(res);
-                    },
-                    error: function () {
-
-                    }
-                })
 
                 //hide button
                 $(this).prop('hidden', true);
@@ -215,6 +199,7 @@
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
+                        viewerToggleBack(customer_id)
                     },
                     error: function () {
 

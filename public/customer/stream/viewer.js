@@ -59,8 +59,8 @@ function toggleSession(apiKey, sessionId, token, streamName) {
 
 function toggleBack(apiKey, sessionId, token) {
     session.forceUnpublish(publisher);
-    init(apiKey, sessionId)
-    // initializeSession(apiKey, sessionId, token)
+    publisher.destroy();
+    initializeSession(apiKey, sessionId, token)
 }
 
 // Callback handler

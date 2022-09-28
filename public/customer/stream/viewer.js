@@ -54,13 +54,11 @@ function initializeSessionStream(apiKey, sessionId, token, streamName) {
 }
 
 function toggleSession(apiKey, sessionId, token, streamName) {
-    session.forceDisconnect();
     initializeSessionStream(apiKey, sessionId, token, streamName)
 }
 
 function toggleBack(apiKey, sessionId, token) {
     session.forceUnpublish(publisher);
-    session.forceDisconnect();
     initializeSession(apiKey, sessionId, token)
 }
 

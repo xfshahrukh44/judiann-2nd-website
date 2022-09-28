@@ -79,3 +79,43 @@ function handleCallback(error) {
         console.log("callback success");
     }
 }
+
+function connectAsPublisher(apiKey, sessionId, token) {
+    session = OT.initSession(apiKey, sessionId);
+
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
+
+    session.connect(token, error => {
+        // If the connection is successful, initialize the publisher and publish to the session
+        if (error) {
+            handleCallback(error);
+        } else {
+            session.publish(publisher, handleCallback);
+        }
+    });
+}
+
+function connectAsSubscriber(apiKey, sessionId, token) {
+    session = OT.initSession(apiKey, sessionId);
+
+    publisher = OT.initPublisher("publisher", {
+        insertMode: "replace",
+        width: "100%",
+        height: "100%",
+        name: 'test'
+    }, handleCallback);
+
+    session.connect(token, error => {
+        // If the connection is successful, initialize the publisher and publish to the session
+        if (error) {
+            handleCallback(error);
+        } else {
+            session.publish(publisher, handleCallback);
+        }
+    });
+}

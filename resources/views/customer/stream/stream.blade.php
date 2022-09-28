@@ -76,17 +76,24 @@
             var token = '{{$token}}';
 
             //init opentok session
-            init('47561291', session_id);
-            initializeSession('47561291', session_id, token);
+            // init('47561291', session_id);
+            // initializeSession('47561291', session_id, token);
+            getSubscriberToken(session_id);
+            connectAsSubscriber('47561291', session_id, token);
             $('#publisher').prop('hidden', true);
 
             //socket: on allow user screen
             window.Echo.channel('allow-user-screen-' + course_id + '-' + user_id)
                 .listen('AllowUserScreen', (e) => {
                     //toggle session
-                    toggleSession('47561291', session_id, token, 'test');
+                    // toggleSession('47561291', session_id, token, 'test');
                     $('#publisher').prop('hidden', false);
                     $('#subscriber').prop('hidden', true);
+
+                    $('#publisher').html('');
+                    $('#subscriber').html('');
+                    getPublisherToken(session_id);
+                    connectAsPublisher('47561291', session_id, token);
                 });
 
             //socket: on revert stream
@@ -95,11 +102,16 @@
                     //toggle session
                     // $('#subscriber').html('');
                     // $('#subscriber').find(":first-child").remove();
-                    setTimeout(function() {
-                        toggleBack('47561291', session_id, token);
-                    }, 5000);
+                    // setTimeout(function() {
+                    //     toggleBack('47561291', session_id, token);
+                    // }, 5000);
                     $('#publisher').prop('hidden', true);
                     $('#subscriber').prop('hidden', false);
+
+                    $('#publisher').html('');
+                    $('#subscriber').html('');
+                    getSubscriberToken(session_id);
+                    connectAsSubscriber('47561291', session_id, token);
                 });
 
             //socket: on viewer toggle back
@@ -107,11 +119,61 @@
                 .listen('ViewerToggleBack', (e) => {
                     if(e.customer_id != user_id) {
                         // $('#subscriber').html('');
-                        setTimeout(function() {
-                            toggleBack('47561291', session_id, token);
-                        }, 5000);
+                        // setTimeout(function() {
+                        //     toggleBack('47561291', session_id, token);
+                        // }, 5000);
+
+                        $('#publisher').prop('hidden', true);
+                        $('#subscriber').prop('hidden', false);
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        getSubscriberToken(session_id);
+                        connectAsSubscriber('47561291', session_id, token);
                     }
+                    // else {
+                    //     $('#publisher').prop('hidden', false);
+                    //     $('#subscriber').prop('hidden', true);
+                    //
+                    //     $('#publisher').html('');
+                    //     $('#subscriber').html('');
+                    //     getPublisherToken(session_id);
+                    //     connectAsPublisher('47561291', session_id, token);
+                    //     toggle = false;
+                    //     viewerToggleBack(e.customer_id);
+                    // }
                 });
+
+            function getPublisherToken(session_id) {
+                var url = `{{route('customer.getPublisherToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        token = res;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
+            function getSubscriberToken(session_id) {
+                var url = `{{route('customer.getSubscriberToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        token = res;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
 
             //on raise hand click
             $('#btn_raise_hand').on('click', function() {

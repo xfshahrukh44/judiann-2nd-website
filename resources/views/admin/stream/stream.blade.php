@@ -117,10 +117,10 @@
                 });
 
                 //toggle session
-                $('#subscriber').html('');
+                // $('#subscriber').html('');
                 setTimeout(function() {
                     toggleSession('47561291', session_id, token);
-                }, 10000);
+                }, 5000);
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
                 $('#btn_revert_stream').prop('hidden', false);

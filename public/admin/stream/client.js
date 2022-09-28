@@ -63,17 +63,12 @@ function initializeSessionStream(apiKey, sessionId, token) {
 
 function toggleSession(apiKey, sessionId, token) {
     session.forceUnpublish(publisher);
-    publisher.destroy();
+    session.forceDisconnect();
     initializeSessionStream(apiKey, sessionId, token)
 }
 
 function toggleBack(apiKey, sessionId, token, streamName) {
-    publisher = OT.initPublisher("publisher", {
-        insertMode: "replace",
-        width: "100%",
-        height: "100%",
-        name: 'test'
-    }, handleCallback);
+    session.forceDisconnect();
     initializeSession(apiKey, sessionId, token, streamName)
 }
 

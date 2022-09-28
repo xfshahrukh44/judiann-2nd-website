@@ -90,8 +90,8 @@
                     $('#publisher').prop('hidden', false);
                     $('#subscriber').prop('hidden', true);
 
-                    $('#publisher').html('');
-                    $('#subscriber').html('');
+                    // $('#publisher').html('');
+                    // $('#subscriber').html('');
                     getPublisherToken(session_id);
                     connectAsPublisher('47561291', session_id, token);
                 });
@@ -108,8 +108,8 @@
                     $('#publisher').prop('hidden', true);
                     $('#subscriber').prop('hidden', false);
 
-                    $('#publisher').html('');
-                    $('#subscriber').html('');
+                    // $('#publisher').html('');
+                    // $('#subscriber').html('');
                     getSubscriberToken(session_id);
                     connectAsSubscriber('47561291', session_id, token);
                 });
@@ -125,8 +125,8 @@
 
                         $('#publisher').prop('hidden', true);
                         $('#subscriber').prop('hidden', false);
-                        $('#publisher').html('');
-                        $('#subscriber').html('');
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
                         getSubscriberToken(session_id);
                         connectAsSubscriber('47561291', session_id, token);
                     }

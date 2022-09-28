@@ -129,17 +129,18 @@
                         $('#subscriber').html('');
                         getSubscriberToken(session_id);
                         connectAsSubscriber('47561291', session_id, token);
-                    } else {
-                        $('#publisher').prop('hidden', false);
-                        $('#subscriber').prop('hidden', true);
-
-                        $('#publisher').html('');
-                        $('#subscriber').html('');
-                        getPublisherToken(session_id);
-                        connectAsPublisher('47561291', session_id, token);
-                        toggle = false;
-                        viewerToggleBack(e.customer_id);
                     }
+                    // else {
+                    //     $('#publisher').prop('hidden', false);
+                    //     $('#subscriber').prop('hidden', true);
+                    //
+                    //     $('#publisher').html('');
+                    //     $('#subscriber').html('');
+                    //     getPublisherToken(session_id);
+                    //     connectAsPublisher('47561291', session_id, token);
+                    //     toggle = false;
+                    //     viewerToggleBack(e.customer_id);
+                    // }
                 });
 
             function getPublisherToken(session_id) {

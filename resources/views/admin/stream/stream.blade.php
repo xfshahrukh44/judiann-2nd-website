@@ -199,28 +199,27 @@
                 {{--$('#btn_revert_stream').data('user', customer_id);--}}
 
                 {{--//ajax to fire event--}}
-                {{--var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";--}}
-                {{--url = url.replace('temp', course_id);--}}
-                {{--url = url.replace('tump', customer_id);--}}
-                {{--$.ajax({--}}
-                {{--    url: url,--}}
-                {{--    type: 'GET',--}}
-                {{--    success: function (res) {--}}
-                {{--        console.log(res);--}}
-                {{--        toggle = true;--}}
-                {{--        viewerToggleBack(customer_id);--}}
-                {{--    },--}}
-                {{--    error: function () {--}}
+                var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        // console.log(res);
+                        // toggle = true;
+                        viewerToggleBack(customer_id);
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        getSubscriberToken(session_id);
+                        connectAsSubscriber('47561291', session_id, token);
+                        toggle = true;
+                        viewerToggleBack(customer_id);
+                    },
+                    error: function () {
 
-                {{--    }--}}
-                {{--})--}}
-
-                $('#publisher').html('');
-                $('#subscriber').html('');
-                getSubscriberToken(session_id);
-                connectAsSubscriber('47561291', session_id, token);
-                toggle = true;
-                viewerToggleBack(customer_id);
+                    }
+                })
             });
 
             //on revert stream click
@@ -240,27 +239,25 @@
                 $('#subscriber').prop('hidden', true);
 
                 //ajax to fire event
-                {{--var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";--}}
-                {{--url = url.replace('temp', course_id);--}}
-                {{--url = url.replace('tump', customer_id);--}}
-                {{--$.ajax({--}}
-                {{--    url: url,--}}
-                {{--    type: 'GET',--}}
-                {{--    success: function (res) {--}}
-                {{--        console.log(res);--}}
-                {{--        viewerToggleBack(customer_id)--}}
-                {{--    },--}}
-                {{--    error: function () {--}}
+                var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        getPublisherToken(session_id);
+                        connectAsPublisher('47561291', session_id, token);
+                        toggle = false;
+                        viewerToggleBack(customer_id);
+                    },
+                    error: function () {
 
-                {{--    }--}}
-                {{--})--}}
-
-                $('#publisher').html('');
-                $('#subscriber').html('');
-                getPublisherToken(session_id);
-                connectAsPublisher('47561291', session_id, token);
-                toggle = false;
-                viewerToggleBack(customer_id);
+                    }
+                })
             });
         });
     </script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\AllowUserScreen;
 use App\Events\RevertStream;
+use App\Events\ViewerToggleBack;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -32,5 +33,9 @@ class StreamController extends Controller
 
     public function revertStream(Request $request, $course_id, $customer_id) {
         return event(new RevertStream($course_id, $customer_id));
+    }
+
+    public function viewerToggleBack(Request $request, $course_id, $customer_id) {
+        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 }

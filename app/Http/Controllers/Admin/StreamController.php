@@ -38,5 +38,6 @@ class StreamController extends Controller
     }
 
     public function viewerToggleBack(Request $request, $course_id, $customer_id) {
+        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 }

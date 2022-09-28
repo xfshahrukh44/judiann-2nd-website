@@ -140,6 +140,8 @@
 
                     }
                 })
+
+                viewerToggleBack();
             });
 
             //on revert stream click
@@ -172,7 +174,26 @@
 
                     }
                 })
+
+                viewerToggleBack();
             });
+
+            function viewerToggleBack() {
+                //ajax to fire event
+                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
         });
     </script>
 @endsection

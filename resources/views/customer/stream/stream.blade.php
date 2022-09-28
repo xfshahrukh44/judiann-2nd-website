@@ -101,6 +101,17 @@
                     $('#subscriber').prop('hidden', false);
                 });
 
+            //socket: on viewer toggle back
+            window.Echo.channel('viewer-toggle-back-' + course_id)
+                .listen('ViewerToggleBack', (e) => {
+                    if(e.customer_id != user_id) {
+                        alert('non publisher');
+                        setTimeout(function() {
+                            toggleBack('47561291', session_id, token);
+                        }, 5000);
+                    }
+                });
+
             //on raise hand click
             $('#btn_raise_hand').on('click', function() {
                 var url = "{{route('customer.raise_hand', 'temp')}}";

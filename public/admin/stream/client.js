@@ -34,7 +34,7 @@ function init(apiKey, sessionId) {
             event.stream,
             "subscriber",
             {
-                insertMode: "append",
+                insertMode: "replace",
                 width: "100%",
                 height: "100%",
                 name: event.stream.name
@@ -63,6 +63,7 @@ function initializeSessionStream(apiKey, sessionId, token) {
 
 function toggleSession(apiKey, sessionId, token) {
     session.forceUnpublish(publisher);
+    publisher.destroy();
     initializeSessionStream(apiKey, sessionId, token)
 }
 

@@ -73,7 +73,6 @@ function handleCallback(error) {
 }
 
 function connectAsPublisher(apiKey, sessionId) {
-    session.disconnect();
     session = OT.initSession(apiKey, sessionId);
 
     publisher = OT.initPublisher("publisher", {
@@ -94,7 +93,6 @@ function connectAsPublisher(apiKey, sessionId) {
 }
 
 function connectAsSubscriber(apiKey, sessionId) {
-    session.disconnect();
     session = OT.initSession(apiKey, sessionId);
 
     publisher = OT.initPublisher("publisher", {

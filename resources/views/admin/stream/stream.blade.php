@@ -208,8 +208,8 @@
                     success: function (res) {
                         // console.log(res);
                         // toggle = true;
-                        $('#publisher').html('');
-                        $('#subscriber').html('');
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
                         getSubscriberToken(session_id);
                         connectAsSubscriber('47561291', session_id, token);
                         toggle = true;
@@ -246,8 +246,8 @@
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
-                        $('#publisher').html('');
-                        $('#subscriber').html('');
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
                         getPublisherToken(session_id);
                         connectAsPublisher('47561291', session_id, token);
                         toggle = false;

@@ -28,7 +28,7 @@ function init(apiKey, sessionId) {
     // Subscribe to a newly created stream
     session.on("streamCreated", event => {
         session.subscribe(event.stream, "subscriber", {
-            insertMode: "append",
+            insertMode: "replace",
             width: "50%",
             height: "50%",
             name: event.stream.name

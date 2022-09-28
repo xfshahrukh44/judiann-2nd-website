@@ -149,6 +149,7 @@
                     url: url,
                     type: 'GET',
                     success: function (res) {
+                        console.log(res);
                         token = res;
                     },
                     error: function () {
@@ -164,6 +165,7 @@
                     url: url,
                     type: 'GET',
                     success: function (res) {
+                        console.log(res);
                         token = res;
                     },
                     error: function () {

@@ -195,7 +195,7 @@
                 {{--}, 5000);--}}
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
-                {{--$('#btn_revert_stream').prop('hidden', false);--}}
+                $('#btn_revert_stream').prop('hidden', false);
                 {{--$('#btn_revert_stream').data('user', customer_id);--}}
 
                 {{--//ajax to fire event--}}

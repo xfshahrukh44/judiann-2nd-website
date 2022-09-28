@@ -153,4 +153,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/temp', function () {
 //    event(new \App\Events\UserJoined(['name' => 'asd']));
 //    dd('end');
+//    $courses = \App\Models\Course::all();
+//    foreach ($courses as $course) {
+//        $course->opentok_session_id = get_fresh_opentok_session_id();
+//        $course->save();
+//    }
 });

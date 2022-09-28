@@ -28,14 +28,15 @@ class StreamController extends Controller
     }
 
     public function allowUserScreen(Request $request, $course_id, $customer_id) {
-        return event(new AllowUserScreen($course_id, $customer_id));
+        event(new AllowUserScreen($course_id, $customer_id));
+        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 
     public function revertStream(Request $request, $course_id, $customer_id) {
-        return event(new RevertStream($course_id, $customer_id));
+        event(new RevertStream($course_id, $customer_id));
+        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 
     public function viewerToggleBack(Request $request, $course_id, $customer_id) {
-        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 }

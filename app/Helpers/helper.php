@@ -41,6 +41,18 @@ function get_fresh_opentok_session_id() {
 
 function get_fresh_opentok_token($session_id) {
     $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
-    $token = $opentok->generateToken($session_id);
+    $token = $opentok->generateToken($session_id, ['role' => \OpenTok\Role::MODERATOR]);
+    return $token;
+}
+
+function get_fresh_publisher_opentok_token($session_id) {
+    $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
+    $token = $opentok->generateToken($session_id, ['role' => \OpenTok\Role::PUBLISHER]);
+    return $token;
+}
+
+function get_fresh_subscriber_opentok_token($session_id) {
+    $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
+    $token = $opentok->generateToken($session_id, ['role' => \OpenTok\Role::SUBSCRIBER]);
     return $token;
 }

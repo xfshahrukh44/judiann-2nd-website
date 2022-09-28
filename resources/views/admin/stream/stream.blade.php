@@ -92,7 +92,7 @@
                                         <div class="text-center" style="width: 100%;">
                                             <i class="fa fa-hand-paper-o text-warning" id="raised_hand_`+e.data.customer.id+`" hidden></i>
                                             <h4 style="color:white;">`+e.data.customer.name+`</h4>
-                                            <button class="btn btn-primary btn-sm btn_allow_user_screen" data-user="`+e.data.customer.id+`">Allow screen share</button>
+                                            <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_`+e.data.customer.id+`" data-user="`+e.data.customer.id+`" hidden>Allow screen share</button>
                                         </div>
                                     </div>
                                 </div>`);
@@ -103,6 +103,7 @@
                 .listen('ViewerRaisedHand', (e) => {
                     toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
                     $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
+                    $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
                 });
 
             //on allow screen click
@@ -117,7 +118,9 @@
 
                 //toggle session
                 $('#subscriber').html('');
-                toggleSession('47561291', session_id, token);
+                setTimeout(function() {
+                    toggleSession('47561291', session_id, token);
+                }, 10000);
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
                 $('#btn_revert_stream').prop('hidden', false);
@@ -146,9 +149,9 @@
 
                 //hide button
                 $(this).prop('hidden', true);
-                $('.btn_allow_user_screen').each(function() {
-                    $(this).prop('hidden', false);
-                });
+                // $('.btn_allow_user_screen').each(function() {
+                //     $(this).prop('hidden', false);
+                // });
 
                 //toggle session
                 toggleBack('47561291', session_id, token, 'test');

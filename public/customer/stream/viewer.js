@@ -54,6 +54,7 @@ function initializeSessionStream(apiKey, sessionId, token, streamName) {
 }
 
 function toggleSession(apiKey, sessionId, token, streamName) {
+    session.forceUnpublish(publisher);
     initializeSessionStream(apiKey, sessionId, token, streamName)
 }
 

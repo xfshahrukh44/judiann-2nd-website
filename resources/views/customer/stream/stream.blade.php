@@ -94,7 +94,7 @@
                 .listen('RevertStream', (e) => {
                     //toggle session
                     // $('#subscriber').html('');
-                    $('#subscriber').find(":first-child").remove();
+                    // $('#subscriber').find(":first-child").remove();
                     setTimeout(function() {
                         toggleBack('47561291', session_id, token);
                     }, 5000);

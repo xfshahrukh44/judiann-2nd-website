@@ -34,7 +34,7 @@ function init(apiKey, sessionId) {
             event.stream,
             "subscriber",
             {
-                insertMode: "append",
+                insertMode: "replace",
                 width: "100%",
                 height: "100%",
                 name: event.stream.name

@@ -106,10 +106,42 @@
                     $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
                 });
 
+            function viewerToggleBack(customer_id) {
+                //ajax to fire event
+                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
             //on allow screen click
             $('body').on('click', '.btn_allow_user_screen', function() {
                 //prep data
                 var customer_id = $(this).data('user');
+
+                //ajax to fire event
+                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
 
                 //hide all buttons
                 $('.btn_allow_user_screen').each(function() {
@@ -118,7 +150,7 @@
 
                 //toggle session
                 // $('#subscriber').html('');
-                $('#subscriber').find(":first-child").remove();
+                // $('#subscriber').find(":first-child").remove();
                 setTimeout(function() {
                     toggleSession('47561291', session_id, token);
                 }, 5000);
@@ -147,6 +179,21 @@
             $('body').on('click', '#btn_revert_stream', function() {
                 //prep data
                 var customer_id = $(this).data('user');
+
+                //ajax to fire event
+                var url = "{{route('admin.viewerToggleBack', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
 
                 //hide button
                 $(this).prop('hidden', true);

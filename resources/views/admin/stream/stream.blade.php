@@ -119,15 +119,15 @@
                         // }, 5000);
 
 
-                        $('#publisher').prop('hidden', false);
-                        $('#subscriber').prop('hidden', true);
-
-                        $('#publisher').html('');
-                        $('#subscriber').html('');
-                        getPublisherToken(session_id);
-                        connectAsPublisher('47561291', session_id, token);
-                        toggle = false;
-                        viewerToggleBack(e.customer_id);
+                        // $('#publisher').prop('hidden', false);
+                        // $('#subscriber').prop('hidden', true);
+                        //
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
+                        // getPublisherToken(session_id);
+                        // connectAsPublisher('47561291', session_id, token);
+                        // toggle = false;
+                        // viewerToggleBack(e.customer_id);
                     }
                 });
 
@@ -208,7 +208,6 @@
                     success: function (res) {
                         // console.log(res);
                         // toggle = true;
-                        viewerToggleBack(customer_id);
                         $('#publisher').html('');
                         $('#subscriber').html('');
                         getSubscriberToken(session_id);

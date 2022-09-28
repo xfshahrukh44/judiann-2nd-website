@@ -144,7 +144,7 @@
                 });
 
             function getPublisherToken(session_id) {
-                var url = `{{route('admin.getPublisherToken', 'temp')}}`;
+                var url = `{{route('customer.getPublisherToken', 'temp')}}`;
                 url = url.replace('temp', session_id);
                 $.ajax({
                     url: url,
@@ -160,7 +160,7 @@
             }
 
             function getSubscriberToken(session_id) {
-                var url = `{{route('admin.getSubscriberToken', 'temp')}}`;
+                var url = `{{route('customer.getSubscriberToken', 'temp')}}`;
                 url = url.replace('temp', session_id);
                 $.ajax({
                     url: url,

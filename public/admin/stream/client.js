@@ -67,6 +67,7 @@ function toggleSession(apiKey, sessionId, token) {
 }
 
 function toggleBack(apiKey, sessionId, token, streamName) {
+    session.forceUnpublish(publisher);
     initializeSession(apiKey, sessionId, token, streamName)
 }
 

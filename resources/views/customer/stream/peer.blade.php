@@ -42,7 +42,9 @@
                         </div>
                         <figure class="videoThumbMain">
                             <div id="subscriber" class="subscriber"></div>
-                            <div id="publisher" class="publisher"></div>
+                            <div id="publisher" class="publisher">
+                                <video autoplay id="broadcaster" controls></video>
+                            </div>
                         </figure>
                     </div>
                 </div>
@@ -66,42 +68,35 @@
     {{--additional js--}}
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{asset('js/video-streaming-utils.js')}}"></script>
     <script>
+        let auth_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
+        let course_id = `{{ $course->id }}`;
+
         $(document).ready(function() {
-            //establish course_id, session_id, token
-            const course_id = window.location.href.split("/").pop();
 
-            var peer = new Peer('peer-course-' + course_id);
-            // //when peer is opened
-            // peer.on('open', function(id) {
-            //     alert('My peer ID is: ' + id);
-            // });
-            // //Anytime another peer attempts to connect to your peer ID, you'll receive a connection event.
-            // peer.on('connection', function(conn) {
-            //     conn.on('data', function(data){
-            //         // Will print 'hi!'
-            //         console.log(data);
-            //         alert('user joined');
-            //     });
-            // });
+            userMediaPermission()
+                .then(stream => {
+                    broadcaster_stream = stream;
+                    peerInit(auth_id).then((newPeer) => {
+                        peer = newPeer;
+                        peer.on("call", (call) => {
+                            console.log("onCall", call.peer)
+                            call.answer();
+                            // // const video = document.createElement("audio");
+                            call.on("stream", (broadcaster_stream) => {
+                                // console.log("in watcher broadcaster_stream", broadcaster_stream)
+                                showBroadcasterVideo(broadcaster_stream)
+                                // addVideoStream(video, userVideoStream, call.peer);
+                            });
+                        });
+                        customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
+                    });
 
-            var conn = peer.connect('peer-course-' + course_id, {
-                'host': '/',
-                'port': '6002'
-            });
-
-            // on open will be launch when you successfully connect to PeerServer
-            conn.on('open', function(){
-                // here you have conn.id
-                alert('connected to peer');
-                conn.send('hi!');
-            });
-
-            //answer call
-            peer.on('call', function(call) {
-                // Answer the call, providing our mediaStream
-                call.answer();
-            });
+                })
+                .catch(err => {
+                    alert('Error! ' + err.message)
+                })
 
         });
     </script>

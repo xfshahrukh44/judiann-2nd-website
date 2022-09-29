@@ -83,6 +83,23 @@ footer {
 }
 
 
-.publisher * {
+.publisher video {
     width: 100%;
+}
+
+.publisher form {
+    position: absolute;
+    bottom: 10px;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.publisher form button {
+    background: red;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    outline: none;
 }

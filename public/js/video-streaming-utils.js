@@ -15,9 +15,9 @@ const peerInit = (auth_id) => {
 
     return new Promise(resolve => {
         const peer = new Peer('peer-course-user-' + auth_id, {
-            // path: "/peerjs",
-            // host: "/",
-            // port: "3030",
+            path: "/peerjs",
+            host: "/",
+            port: "3030",
         });
         //when peer is opened
         peer.on('open', function (id) {

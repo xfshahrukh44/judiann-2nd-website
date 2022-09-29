@@ -1060,9 +1060,10 @@ footer {
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
+    gap: 1rem;
 }
 
-.videoControllers a {
+.videoControllers a, .videoControllers button {
     width: 50px;
     height: 50px;
     transition: all 0.3s ease;
@@ -1073,6 +1074,7 @@ footer {
     color: #fff;
     font-size: 1.25rem;
     background: #DD1313;
+    border: none;
 }
 
 .videoControllers a:hover {
@@ -1080,7 +1082,7 @@ footer {
 }
 
 .videoControllers a i {
-    transform: rotate(-135deg);
+    /*transform: rotate(-135deg);*/
 }
 
 .chattingSec .videoThumbMain {
@@ -1170,4 +1172,8 @@ footer {
 
 .chattingSec .slick-arrow:before{
     content: none;
+}
+
+.videoControllers button i {
+    transform: rotate(225deg);
 }

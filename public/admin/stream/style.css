@@ -69,14 +69,37 @@ button {
 
 .publisher {
     position: absolute;
-    width: 25vmin;
-    height: 25vmin;
+    width: 100%;
+    height: 100%;
     min-width: 25em;
     min-height: 25em;
     align-self: flex-end;
+    display: flex;
 }
 
 footer {
     text-align: center;
     padding: 0.5em;
+}
+
+
+.publisher video {
+    width: 100%;
+}
+
+.publisher form {
+    position: absolute;
+    bottom: 10px;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.publisher form button {
+    background: red;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: none;
+    outline: none;
 }

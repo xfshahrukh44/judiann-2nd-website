@@ -43,7 +43,7 @@
                         <figure class="videoThumbMain">
                             <div id="subscriber" class="subscriber"></div>
                             <div id="publisher" class="publisher">
-                                <video autoplay id="broadcaster" controls></video>
+                                <video autoplay id="broadcaster"></video>
                             </div>
                         </figure>
                     </div>
@@ -104,12 +104,17 @@
             //on raise hand click
             $('#btn_raise_hand').on('click', function() {
                 var url = "{{route('customer.raise_hand', 'temp')}}";
+                let _this = $(this);
+                _this.prop('disabled', true);
                 url = url.replace('temp', course_id);
                 $.ajax({
                     url: url,
                     type: 'GET',
                     success: function (res) {
                         console.log(res);
+                        setTimeout(function() {
+                            _this.prop('disabled', true);
+                        }, 1000 * 60);
                     },
                     error: function () {
 

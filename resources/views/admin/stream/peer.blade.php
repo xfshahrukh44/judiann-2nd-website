@@ -40,12 +40,18 @@
                             <h3></h3>
                         </div>
                         <div class="videoControllers" style="z-index: 1;">
-                            <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-phone"></i></a>
+                            <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-undo"></i></a>
+                            <form action="{{route('admin.stopStream', $course->id)}}" method="POST">
+                                @csrf
+                                <button type="submit">
+                                    <i class="fas fa-phone"></i>
+                                </button>
+                            </form>
                         </div>
                         <figure class="videoThumbMain">
                             <div id="subscriber" class="subscriber"></div>
                             <div id="publisher" class="publisher">
-                                <video autoplay id="broadcaster" controls></video>
+                                <video autoplay id="broadcaster"></video>
                             </div>
                         </figure>
                     </div>
@@ -57,12 +63,6 @@
                 </div>
             </div>
         </div>
-        <form action="{{route('admin.stopStream', $course->id)}}" method="POST">
-            @csrf
-            <button type="submit">
-                Stop streaming
-            </button>
-        </form>
     </section>
 
 @endsection

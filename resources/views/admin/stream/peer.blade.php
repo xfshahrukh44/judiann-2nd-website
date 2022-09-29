@@ -142,6 +142,8 @@
                 $('.btn_allow_user_screen').each(function() {
                     $(this).prop('hidden', true);
                 });
+                $('#btn_revert_stream').prop('hidden', false);
+                $('#btn_revert_stream').data('user', customer_id);
 
                 const viewer_stream_c = viewer_streams['peer-course-user-' + customer_id]
                 const [videoTrack] = viewer_stream_c.getVideoTracks();
@@ -215,35 +217,23 @@
 
                 //hide button
                 $(this).prop('hidden', true);
-                // $('.btn_allow_user_screen').each(function() {
-                //     $(this).prop('hidden', false);
-                // });
 
-                //toggle session
-                toggleBack('47561291', session_id, token, 'test');
-                $('#publisher').prop('hidden', false);
-                $('#subscriber').prop('hidden', true);
+                const [videoTrack] = broadcaster_stream.getVideoTracks();
+                const [audioTrack] = broadcaster_stream.getAudioTracks();
+                // const broadcaster_stream_c = broadcaster_stream
 
-                //ajax to fire event
-                var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
-                url = url.replace('tump', customer_id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (res) {
-                        console.log(res);
-                        // $('#publisher').html('');
-                        // $('#subscriber').html('');
-                        // getPublisherToken(session_id);
-                        // connectAsPublisher('47561291', session_id, token);
-                        // toggle = false;
-                        // viewerToggleBack(customer_id);
-                    },
-                    error: function () {
+                console.log("calls", peer_calls, videoTrack, audioTrack)
 
+                for(let key in peer_calls){
+                    if(videoTrack){
+                        const sender_video = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === videoTrack.kind);
+                        sender_video.replaceTrack(videoTrack);
                     }
-                })
+                    if(audioTrack){
+                        const sender_audio = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === audioTrack.kind);
+                        sender_audio.replaceTrack(audioTrack);
+                    }
+                }
             });
 
         });

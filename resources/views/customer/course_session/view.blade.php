@@ -43,7 +43,7 @@
 {{--                            @if(course_is_joinable($content->course->id))--}}
 {{--                                <button class="btn btn-success" style="float: right;">Join</button>--}}
 {{--                            @endif--}}
-                            @if($content->class_type == 'online')
+                            @if($content->class_type == 'online' && $content->course->is_streaming)
                                 <a target="_blank" href="{{route('customer.stream', $content->course->id)}}" class="btn btn-success" style="float: right;">Join</a>
                             @endif
                         </div>

@@ -57,6 +57,12 @@
                 </div>
             </div>
         </div>
+        <form action="{{route('admin.stopStream', $course->id)}}" method="POST">
+            @csrf
+            <button type="submit">
+                Stop streaming
+            </button>
+        </form>
     </section>
 
 @endsection
@@ -82,9 +88,20 @@
             userMediaPermission()
                 .then(stream => {
                     broadcaster_stream = stream;
+                    broadcaster_stream_original = stream;
                     showMyVideo(stream)
                     peerInit(auth_id).then((newPeer) => {
                         peer = newPeer;
+                        /*peer.on("call", (call) => {
+                            console.log("onCall", call.peer)
+                            call.answer();
+                            // // const video = document.createElement("audio");
+                            call.on("stream", (broadcaster_stream) => {
+                                // console.log("in watcher broadcaster_stream", broadcaster_stream)
+                                showBroadcasterVideo(broadcaster_stream)
+                                // addVideoStream(video, userVideoStream, call.peer);
+                            });
+                        });*/
                         broadcasterInitPresenceChannel({echo: window.Echo, auth_id, channel_id: course_id});
                     });
 
@@ -92,7 +109,6 @@
                 .catch(err => {
                     alert('Error! ' + err.message)
                 })
-
 
             /*var conn = peer.connect('peer-course-' + course_id, {
                 'host': '/',
@@ -108,6 +124,127 @@
             //call
             // var constraints = { video: true, audio: true };
             // var call = peer.call('peer-course-' + course_id, userMediaPermission().then().catch());
+
+            //socket: on viewer raise hand
+            window.Echo.channel('user-raised-hand-' + course_id)
+                .listen('ViewerRaisedHand', (e) => {
+                    toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
+                    $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
+                    $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
+                });
+
+            //on allow screen click
+            $('body').on('click', '.btn_allow_user_screen', function() {
+                //prep data
+                var customer_id = $(this).data('user');
+
+                //hide all buttons
+                $('.btn_allow_user_screen').each(function() {
+                    $(this).prop('hidden', true);
+                });
+
+                const viewer_stream_c = viewer_streams['peer-course-user-' + customer_id]
+                const [videoTrack] = viewer_stream_c.getVideoTracks();
+                const [audioTrack] = viewer_stream_c.getAudioTracks();
+                // const broadcaster_stream_c = broadcaster_stream
+
+                console.log("calls", peer_calls, videoTrack, audioTrack)
+
+                for(let key in peer_calls){
+                    if(videoTrack){
+                        const sender_video = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === videoTrack.kind);
+                        sender_video.replaceTrack(videoTrack);
+                    }
+                    if(audioTrack){
+                        const sender_audio = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === audioTrack.kind);
+                        sender_audio.replaceTrack(audioTrack);
+                    }
+                }
+
+
+
+                /*for(let track of broadcaster_stream.getTracks()){
+                    if(track.readyState === 'live' && track.kind === 'audio' && viewer_stream_c.getAudioTracks().length > 0){
+                        broadcaster_stream_c.replaceTrack(viewer_stream_c.getAudioTracks()[0])
+                    }
+                    if(track.readyState === 'live' && track.kind === 'video' && viewer_stream_c.getVideoTracks().length > 0){
+                        broadcaster_stream_c.replaceTrack(viewer_stream_c.getVideoTracks()[0])
+                    }
+                }*/
+
+
+                // console.log('user stream', viewer_streams['peer-course-user-' + customer_id], broadcaster_stream.getTracks())
+
+                // //toggle session
+                // // $('#subscriber').html('');
+                // setTimeout(function() {
+                //     toggleSession('47561291', session_id, token);
+                // }, 5000);
+                // $('#publisher').prop('hidden', true);
+                // $('#subscriber').prop('hidden', false);
+                // $('#btn_revert_stream').prop('hidden', false);
+                // $('#btn_revert_stream').data('user', customer_id);
+
+                {{--//ajax to fire event--}}
+                /*var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        toggle = true;
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        // getSubscriberToken(session_id);
+                        // connectAsSubscriber('47561291', session_id, token);
+                        // toggle = true;
+                        // viewerToggleBack(customer_id);
+                    },
+                    error: function () {
+
+                    }
+                })*/
+            });
+
+            //on revert stream click
+            $('body').on('click', '#btn_revert_stream', function() {
+                //prep data
+                var customer_id = $(this).data('user');
+
+                //hide button
+                $(this).prop('hidden', true);
+                // $('.btn_allow_user_screen').each(function() {
+                //     $(this).prop('hidden', false);
+                // });
+
+                //toggle session
+                toggleBack('47561291', session_id, token, 'test');
+                $('#publisher').prop('hidden', false);
+                $('#subscriber').prop('hidden', true);
+
+                //ajax to fire event
+                var url = "{{route('admin.revertStream', ['temp', 'tump'])}}";
+                url = url.replace('temp', course_id);
+                url = url.replace('tump', customer_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
+                        // getPublisherToken(session_id);
+                        // connectAsPublisher('47561291', session_id, token);
+                        // toggle = false;
+                        // viewerToggleBack(customer_id);
+                    },
+                    error: function () {
+
+                    }
+                })
+            });
 
         });
     </script>

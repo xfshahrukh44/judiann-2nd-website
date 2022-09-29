@@ -20,7 +20,8 @@ class Course extends Model
         'date_range_to',
         'time_from',
         'time_to',
-        'opentok_session_id'
+        'opentok_session_id',
+        'is_streaming'
     ];
 
     public static function boot() {

@@ -148,6 +148,7 @@
                 const viewer_stream_c = viewer_streams['peer-course-user-' + customer_id]
                 const [videoTrack] = viewer_stream_c.getVideoTracks();
                 const [audioTrack] = viewer_stream_c.getAudioTracks();
+                showMyVideo(viewer_stream_c)
                 // const broadcaster_stream_c = broadcaster_stream
 
                 console.log("calls", peer_calls, videoTrack, audioTrack)
@@ -221,6 +222,7 @@
                 const [videoTrack] = broadcaster_stream.getVideoTracks();
                 const [audioTrack] = broadcaster_stream.getAudioTracks();
                 // const broadcaster_stream_c = broadcaster_stream
+                showMyVideo(broadcaster_stream)
 
                 console.log("calls", peer_calls, videoTrack, audioTrack)
 

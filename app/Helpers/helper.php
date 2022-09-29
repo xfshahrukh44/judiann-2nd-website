@@ -60,3 +60,11 @@ function get_fresh_subscriber_opentok_token($session_id) {
 //    return strval($token);
     return $token;
 }
+
+function get_payment_keys() {
+    $setting = Settings::findOrFail(1);
+    return [
+        "secret_key" => $setting->stripe_env == 'Testing' ? $setting->stripe_testing_secret_key : $setting->stripe_secret_key,
+        "publishable_key" => $setting->stripe_env == 'Testing' ? $setting->stripe_testing_publishable_key : $setting->stripe_publishable_key,
+    ];
+}

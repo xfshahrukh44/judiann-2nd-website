@@ -18,12 +18,12 @@ class PaymentGatewayController extends Controller
                 $content = Settings::find(1);
 
                 // paypal
-                $content->paypal_env = $request->paypal_env;
-                $content->paypal_client_id = $request->paypal_client_id;
-                $content->paypal_secret_key = $request->paypal_secret_key;
-                $content->paypal_testing_client_id = $request->paypal_testing_client_id;
-                $content->paypal_testing_secret_key = $request->paypal_testing_secret_key;
-                $content->paypal_check = $request->paypal_check;
+//                $content->paypal_env = $request->paypal_env;
+//                $content->paypal_client_id = $request->paypal_client_id;
+//                $content->paypal_secret_key = $request->paypal_secret_key;
+//                $content->paypal_testing_client_id = $request->paypal_testing_client_id;
+//                $content->paypal_testing_secret_key = $request->paypal_testing_secret_key;
+//                $content->paypal_check = $request->paypal_check;
 
                 // stripe
                 $content->stripe_env = $request->stripe_env;
@@ -46,8 +46,7 @@ class PaymentGatewayController extends Controller
                 }
             } else {
                 $content = Settings::findOrfail(1);
-                $shippingRates = ShippingRate::where('status', 1)->get();
-                return view('admin.paymentGateway.edit', compact('content', 'shippingRates'));
+                return view('admin.paymentGateway.edit', compact('content'));
             }
         } catch (\Exception $ex) {
             return redirect('admin/dashboard')->with('error', $ex->getMessage());

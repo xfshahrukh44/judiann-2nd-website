@@ -101,10 +101,12 @@ class FrontController extends Controller
             ];
         }
 
-        $stripe = [
-            "secret_key" => env("SECRET_KEY", "sk_test_lUp78O7PgN08WC9UgNRhOCnr"),
-            "publishable_key" => env("PUBLISHABLE_KEY", "pk_test_0rY5rGJ7GN1xEhCB40mAcWjg"),
-        ];
+//        $stripe = [
+//            "secret_key" => env("SECRET_KEY", "sk_test_lUp78O7PgN08WC9UgNRhOCnr"),
+//            "publishable_key" => env("PUBLISHABLE_KEY", "pk_test_0rY5rGJ7GN1xEhCB40mAcWjg"),
+//        ];
+
+        $stripe = get_payment_keys();
 
         $user = session()->get('user');
         $course_session_array = session()->get('course_session_array');

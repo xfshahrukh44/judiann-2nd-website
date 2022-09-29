@@ -50,6 +50,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/settings', 'SettingController@index')->name('settings');
     route::get('/changePassword', [SettingController::class, 'changePassword']);
     route::post('/updateAdminPassword', [SettingController::class, 'updateAdminPassword']);
+    Route::match(['get', 'post'], '/paymentgatway', 'PaymentGatewayController@index')->name('paymentgatway');
 
     //stream
     route::get('/stream/{course_id}', [StreamController::class, 'stream'])->name('admin.stream');

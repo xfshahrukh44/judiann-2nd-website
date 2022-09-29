@@ -40,94 +40,94 @@
                                                 {{-- start  --}}
                                                 <label for="name">Payment Options</label>
                                                 <div id="accordion">
-                                                    <div class="card">
-                                                        <div class="card-header bg-dark" id="headingOne">
-                                                            <h5 class="mb-0">
-                                                                <div class="btn btn-link text-white text-left"
-                                                                     style="width:100%;" data-toggle="collapse"
-                                                                     data-target="#collapseOne" aria-expanded="true"
-                                                                     aria-controls="collapseOne">
-                                                                    Paypal
-                                                                </div>
-                                                            </h5>
-                                                        </div>
+{{--                                                    <div class="card">--}}
+{{--                                                        <div class="card-header bg-dark" id="headingOne">--}}
+{{--                                                            <h5 class="mb-0">--}}
+{{--                                                                <div class="btn btn-link text-white text-left"--}}
+{{--                                                                     style="width:100%;" data-toggle="collapse"--}}
+{{--                                                                     data-target="#collapseOne" aria-expanded="true"--}}
+{{--                                                                     aria-controls="collapseOne">--}}
+{{--                                                                    Paypal--}}
+{{--                                                                </div>--}}
+{{--                                                            </h5>--}}
+{{--                                                        </div>--}}
 
-                                                        <div id="collapseOne"
-                                                             class="collapse border border-dark collapse show"
-                                                             aria-labelledby="headingOne" data-parent="#accordion">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-md-3">
-                                                                        Select Environment:
-                                                                    </div>
-                                                                    <div class="col-md-9">
-                                                                        <input type="radio" name="paypal_env"
-                                                                               id="paypal_env_live"
-                                                                               @if($content->paypal_env == "Live") checked
-                                                                               @endif value="Live"> Live &nbsp;
-                                                                        <input type="radio" name="paypal_env"
-                                                                               id="paypal_env_testing"
-                                                                               @if($content->paypal_env == "Testing") checked
-                                                                               @endif value="Testing"> Testing
-                                                                    </div>
-                                                                </div>
-                                                                <br>
-                                                                <div class="paypal-live-credentials">
-                                                                    <div class="row">
-                                                                        <div class="col-md-3">
-                                                                            Client ID:
-                                                                        </div>
-                                                                        <div class="col-md-9">
-                                                                            <input type="text" name="paypal_client_id"
-                                                                                   id="paypal_client_id"
-                                                                                   class="form-control"
-                                                                                   value="{{$content->paypal_client_id??''}}">
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <div class="col-md-3">
-                                                                            Secret Key:
-                                                                        </div>
-                                                                        <div class="col-md-9">
-                                                                            <input type="text" name="paypal_secret_key"
-                                                                                   id="paypal_secret_key"
-                                                                                   class="form-control"
-                                                                                   value="{{$content->paypal_secret_key??''}}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+{{--                                                        <div id="collapseOne"--}}
+{{--                                                             class="collapse border border-dark collapse show"--}}
+{{--                                                             aria-labelledby="headingOne" data-parent="#accordion">--}}
+{{--                                                            <div class="card-body">--}}
+{{--                                                                <div class="row">--}}
+{{--                                                                    <div class="col-md-3">--}}
+{{--                                                                        Select Environment:--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <div class="col-md-9">--}}
+{{--                                                                        <input type="radio" name="paypal_env"--}}
+{{--                                                                               id="paypal_env_live"--}}
+{{--                                                                               @if($content->paypal_env == "Live") checked--}}
+{{--                                                                               @endif value="Live"> Live &nbsp;--}}
+{{--                                                                        <input type="radio" name="paypal_env"--}}
+{{--                                                                               id="paypal_env_testing"--}}
+{{--                                                                               @if($content->paypal_env == "Testing") checked--}}
+{{--                                                                               @endif value="Testing"> Testing--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <br>--}}
+{{--                                                                <div class="paypal-live-credentials">--}}
+{{--                                                                    <div class="row">--}}
+{{--                                                                        <div class="col-md-3">--}}
+{{--                                                                            Client ID:--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="col-md-9">--}}
+{{--                                                                            <input type="text" name="paypal_client_id"--}}
+{{--                                                                                   id="paypal_client_id"--}}
+{{--                                                                                   class="form-control"--}}
+{{--                                                                                   value="{{$content->paypal_client_id??''}}">--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <br/>--}}
+{{--                                                                    <div class="row">--}}
+{{--                                                                        <div class="col-md-3">--}}
+{{--                                                                            Secret Key:--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="col-md-9">--}}
+{{--                                                                            <input type="text" name="paypal_secret_key"--}}
+{{--                                                                                   id="paypal_secret_key"--}}
+{{--                                                                                   class="form-control"--}}
+{{--                                                                                   value="{{$content->paypal_secret_key??''}}">--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
 
-                                                                <div class="paypal-testing-credentials">
-                                                                    <div class="row">
-                                                                        <div class="col-md-3">
-                                                                            Testing Client ID:
-                                                                        </div>
-                                                                        <div class="col-md-9">
-                                                                            <input type="text"
-                                                                                   name="paypal_testing_client_id"
-                                                                                   id="paypal_testing_client_id"
-                                                                                   class="form-control"
-                                                                                   value="{{$content->paypal_testing_client_id??''}}">
-                                                                        </div>
-                                                                    </div>
-                                                                    <br/>
-                                                                    <div class="row">
-                                                                        <div class="col-md-3">
-                                                                            Testing Secret Key:
-                                                                        </div>
-                                                                        <div class="col-md-9">
-                                                                            <input type="text"
-                                                                                   name="paypal_testing_secret_key"
-                                                                                   id="paypal_testing_secret_key"
-                                                                                   class="form-control"
-                                                                                   value="{{$content->paypal_testing_secret_key??''}}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+{{--                                                                <div class="paypal-testing-credentials">--}}
+{{--                                                                    <div class="row">--}}
+{{--                                                                        <div class="col-md-3">--}}
+{{--                                                                            Testing Client ID:--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="col-md-9">--}}
+{{--                                                                            <input type="text"--}}
+{{--                                                                                   name="paypal_testing_client_id"--}}
+{{--                                                                                   id="paypal_testing_client_id"--}}
+{{--                                                                                   class="form-control"--}}
+{{--                                                                                   value="{{$content->paypal_testing_client_id??''}}">--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                    <br/>--}}
+{{--                                                                    <div class="row">--}}
+{{--                                                                        <div class="col-md-3">--}}
+{{--                                                                            Testing Secret Key:--}}
+{{--                                                                        </div>--}}
+{{--                                                                        <div class="col-md-9">--}}
+{{--                                                                            <input type="text"--}}
+{{--                                                                                   name="paypal_testing_secret_key"--}}
+{{--                                                                                   id="paypal_testing_secret_key"--}}
+{{--                                                                                   class="form-control"--}}
+{{--                                                                                   value="{{$content->paypal_testing_secret_key??''}}">--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
                                                     <div class="card">
                                                         <div class="card-header bg-dark" id="headingTwo">
                                                             <h5 class="mb-0">
@@ -275,18 +275,10 @@
                                                 </div>
                                             </div>
                                             {{-- end --}}
-                                            <div class="input-group-btn">
-                                                <div class="file-btn mt-4">
-                                                    <span style="font-weight: bold;margin-right: 10px;">Paypal</span>
-                                                    <input type="checkbox" id="paypal"
-                                                           @if($content->paypal_check == "yes") checked
-                                                           @endif name="paypal_check" value="yes">
-                                                </div>
+                                            <div class="input-group-btn" hidden>
                                                 <div class="file-btn mt-4">
                                                     <span style="font-weight: bold;margin-right: 10px;">Stripe</span>
-                                                    <input type="checkbox" id="stipe"
-                                                           @if($content->stripe_check == "yes") checked
-                                                           @endif name="stripe_check" value="yes">
+                                                    <input type="checkbox" id="stipe" checked name="stripe_check" value="yes">
                                                 </div>
 {{--                                                <div class="file-btn mt-4">--}}
 {{--                                                    <span--}}

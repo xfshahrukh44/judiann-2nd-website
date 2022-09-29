@@ -25,7 +25,7 @@ class StreamController extends Controller
         $token = get_fresh_opentok_token($course->opentok_session_id);
         $t2 = get_fresh_publisher_opentok_token($course->opentok_session_id);
 
-        return view('admin.stream.index', compact('course', 'token'));
+        return view('admin.stream.peer', compact('course', 'token'));
     }
 
     public function allowUserScreen(Request $request, $course_id, $customer_id) {

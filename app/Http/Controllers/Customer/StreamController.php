@@ -21,7 +21,7 @@ class StreamController extends Controller
         //get token
         $token = get_fresh_opentok_token($course->opentok_session_id);
 
-        return view('customer.stream.index', compact('course', 'token'));
+        return view('customer.stream.peer', compact('course', 'token'));
     }
 
     public function raiseHand(Request $request, $course_id)

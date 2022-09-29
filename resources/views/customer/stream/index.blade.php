@@ -1,48 +1,65 @@
-<html lang="en">
-<head>
-    <title>Stream your video chat</title>
-    <meta
-        name="description"
-        content="Stream a basic audio-video chat with Vonage Video API in Node.js"
-    />
+@extends('front.layouts.app')
+
+@section('title', 'Classroom')
+@section('description', '')
+@section('keywords', '')
+
+@section('css')
+    {{--additional css--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
         id="favicon"
         rel="icon"
         href="https://tokbox.com/developer/favicon.ico"
         type="image/x-icon"
     />
-    <meta charset="utf-8" />
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{asset('admin/stream/style.css')}}" />
+@endsection
 
-    <link rel="stylesheet" href="{{asset('customer/stream/style.css')}}" />
 
-    {{--additional css--}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+@section('content')
 
-<body>
-    <header>
-        <h1>Viewer</h1>
-    </header>
+    <style>
+        header, footer {
+            display: none;
+        }
+    </style>
 
-    <main>
-        <div id="subscriber" class="subscriber"></div>
-        <div id="publisher" class="publisher"></div>
-    </main>
+    <section class="chattingSec">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="videoBox" style="width: 100%">
+                        <div class="headingCont">
+                            <h3></h3>
+                        </div>
+                        <div class="videoControllers" style="z-index: 1;">
+                            <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-phone"></i></a>
+                        </div>
+                        <figure class="videoThumbMain">
+                            <div id="subscriber" class="subscriber"></div>
+                            <div id="publisher" class="publisher"></div>
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="video-thumbs lobby_viewers_wrapper">
+                        <main class="container py-4">
+                            <button class="btn btn-primary btn-block" id="btn_raise_hand"><i class="fa fa-hand-paper-o"></i></button>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <main class="container py-4" style="border: solid 1px lightgrey;">
-        <button class="btn btn-primary" id="btn_raise_hand"><i class="fa fa-hand-paper-o"></i></button>
-    </main>
+@endsection
 
-    <footer>
-        <p>
-            <small>All rights reserved. </small>
-        </p>
-    </footer>
-
+@section('script')
     <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
     <script src="{{asset('customer/stream/viewer.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
@@ -60,27 +77,93 @@
 
             //init opentok session
             init('47561291', session_id);
-            initializeSession('47561291', session_id, token);
+            getSubscriberToken(session_id);
+            connectAsSubscriber('47561291', session_id, token);
             $('#publisher').prop('hidden', true);
 
             //socket: on allow user screen
             window.Echo.channel('allow-user-screen-' + course_id + '-' + user_id)
                 .listen('AllowUserScreen', (e) => {
                     //toggle session
-                    toggleSession('47561291', session_id, token, 'test');
+                    $('.videoThumbMain').html('<div id="publisher" class="publisher"></div>');
                     $('#publisher').prop('hidden', false);
                     $('#subscriber').prop('hidden', true);
+
+                    // $('#publisher').html('');
+                    // $('#subscriber').html('');
+                    getPublisherToken(session_id);
+                    connectAsPublisher('47561291', session_id, token);
                 });
 
             //socket: on revert stream
             window.Echo.channel('revert-screen-' + course_id + '-' + user_id)
                 .listen('RevertStream', (e) => {
+                    //append publisher div to video box
+                    $('.videoThumbMain').html('<div id="subscriber" class="subscriber"></div>');
+
                     //toggle session
-                    $('#subscriber').html('');
-                    toggleBack('47561291', session_id, token);
-                    $('#publisher').prop('hidden', true);
-                    $('#subscriber').prop('hidden', false);
+                    $('body #publisher').prop('hidden', true);
+                    $('.subscriber').prop('hidden', false);
+
+                    // $('#publisher').html('');
+                    // $('#subscriber').html('');
+                    getSubscriberToken(session_id);
+                    connectAsSubscriber('47561291', session_id, token);
                 });
+
+            //socket: on viewer toggle back
+            window.Echo.channel('viewer-toggle-back-' + course_id)
+                .listen('ViewerToggleBack', (e) => {
+                    if(e.customer_id != user_id) {
+                        $('#publisher').prop('hidden', true);
+                        $('#subscriber').prop('hidden', false);
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
+                        getSubscriberToken(session_id);
+                        connectAsSubscriber('47561291', session_id, token);
+                    }
+                    else {
+                        $('#publisher').prop('hidden', false);
+                        $('#subscriber').prop('hidden', true);
+
+                        // $('#publisher').html('');
+                        // $('#subscriber').html('');
+                        getPublisherToken(session_id);
+                        connectAsPublisher('47561291', session_id, token);
+                    }
+                });
+
+            function getPublisherToken(session_id) {
+                var url = `{{route('customer.getPublisherToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        // token = res;
+                        token = `{{session()->get('publisher_token')}}`;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
+            function getSubscriberToken(session_id) {
+                var url = `{{route('customer.getSubscriberToken', 'temp')}}`;
+                url = url.replace('temp', session_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        // token = res;
+                        token = `{{session()->get('subscriber_token')}}`;
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
 
             //on raise hand click
             $('#btn_raise_hand').on('click', function() {
@@ -100,5 +183,4 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection

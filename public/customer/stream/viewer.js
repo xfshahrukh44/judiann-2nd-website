@@ -72,15 +72,20 @@ function handleCallback(error) {
     }
 }
 
-function connectAsPublisher(apiKey, sessionId) {
-    session = OT.initSession(apiKey, sessionId);
-
-    publisher = OT.initPublisher("publisher", {
-        insertMode: "replace",
-        width: "100%",
-        height: "100%",
-        name: 'test'
-    }, handleCallback);
+function connectAsPublisher(apiKey, sessionId, token) {
+    if (session) {
+        if (publisher) {
+            session.unpublish(publisher);
+            publisher = OT.initPublisher("publisher", {
+                insertMode: "replace",
+                width: "100%",
+                height: "100%",
+                name: 'test'
+            }, handleCallback);
+        }
+        session.disconnect();
+        session = OT.initSession(apiKey, sessionId);
+    }
 
     session.connect(token, error => {
         // If the connection is successful, initialize the publisher and publish to the session
@@ -92,22 +97,17 @@ function connectAsPublisher(apiKey, sessionId) {
     });
 }
 
-function connectAsSubscriber(apiKey, sessionId) {
-    session = OT.initSession(apiKey, sessionId);
+function connectAsSubscriber(apiKey, sessionId, token) {
+    if (session) {
+        // if (publisher) {
+        //     session.unpublish(publisher);
+        // }
+        session.disconnect();
+        session = OT.initSession(apiKey, sessionId);
+    }
 
-    publisher = OT.initPublisher("publisher", {
-        insertMode: "replace",
-        width: "100%",
-        height: "100%",
-        name: 'test'
-    }, handleCallback);
-
-    session.connect(token, error => {
-        // If the connection is successful, initialize the publisher and publish to the session
-        if (error) {
-            handleCallback(error);
-        } else {
-            session.publish(publisher, handleCallback);
-        }
-    });
+    alert('connecting');
+    session.connect(token, error => handleCallback(error));
+    setTimeout(function() {
+    }, 5000);
 }

@@ -74,21 +74,16 @@
             var toggle = false;
 
             //init opentok session
-            // init('47561291', session_id);
-            // initializeSession('47561291', session_id, token, 'test');
-            getPublisherToken(session_id);
-            connectAsPublisher('47561291', session_id, token);
+            init('47561291', session_id);
+            initializeSession('47561291', session_id, token, 'test');
+            // getPublisherToken(session_id);
+            // connectAsPublisher('47561291', session_id, token);
             $('#subscriber').prop('hidden', true);
 
             //socket: on viewer join
             window.Echo.channel('user-joined-' + course_id)
                 .listen('UserJoined', (e) => {
                     toastr.info(e.data.customer.name + ' has joined the session.');
-                    // $('.lobby_viewers_wrapper').append(`<div class="col-md-3 text-center py-4" style="border: 1px solid grey;">
-                    //                                     <i class="fa fa-hand-paper-o text-warning" id="raised_hand_`+e.data.customer.id+`" hidden></i>
-                    //                                     <h3>`+e.data.customer.name+`</h3>
-                    //                                     <button class="btn btn-primary btn-sm btn_allow_user_screen" data-user="`+e.data.customer.id+`">Allow screen share</button>
-                    //                                 </div>`);
                     $('.lobby_viewers_wrapper')
                         .append(`<div>
                                     <div class="thumbBox d-flex align-items-center" style="min-width: 286px; min-height: 250px;">
@@ -190,13 +185,13 @@
 
                 //toggle session
                 // $('#subscriber').html('');
-                {{--setTimeout(function() {--}}
-                {{--    toggleSession('47561291', session_id, token);--}}
-                {{--}, 5000);--}}
+                setTimeout(function() {
+                    toggleSession('47561291', session_id, token);
+                }, 5000);
                 $('#publisher').prop('hidden', true);
                 $('#subscriber').prop('hidden', false);
                 $('#btn_revert_stream').prop('hidden', false);
-                {{--$('#btn_revert_stream').data('user', customer_id);--}}
+                $('#btn_revert_stream').data('user', customer_id);
 
                 {{--//ajax to fire event--}}
                 var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
@@ -206,14 +201,14 @@
                     url: url,
                     type: 'GET',
                     success: function (res) {
-                        // console.log(res);
-                        // toggle = true;
-                        // $('#publisher').html('');
-                        // $('#subscriber').html('');
-                        getSubscriberToken(session_id);
-                        connectAsSubscriber('47561291', session_id, token);
+                        console.log(res);
                         toggle = true;
-                        viewerToggleBack(customer_id);
+                        $('#publisher').html('');
+                        $('#subscriber').html('');
+                        // getSubscriberToken(session_id);
+                        // connectAsSubscriber('47561291', session_id, token);
+                        // toggle = true;
+                        // viewerToggleBack(customer_id);
                     },
                     error: function () {
 
@@ -233,7 +228,7 @@
                 // });
 
                 //toggle session
-                // toggleBack('47561291', session_id, token, 'test');
+                toggleBack('47561291', session_id, token, 'test');
                 $('#publisher').prop('hidden', false);
                 $('#subscriber').prop('hidden', true);
 
@@ -248,10 +243,10 @@
                         console.log(res);
                         // $('#publisher').html('');
                         // $('#subscriber').html('');
-                        getPublisherToken(session_id);
-                        connectAsPublisher('47561291', session_id, token);
-                        toggle = false;
-                        viewerToggleBack(customer_id);
+                        // getPublisherToken(session_id);
+                        // connectAsPublisher('47561291', session_id, token);
+                        // toggle = false;
+                        // viewerToggleBack(customer_id);
                     },
                     error: function () {
 

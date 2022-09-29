@@ -1,6 +1,9 @@
 let peer = null;
+let peer_calls = {};
 let broadcaster_stream = null;
+let broadcaster_stream_original = null;
 let is_peer_open = false;
+let viewer_streams = [];
 
 const peerInit = (auth_id) => {
 
@@ -41,10 +44,20 @@ const broadcasterInitPresenceChannel = ({echo, auth_id, channel_id}) => {
         console.log("all users", users, is_peer_open)
         if (auth_id) {
             const viewers = _.filter(users, (user) => {
-                return user.id !== auth_id
+                return user.id != auth_id
             })
             _.each(viewers, (user) => {
                 callingToViewer(user.id);
+                $('.lobby_viewers_wrapper')
+                    .append(`<div id="viewer-id-${user.id}">
+                                    <div class="thumbBox d-flex align-items-center" style="min-width: 286px; min-height: 250px;">
+                                        <div class="text-center" style="width: 100%;">
+                                            <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
+                                            <h4 style="color:white;">` + user.name + `</h4>
+                                            <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
+                                        </div>
+                                    </div>
+                                </div>`);
             })
         }
     });
@@ -56,9 +69,9 @@ const broadcasterInitPresenceChannel = ({echo, auth_id, channel_id}) => {
             .append(`<div id="viewer-id-${user.id}">
                                     <div class="thumbBox d-flex align-items-center" style="min-width: 286px; min-height: 250px;">
                                         <div class="text-center" style="width: 100%;">
-                                            <i class="fa fa-hand-paper-o text-warning" id="raised_hand_`+user.id+`" hidden></i>
-                                            <h4 style="color:white;">`+user.name+`</h4>
-                                            <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_`+user.id+`" data-user="`+user.id+`" hidden>Allow screen share</button>
+                                            <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
+                                            <h4 style="color:white;">` + user.name + `</h4>
+                                            <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
                                         </div>
                                     </div>
                                 </div>`);
@@ -68,6 +81,8 @@ const broadcasterInitPresenceChannel = ({echo, auth_id, channel_id}) => {
         // console.log(user.name, "Left");
         $(`#viewer-id-${user.id}`).remove()
     });
+
+    return channel;
 }
 
 const customerInitPresenceChannel = ({echo, channel_id}) => {
@@ -77,28 +92,36 @@ const customerInitPresenceChannel = ({echo, channel_id}) => {
     const channel = echo.join(
         `streaming-channel.${channel_id}`
     );
-    // channel.here((users) => {
-    //     console.log("all users", users, is_peer_open)
-    //     if (auth_id) {
-    //         const viewers = _.filter(users, (user) => {
-    //             return user.id !== auth_id
-    //         })
-    //         _.each(viewers, (user) => {
-    //             callingToViewer(user.id);
-    //         })
-    //     }
-    // });
-    // channel.joining((user) => {
-    //     callingToViewer(user.id);
-    // });
-    // channel.leaving((user) => {
-    //     // console.log(user.name, "Left");
-    // });
+    /*channel.here((users) => {
+        console.log("all users", users, is_peer_open)
+        if (auth_id) {
+            const viewers = _.filter(users, (user) => {
+                return user.id !== auth_id
+            })
+            _.each(viewers, (user) => {
+                callingToViewer(user.id);
+            })
+        }
+    });
+    channel.joining((user) => {
+        // callingToViewer(user.id);
+    });
+    channel.leaving((user) => {
+        console.log(user.name, "Left");
+    });*/
+
+    return channel
 }
 
 const callingToViewer = (user_id) => {
     if (peer && broadcaster_stream) {
-        peer.call('peer-course-user-' + user_id, broadcaster_stream)
+        peer_calls['peer-course-user-' + user_id] = peer.call('peer-course-user-' + user_id, broadcaster_stream)
+        let call = peer_calls['peer-course-user-' + user_id]
+        call.on('stream', (viewer_stream) => {
+            console.log("in watcher viewer stream", viewer_stream)
+            viewer_streams['peer-course-user-' + user_id] = viewer_stream
+        })
+        console.log('call senders', peer_calls)
     }
 }
 

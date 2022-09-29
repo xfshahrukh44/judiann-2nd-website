@@ -82,21 +82,41 @@
                         peer = newPeer;
                         peer.on("call", (call) => {
                             console.log("onCall", call.peer)
-                            call.answer();
+                            call.answer(stream);
                             // // const video = document.createElement("audio");
                             call.on("stream", (broadcaster_stream) => {
-                                // console.log("in watcher broadcaster_stream", broadcaster_stream)
+                                console.log("in watcher broadcaster_stream", broadcaster_stream)
                                 showBroadcasterVideo(broadcaster_stream)
                                 // addVideoStream(video, userVideoStream, call.peer);
                             });
                         });
-                        customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
+                        let channel = customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
+                        channel.listen('StopStreaming', () => {
+                            window.close();
+                        });
                     });
 
                 })
                 .catch(err => {
                     alert('Error! ' + err.message)
                 })
+
+            //on raise hand click
+            $('#btn_raise_hand').on('click', function() {
+                var url = "{{route('customer.raise_hand', 'temp')}}";
+                url = url.replace('temp', course_id);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function () {
+
+                    }
+                })
+
+            });
 
         });
     </script>

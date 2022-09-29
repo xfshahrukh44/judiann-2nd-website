@@ -133,7 +133,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item has-treeview {{ request()->IS('admin/settings') ? 'menu-is-opening menu-open' : '' }}">
+                    <li class="nav-item has-treeview {{ request()->IS('admin/settings') || request()->IS('admin/paymentgatway') ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link ">
                             <i class="nav-icon fas fa-tags fw"></i>
                             <p>
@@ -148,6 +148,16 @@
                                     <i class="nav-icon fas fa-cog"></i>
                                     <p>
                                         General Settings
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('paymentgatway')}}"
+                                   class="nav-link {{ request()->IS('admin/paymentgatway') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-hand-holding-usd"></i>
+                                    <p>
+                                        Payment Gateways
                                     </p>
                                 </a>
                             </li>

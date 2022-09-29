@@ -45,7 +45,7 @@
                         <figure class="videoThumbMain">
                             <div id="subscriber" class="subscriber"></div>
                             <div id="publisher" class="publisher">
-                                <video autoplay id="broadcaster" controls></video>
+                                <video autoplay id="broadcaster"></video>
                             </div>
                         </figure>
                     </div>

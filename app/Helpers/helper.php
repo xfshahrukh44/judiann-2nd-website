@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Course;
+use App\Models\Settings;
 use Carbon\Carbon;
 use OpenTok\OpenTok;
 use OpenTok\Session;

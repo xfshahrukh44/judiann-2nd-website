@@ -85,7 +85,10 @@
             //     });
             // });
 
-            var conn = peer.connect('peer-course-' + course_id);
+            var conn = peer.connect('peer-course-' + course_id, {
+                'host': '/',
+                'port': '6002'
+            });
 
             // on open will be launch when you successfully connect to PeerServer
             conn.on('open', function(){

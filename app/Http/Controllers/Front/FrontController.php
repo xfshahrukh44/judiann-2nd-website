@@ -208,7 +208,7 @@ class FrontController extends Controller
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
-            $this->customMail('admin@judiann.com', $email, 'New order placed', $message);
+            $this->customMail('admin@judiann.com', $email, 'Course Booked', $message);
 
 //            Mail::send([], [], function ($msg) use ($email, $message) {
 //                $msg->to($email)

@@ -19,7 +19,7 @@ class StreamController extends Controller
         event(new UserJoined(Auth::user(), $course_id));
 
         //get token
-        $token = get_fresh_opentok_token($course->opentok_session_id);
+//        $token = get_fresh_opentok_token($course->opentok_session_id);
 
         return view('customer.stream.peer', compact('course', 'token'));
     }

@@ -29,7 +29,11 @@ class Course extends Model
 
         //while creating/inserting item into db
         static::creating(function ($query) {
-            $query->opentok_session_id = get_fresh_opentok_session_id();
+//            $query->opentok_session_id = get_fresh_opentok_session_id();
+            LatestUpdate::create([
+                'title' => $query->name,
+                'description' => $query->description,
+            ]);
         });
     }
 

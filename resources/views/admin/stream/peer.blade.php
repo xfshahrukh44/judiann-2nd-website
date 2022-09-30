@@ -81,6 +81,7 @@
     <script>
         let auth_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
         let course_id = `{{ $course->id }}`;
+        let avatar_image_url = '{{asset('images/avatar.png')}}';
 
         $(document).ready(function () {
             //establish course_id, session_id, token

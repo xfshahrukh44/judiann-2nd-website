@@ -41,6 +41,11 @@
                             <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-phone"></i></a>
                         </div>
                         <figure class="videoThumbMain">
+                            <div class="class_ended_wrapper" style="width: 100%; height: 100%; position: absolute; background-color: black;" hidden>
+                                <h1 class="text-center" style="right: 50%; bottom: 50%; transform: translate(50%,50%); position: absolute; color:white;">
+                                    Class Ended
+                                </h1>
+                            </div>
                             <div id="subscriber" class="subscriber"></div>
                             <div id="publisher" class="publisher">
                                 <video autoplay id="broadcaster"></video>
@@ -72,6 +77,7 @@
     <script>
         let auth_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
         let course_id = `{{ $course->id }}`;
+        let avatar_image_url = '{{asset('images/avatar.png')}}';
 
         $(document).ready(function() {
 
@@ -92,7 +98,8 @@
                         });
                         let channel = customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
                         channel.listen('StopStreaming', () => {
-                            window.close();
+                            $('.class_ended_wrapper').prop('hidden', false);
+                            // window.close();
                         });
                     });
 

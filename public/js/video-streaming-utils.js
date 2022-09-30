@@ -53,6 +53,8 @@ const broadcasterInitPresenceChannel = ({echo, auth_id, channel_id}) => {
                                     <div class="thumbBox d-flex align-items-center" style="min-width: 286px; min-height: 250px;">
                                         <div class="text-center" style="width: 100%;">
                                             <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
+                                            <br />
+                                            <img src="`+avatar_image_url+`" style="background-color: white; max-width: 100px; max-height: 100px;">
                                             <h4 style="color:white;">` + user.name + `</h4>
                                             <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
                                         </div>
@@ -70,6 +72,8 @@ const broadcasterInitPresenceChannel = ({echo, auth_id, channel_id}) => {
                                     <div class="thumbBox d-flex align-items-center" style="min-width: 286px; min-height: 250px;">
                                         <div class="text-center" style="width: 100%;">
                                             <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
+                                            <br />
+                                            <img src="`+avatar_image_url+`" style="background-color: white; max-width: 100px; max-height: 100px;">
                                             <h4 style="color:white;">` + user.name + `</h4>
                                             <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
                                         </div>

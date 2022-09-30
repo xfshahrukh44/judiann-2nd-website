@@ -98,6 +98,7 @@
                         });
                         let channel = customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
                         channel.listen('StopStreaming', () => {
+                            $('.class_ended_wrapper').css('z-index', 1);
                             $('.class_ended_wrapper').prop('hidden', false);
                             // window.close();
                         });

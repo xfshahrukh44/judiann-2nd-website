@@ -41,6 +41,11 @@
                         <div>
                             <div class="thumbBox">
                                 <img src="{{asset('front/images/thumb1.jpg')}}" alt="">
+                                <i class="fa fa-hand-paper-o"></i>
+                                <div class="content">
+                                    <h3>Name</h3>
+                                    <button class="themeBtn py-1">Allow Screen Share</button>
+                                </div>
                             </div>
                         </div>
                         <div>

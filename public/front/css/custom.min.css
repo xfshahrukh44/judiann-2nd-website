@@ -788,6 +788,16 @@ footer {
     font-size: 1.375rem;
 }
 
+.contactInnr img {
+    height: 700px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.contactInnr .row + .row {
+    margin-top: 2rem;
+}
+
 .contactInnr button:hover {
     background: var(--white);
 }
@@ -1169,7 +1179,7 @@ footer {
     object-fit: cover;
 }
 
-.thumbBox .content{
+.thumbBox .content {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -1178,7 +1188,7 @@ footer {
     justify-content: center;
 }
 
-.thumbBox i{
+.thumbBox i {
     font-size: 1.25rem;
     color: #fff;
     position: absolute;
@@ -1189,7 +1199,7 @@ footer {
     transition: all 0.4s ease-in-out;
 }
 
-.thumbBox i:hover{
+.thumbBox i:hover {
     opacity: 1;
 }
 
@@ -1198,7 +1208,7 @@ footer {
     align-items: center;
 }
 
-.chattingSec .slick-arrow:before{
+.chattingSec .slick-arrow:before {
     content: none;
 }
 

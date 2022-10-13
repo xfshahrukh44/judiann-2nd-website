@@ -124,10 +124,10 @@
                 </div>
                 <div class="col-md-4">
                     <ul class="ftrSocial">
-                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=100085857340410"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.instagram.com/j.ebyjudiann/"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://twitter.com/JudiannEchezab1"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="https://www.tiktok.com/@j.ebyjudiann?_t=8VH4jKe6Im9&_r=1"><img width="16" height="16" src="{{asset('front/images/tiktokLogo.jpg')}}" alt=""></a></li>
                     </ul>
                 </div>
             </div>

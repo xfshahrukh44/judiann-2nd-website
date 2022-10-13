@@ -25,7 +25,7 @@
                                         <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
                                         <p>Learn beginner, College level and industry professional<br>
                                             level skills through our Master Classes.</p>
-                                        <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
+                                        <a href="{{route('front.schedule')}}" class="themeBtn">Schedule A Class</a>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                         <h2 class="headOne">About Us</h2>
                         <p>Our in-house programs and remote learning classes create a hands-on,<br>collaborative
                             learning experience.</p>
-                        <a href="#" class="themeBtn">Learn More</a>
+                        <a href="{{route('front.about-us')}}" class="themeBtn">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-12 text-center">
-                    <a href="#" class="themeBtn">View All</a>
+                    <a href="{{route('front.judiann-portfolio')}}" class="themeBtn">View All</a>
                 </div>
             </div>
         </div>
@@ -195,12 +195,11 @@
                     </a>
                 </div>
                 <div class="col-md-12 mt-4 text-center">
-                    <a href="#" class="themeBtn">View All</a>
+                    <a href="{{route('front.students-work')}}" class="themeBtn">View All</a>
                 </div>
             </div>
         </div>
     </section>
-
 
     <section class="vogueSec">
         <div class="container">
@@ -215,89 +214,195 @@
         </div>
     </section>
 
-
     <section class="srvcSec">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="headOne">Services</h2>
-                    <p>5-15 day intensive training courses are devoted to creating a garment. These intensives offer
-                        classes for specific garments such as couture garments (such as evening wear or a wedding
-                        dress). Learn to tailor a coat, jacket or pair of trousers.</p>
-                    <h3 class="headTwo">What we Offer</h3>
-                    <ul>
-                        <li>Sewing classes from beginner to advanced. Classes will be offered as private classes and
-                            group classes. Please see the schedule for class times or contact us for a one on one class.
-                            Classes are hold online and in person
-                        </li>
-                        <li>College prep and College students specialized portfolio courses:</li>
-                    </ul>
-                </div>
-            </div>
+            <section class="srvcSec">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="headOne">MASTER CLASS</h2>
+                            <h3 class="headTwo">Portfolio Development for College Applications</h3>
+                            <p>Are you looking to apply to a Fashion or Art school and need help in preparing a
+                                professional portfolio to include with your applications? Most Art schools will require
+                                some type of portfolio to be included when you apply.</p>
+                            <p>We offer private sessions where we work with you individually on the development of your
+                                portfolio. </p>
+                            <h3 class="headTwo">What is a Portfolio?</h3>
+                            <p>Think of the portfolio as a visual resume which is used to express the best of your work
+                                that is well edited and curated. Your portfolio is a very important tool that you will
+                                use to sell yourself to a prospective school.</p>
+                            <p>Your portfolio should be able to express to the viewer your ideas, aesthetics, vision and
+                                who you are as a designer. It should communicate your quality, values and skills.</p>
+                            <p>Individual Classes dates and times will be determined after a consultation. We can
+                                schedule these based on your needs and my availability. </p>
+                            <p>12 classes over a 3 month period. (1 class per week x 3 months) This can be adjusted if
+                                needed. Each class is one hour. The student will be expected to do the work discussed in
+                                the session and have it ready for the next session.<br>Cost $2500</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="headOne">Services</h2>
+                            <p>5-15 day intensive training courses are devoted to creating a garment. These intensives
+                                offer classes for specific garments such as couture garments (such as evening wear or a
+                                wedding dress). Learn to tailor a coat, jacket or pair of trousers.</p>
+                            <h3 class="headTwo">What we Offer</h3>
+                            <ul>
+                                <li>Sewing classes from beginner to advanced. Classes will be offered as private classes
+                                    and group classes. Please see the schedule for class times or contact us for a one
+                                    on one class.
+                                    Classes are hold online and in person
+                                </li>
+                                <li>College prep and College students specialized portfolio courses:</li>
+                            </ul>
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="sewngContent">
-                        <figure>
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/srvcimg1.jpg')}}" alt="img">
-                        </figure>
-                        <div class="overlaySewng">
-                            <h3 class="headTwo">Sewing Classes Offered</h3>
-                            <a href="#" class="themeBtn">View Details</a>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="sewngContent">
+                                <figure>
+                                    <img class="img-fluid"
+                                         src="{{asset("front/images/srv1.jpg")}}"
+                                         alt="img">
+                                </figure>
+                                <div class="overlaySewng">
+                                    <h3 class="headTwo">Sewing Classes Offered</h3>
+                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row telrng">
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv2.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Tailoring: “Masterclass</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv3.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Pattern making courses</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv4.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Draping Making Courses</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv5.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Intro To Draping</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row telrng">
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv6.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">How to sew a circle skirt</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv7.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Gathered skirt with ruffles</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv8.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Master class jacket</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="sewngContent">
+                                        <figure>
+                                            <img class="img-fluid"
+                                                 src="{{asset("front/images/srv9.jpg")}}"
+                                                 alt="img">
+                                        </figure>
+                                        <div class="overlaySewng">
+                                            <h3 class="headTwo">Online courses</h3>
+                                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="sewngContent">
+                                <figure>
+                                    <img class="img-fluid"
+                                         src="{{asset("front/images/srv10.jpg")}}"
+                                         alt="img">
+                                </figure>
+                                <div class="overlaySewng">
+                                    <h3 class="headTwo">Tailored knotch jacket</h3>
+                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row telrng">
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid" src="{{asset('front/images/srvcimg2.jpg')}}" alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Tailoring: “Masterclass</h3>
-                                    <a href="#" class="themeBtn">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid" src="{{asset('front/images/srvcimg4.jpg')}}" alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Pattern making courses</h3>
-                                    <a href="#" class="themeBtn">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid" src="{{asset('front/images/srvcimg3.jpg')}}" alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Draping Classes</h3>
-                                    <a href="#" class="themeBtn">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid" src="{{asset('front/images/srvcimg5.jpg')}}" alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Intro to Draping How</h3>
-                                    <a href="#" class="themeBtn">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
     </section>
 

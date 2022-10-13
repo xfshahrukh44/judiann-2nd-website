@@ -788,6 +788,16 @@ footer {
     font-size: 1.375rem;
 }
 
+.contactInnr img {
+    height: 700px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.contactInnr .row + .row {
+    margin-top: 2rem;
+}
+
 .contactInnr button:hover {
     background: var(--white);
 }
@@ -1157,12 +1167,40 @@ footer {
     margin-top: 1rem;
     background: none;
     border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
 }
 
 .thumbBox img {
-    height: 250px;
-    object-fit: contain;
+    height: 300px;
+    object-fit: cover;
+}
+
+.thumbBox .content {
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thumbBox i {
+    font-size: 1.25rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+    transition: all 0.4s ease-in-out;
+}
+
+.thumbBox i:hover {
+    opacity: 1;
 }
 
 .chattingSec .row [class*='col-'] {
@@ -1170,7 +1208,7 @@ footer {
     align-items: center;
 }
 
-.chattingSec .slick-arrow:before{
+.chattingSec .slick-arrow:before {
     content: none;
 }
 

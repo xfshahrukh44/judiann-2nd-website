@@ -33,9 +33,14 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::get('/course-view/{id}', 'CourseController@show')->name('course-view');
     Route::delete('course/destroy/{id}', 'CourseController@destroy');
 
+    //course
+    Route::get('order', 'CourseSessionController@index')->name('order');
+    Route::get('/order-view/{id}', 'CourseSessionController@show')->name('order-view');
+
     //customer
     Route::get('customer', 'CustomerController@index')->name('customer');
     Route::match(['get', 'post'], '/customer-edit/{id}', 'CustomerController@edit')->name('admin.edit-customer');
+    Route::get('/customer-view/{id}', 'CustomerController@show')->name('customer-view');
     Route::post('/customer/block/{id}', 'CustomerController@block')->name('customer-block');
     Route::delete('customer/delete/{id}', 'CustomerController@destroy');
 

@@ -52,6 +52,7 @@
                                         <th>Name</th>
                                         <th>Desciption</th>
                                         <th>Fees</th>
+                                        <th>Created At</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -126,9 +127,12 @@
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
                     {data: 'fees', name: 'fees'},
+                    {data: 'created_at', name: 'created_at'},
 
                     {data: 'action', name: 'action', orderable: false}
-                ]
+                ],
+
+                "order": [[ 4, "desc" ]]
 
             });
             var delete_id;

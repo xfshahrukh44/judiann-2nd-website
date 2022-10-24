@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{URL::asset('admin/plugins/daterangepicker/daterangepicker.css')}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{URL::asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
+    {{--fullcalendar--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 {{--  table colors remove--}}
 <!-- Datatables -->
     <link href="{{ asset('admin/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -186,6 +188,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('order')}}"
+                           class="nav-link {{ request()->IS('admin/order') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Orders</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{url('admin/changePassword')}}"
                            class="nav-link {{ request()->IS('admin/changePassword') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-comments"></i>
@@ -284,6 +293,9 @@
 <script src="{{asset('admin/datatables/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('admin/datatables/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+
+{{-- fullcalendar --}}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
 @yield('script')
 </body>

@@ -15,6 +15,10 @@ class LatestUpdateController extends Controller
             if (request()->ajax()) {
                 return datatables()->of(LatestUpdate::orderBy('created_at', 'DESC')->get())
                     ->addIndexColumn()
+                    ->editColumn('created_at', function($data){
+                        $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y');
+                        return $formatedDate;
+                    })
                     ->addColumn('action', function ($data) {
                         return '<a title="View" href="latest-update-view/' . $data->id . '" class="btn btn-dark btn-sm"><i class="fas fa-eye"></i></a>&nbsp;<a title="edit" href="latest-update-edit/' . $data->id . '" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>&nbsp;<button title="Delete" type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>';
                     })->make(true);

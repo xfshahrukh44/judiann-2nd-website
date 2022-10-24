@@ -51,6 +51,7 @@
                                         <th>#</th>
                                         <th>Title</th>
                                         <th>Desciption</th>
+                                        <th>Created At</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -124,9 +125,12 @@
                     {data: 'id', name: 'id'},
                     {data: 'title', name: 'title'},
                     {data: 'description', name: 'description'},
+                    {data: 'created_at', name: 'created_at'},
 
                     {data: 'action', name: 'action', orderable: false}
-                ]
+                ],
+
+                "order": [[ 3, "desc" ]]
 
             });
             var delete_id;

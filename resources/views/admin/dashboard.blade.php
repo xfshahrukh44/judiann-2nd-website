@@ -1,13 +1,16 @@
 @extends('admin.layouts.app')
-@section('section')
+
 @section('title', 'Dashboard')
-<div class="content-wrapper">
+
+@section('section')
+    <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Dashboard</h1>
+                    <div id="div_events" hidden data-events="{{json_encode($events)}}"></div>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,6 +28,9 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
+                <div class="col-lg-8 offset-md-2">
+                    <div id='calendar' class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap"></div>
+                </div>
 {{--                <div class="col-lg-3 col-6">--}}
 {{--                    <!-- small box -->--}}
 {{--                    <div class="small-box bg-info">--}}
@@ -88,4 +94,34 @@
     </section>
     <!-- /.content -->
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            var calendar_events = [];
+            var events = $('#div_events').data('events');
+            console.log(events);
+
+            events.forEach(function(item) {
+                calendar_events.push({
+                    title: item.title,
+                    start: new Date(item.date),
+                    backgroundColor: item.color,
+                    borderColor: item.color,
+                    allDay: true
+                });
+            });
+
+            console.log(calendar_events);
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: calendar_events,
+            });
+
+            calendar.render();
+        });
+    </script>
 @endsection

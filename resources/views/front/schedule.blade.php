@@ -34,6 +34,9 @@
                             <div class="lastBox">
                                 <h3>{{$latest_update->title}}</h3>
                                 <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                    <h4 class="text-white">TIMINGS</h4>
+                                    {!! get_course_timings($latest_update->course) !!}
+                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -51,6 +54,9 @@
                             <div class="lastBox">
                                 <h3>{{$latest_update->title}}</h3>
                                 <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                    <h4 class="text-white">TIMINGS</h4>
+                                    {!! get_course_timings($latest_update->course) !!}
+                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
                             </div>
                         </div>
                     @endif

@@ -97,25 +97,30 @@
         </div>
     </section>
 
-    <section class="lastestSec">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <h2 class="headOne">Latest Updates</h2>
-                </div>
-                <div class="col-12">
-                    <div class="lastSlider">
-                        @foreach($latest_updates as $latest_update)
-                            <div class="lastBox">
-                                <h3>{{$latest_update->title}}</h3>
-                                {!! get_readable_description($latest_update->description) !!}
-                            </div>
-                        @endforeach
+    @if(count($latest_updates) > 0)
+        <section class="lastestSec">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <h2 class="headOne">Latest Updates</h2>
+                    </div>
+                    <div class="col-12">
+                        <div class="lastSlider">
+                            @foreach($latest_updates as $latest_update)
+                                <div class="lastBox">
+                                    <h3>{{$latest_update->title}}</h3>
+                                    {!! get_readable_description($latest_update->description) !!}
+                                    <h4 class="text-white">TIMINGS</h4>
+                                    {!! get_course_timings($latest_update->course) !!}
+                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section class="portfolioSec">
         <div class="container-fluid">

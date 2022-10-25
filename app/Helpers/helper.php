@@ -69,3 +69,25 @@ function get_payment_keys() {
         "publishable_key" => $setting->stripe_env == 'Testing' ? $setting->stripe_testing_publishable_key : $setting->stripe_publishable_key,
     ];
 }
+
+function get_course_timings($course) {
+    //if course has multiple dates
+    if(is_null($course->date_range)) {
+        $string = "";
+        foreach ($course->course_dates as $course_date)
+        {
+            $date = Carbon::parse($course_date->date)->format('d M Y');
+            $time_from = Carbon::parse($course_date->time_from)->format('g:i A');
+            $time_to = Carbon::parse($course_date->time_to)->format('g:i A');
+            $string .= "<h6 class='text-white'>".$date." [".$time_from." - ".$time_to."]"."</h6>";
+        }
+    } else {
+        $date_from = Carbon::parse($course->date_range_from)->format('d M Y');
+        $date_to = Carbon::parse($course->date_range_to)->format('d M Y');
+        $time_from = Carbon::parse($course->time_from)->format('g:i A');
+        $time_to = Carbon::parse($course->time_to)->format('g:i A');
+        $string = "<h6 class='text-white'>".$date_from." to ".$date_to." [".$time_from." - ".$time_to."]"."</h6>";
+    }
+
+    return $string;
+}

@@ -37,6 +37,15 @@
                                         <div class="alert alert-success">{{Session::get('msg')}}</div>
                                     @endif
                                     <div class="form-group">
+                                        <label for="name">Course Image</label>
+                                        <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image"placeholder="Course">
+                                        @error('image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
                                         <label for="name">Course Name</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{$content->name?? old('name')}}" placeholder="Course" required>
                                         @error('name')

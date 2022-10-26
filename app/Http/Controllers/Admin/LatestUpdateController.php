@@ -43,7 +43,7 @@ class LatestUpdateController extends Controller
             ]);
 
             if ($latest_update) {
-                return redirect()->route('latest-update')->with(['success' => 'Latest Update Added Successfully']);
+                return redirect()->route('latest-update')->with(['success' => 'Course Update Added Successfully']);
             }
         }
 
@@ -68,7 +68,7 @@ class LatestUpdateController extends Controller
             $latest_update->description = $request->input('description');
 
             if ($latest_update->save()) {
-                return redirect()->route('latest-update')->with(['success' => 'Latest Update Edit Successfully']);
+                return redirect()->route('latest-update')->with(['success' => 'Course Update Edit Successfully']);
             }
         }else {
             $content=LatestUpdate::findOrFail($id);

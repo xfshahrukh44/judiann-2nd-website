@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', (isset($content->name) ? $content->name : ''). ' Latest Update')
+@section('title', (isset($content->name) ? $content->name : ''). ' Course Update')
 @section('page_css')
 <!-- Datatables -->
 <link href="{{ asset('admin/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
                 <div class="col-sm-6 offset-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Latest Update Detail</li>
+                        <li class="breadcrumb-item active">Course Update Detail</li>
                     </ol>
                 </div>
             </div>
@@ -39,7 +39,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Latest Update Detail</h3>
+                            <h3 class="card-title">Course Update Detail</h3>
                         </div>
 
                         <!-- /.card-header -->
@@ -53,12 +53,12 @@
                                     </tr>
 
                                     <tr>
-                                        <th>Latest Update Title</th>
+                                        <th>Course Update Title</th>
                                         <td>{{$content->title??''}}</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Latest Update Description</th>
+                                        <th>Course Update Description</th>
                                         <td>{!! get_readable_description($content->description) !!}</td>
                                     </tr>
                                 </thead>

@@ -7,6 +7,7 @@ use App\Events\RevertStream;
 use App\Events\StopStreaming;
 use App\Events\ViewerToggleBack;
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -15,30 +16,19 @@ class StreamController extends Controller
     public function stream(Request $request, $course_id)
     {
         $course = Course::find($course_id);
-        $course->is_streaming = true;
-        $course->save();
-
-//        //update session id of course (fresh)
-//        if(is_null($course->opentok_session_id)) {
-//            $course->opentok_session_id = get_fresh_opentok_session_id();
-//            $course->save();
-//        }
-//
-//        //get token
-//        $token = get_fresh_opentok_token($course->opentok_session_id);
-//        $t2 = get_fresh_publisher_opentok_token($course->opentok_session_id);
+        $active_batch = Batch::find($course->active_batch()->id);
+        $active_batch->is_streaming = true;
+        $active_batch->save();
 
         return view('admin.stream.peer', compact('course'));
     }
 
     public function allowUserScreen(Request $request, $course_id, $customer_id) {
         return event(new AllowUserScreen($course_id, $customer_id));
-//        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 
     public function revertStream(Request $request, $course_id, $customer_id) {
         return event(new RevertStream($course_id, $customer_id));
-//        return event(new ViewerToggleBack($course_id, $customer_id));
     }
 
     public function viewerToggleBack(Request $request, $course_id, $customer_id) {
@@ -46,8 +36,9 @@ class StreamController extends Controller
     }
 
     public function stop(Request $request, Course $course) {
-        $course->is_streaming = false;
-        $course->save();
+        $active_batch = Batch::find($course->active_batch()->id);
+        $active_batch->is_streaming = false;
+        $active_batch->save();
         event(new StopStreaming($course->id));
         return view('blank');
     }

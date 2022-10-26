@@ -122,8 +122,8 @@
 
 
                     {data: 'id', name: 'id'},
-                    {data: 'course.name', name: 'course_name'},
-                    {data: 'course.fees', name: 'course_fees'},
+                    {data: 'batch.course.name', name: 'course_name'},
+                    {data: 'batch.course.fees', name: 'course_fees'},
                     {data: 'class_type', name: 'class_type'},
                     {data: 'physical_class_type', name: 'physical_class_type'},
                     {data: 'created_at', name: 'created_at'},

@@ -63,7 +63,12 @@
 
                                     <tr>
                                         <th>Course</th>
-                                        <td>{{$content->course->name??''}}</td>
+                                        <td>{{$content->batch->course->name??''}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Batch</th>
+                                        <td>{{$content->batch->name??''}}</td>
                                     </tr>
 
                                     <tr>

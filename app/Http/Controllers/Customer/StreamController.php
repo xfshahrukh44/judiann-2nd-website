@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class StreamController extends Controller
 {
-    public function stream(Request $request, $course_id)
+    public function stream(Request $request, $course_id, $batch_id)
     {
         $course = Course::find($course_id);
 
+        if($course->active_batch()->id != $batch_id) {
+            return redirect()->back()->with('error', 'You are not part of the active batch.');
+        }
+
         //fire user has joined event
         event(new UserJoined(Auth::user(), $course_id));
-
-        //get token
-//        $token = get_fresh_opentok_token($course->opentok_session_id);
 
         return view('customer.stream.peer', compact('course'));
     }

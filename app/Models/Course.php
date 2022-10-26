@@ -47,4 +47,14 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\CourseSession');
     }
+
+    public function batches()
+    {
+        return $this->hasMany('App\Models\Batch');
+    }
+
+    public function active_batch()
+    {
+        return $this->hasMany('App\Models\Batch')->where('has_ended', false)->first();
+    }
 }

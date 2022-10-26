@@ -124,8 +124,8 @@
                                                 <option disabled selected value="">Select Course Type:</option>
                                                 @foreach($courses as $course)
                                                     <option class="option_course_type"
-                                                            data-online="{{$course->is_online}}"
-                                                            data-physical="{{$course->is_physical}}"
+                                                            data-online="{{$course->active_batch()->is_online}}"
+                                                            data-physical="{{$course->active_batch()->is_physical}}"
                                                             value="{{$course->id}}">{{$course->name}} </option>
                                                 @endforeach
                                             </select>

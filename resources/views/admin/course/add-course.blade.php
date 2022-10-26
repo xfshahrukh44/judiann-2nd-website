@@ -63,9 +63,19 @@
                                         </span>
                                         @enderror
                                     </div>
+                                    <h4>Batch Information</h4>
+                                    <div class="form-group">
+                                        <label for="batch_name">Batch Name</label>
+                                        <input type="text" class="form-control @error('batch_name') is-invalid @enderror" name="batch_name" id="batch_name" value="{{$content->active_batch()->name?? old('batch_name')}}">
+                                        @error('batch_name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <label for="is_online">Is Online?</label>
-                                        <input type="checkbox" class="@error('is_online') is-invalid @enderror" name="is_online" id="is_online" value="{{$content->is_online?? old('is_online')}}" {!! isset($content) && $content->is_online == 1 ? 'checked' : '' !!}>
+                                        <input type="checkbox" class="@error('is_online') is-invalid @enderror" name="is_online" id="is_online" value="{{$content->active_batch()->is_online?? old('is_online')}}" {!! isset($content) && $content->active_batch()->is_online == 1 ? 'checked' : '' !!}>
                                         @error('is_online')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -74,27 +84,35 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="is_physical">Is Physical?</label>
-                                        <input type="checkbox" class="@error('is_physical') is-invalid @enderror" name="is_physical" id="is_physical" value="{{$content->is_physical?? old('is_physical')}}" {!! isset($content) && $content->is_physical == 1 ? 'checked' : '' !!}>
+                                        <input type="checkbox" class="@error('is_physical') is-invalid @enderror" name="is_physical" id="is_physical" value="{{$content->active_batch()->is_physical?? old('is_physical')}}" {!! isset($content) && $content->active_batch()->is_physical == 1 ? 'checked' : '' !!}>
                                         @error('is_physical')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control @error('number_of_seats') is-invalid @enderror" name="number_of_seats" id="number_of_seats" placeholder="Number of Seats" value="{{$content->active_batch()->number_of_seats?? old('number_of_seats')}}" hidden>
+                                        @error('number_of_seats')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
 
                                     <label for="date_range">Schedule Type</label>
                                     <div class="form-group">
-                                        <input type="radio" value="date_range" name="schedule_types" class="input_schedule_types" required {!! isset($content) && count($content->course_dates) == 0 ? 'checked' : '' !!}>
+                                        <input type="radio" value="date_range" name="schedule_types" class="input_schedule_types" required {!! isset($content) && count($content->active_batch()->batch_dates) == 0 ? 'checked' : '' !!}>
                                         <label for="">Date Range</label>
-                                        <input type="radio" value="custom_dates" name="schedule_types" class="input_schedule_types" required {!! isset($content) && count($content->course_dates) > 0 ? 'checked' : '' !!}>
+                                        <input type="radio" value="custom_dates" name="schedule_types" class="input_schedule_types" required {!! isset($content) && count($content->active_batch()->batch_dates) > 0 ? 'checked' : '' !!}>
                                         <label for="">Custom Dates</label>
                                     </div>
 
-                                    <div class="form-group date_range_wrapper" {!! !isset($content) ? 'hidden' : '' !!} {!! isset($content) && count($content->course_dates) > 0 ? 'hidden' : '' !!}>
+                                    <div class="form-group date_range_wrapper" {!! !isset($content) ? 'hidden' : '' !!} {!! isset($content) && count($content->active_batch()->batch_dates) > 0 ? 'hidden' : '' !!}>
                                         <label for="date_range">Date Range</label>
-                                        <input type="text" class="@error('date_range') is-invalid @enderror input_date_range" name="date_range" id="date_range" value="{{$content->date_range?? old('date_range')}}" {!! isset($content) && $content->date_range == 1 ? 'checked' : '' !!}>
-                                        <input type="time" id="input_date_range_time_from" name="time_from" value="{{$content->time_from ?? old('time_from')}}">
-                                        <input type="time" id="input_date_range_time_to" name="time_to" value="{{$content->time_to ?? old('time_to')}}">
+                                        <input type="text" class="@error('date_range') is-invalid @enderror input_date_range" name="date_range" id="date_range" value="{{$content->active_batch()->date_range?? old('date_range')}}" {!! isset($content) && $content->active_batch()->date_range == 1 ? 'checked' : '' !!}>
+                                        <input type="time" id="input_date_range_time_from" name="time_from" value="{{$content->active_batch()->time_from ?? old('time_from')}}">
+                                        <input type="time" id="input_date_range_time_to" name="time_to" value="{{$content->active_batch()->time_to ?? old('time_to')}}">
                                         @error('date_range')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -102,16 +120,16 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group custom_dates_wrapper" {!! !isset($content) ? 'hidden' : '' !!} {!! isset($content) && count($content->course_dates) == 0 ? 'hidden' : '' !!}>
+                                    <div class="form-group custom_dates_wrapper" {!! !isset($content) ? 'hidden' : '' !!} {!! isset($content) && count($content->active_batch()->batch_dates) == 0 ? 'hidden' : '' !!}>
                                         <label for="date_range">Custom Dates</label>
                                         <input type="button" class="btn btn-primary btn-sm btn_add_custom_dates" value="+" style="margin-top: 10px;margin-bottom: 10px;">
                                         <div class="custom_dates_inner_wrapper">
-                                            @if(isset($content) && count($content->course_dates) > 0)
-                                                @foreach($content->course_dates as $course_date)
+                                            @if(isset($content) && count($content->active_batch()->batch_dates) > 0)
+                                                @foreach($content->active_batch()->batch_dates as $batch_date)
                                                     <div>
-                                                        <input type="date" class="input_custom_dates" name="custom_dates[]" value="{{$course_date->date}}" required>
-                                                        <input type="time" class="input_time_from" name="time_froms[]" value="{{$course_date->time_from}}" required>
-                                                        <input type="time" class="input_time_to" name="time_tos[]" value="{{$course_date->time_to}}" required>
+                                                        <input type="date" class="input_custom_dates" name="custom_dates[]" value="{{$batch_date->date}}" required>
+                                                        <input type="time" class="input_time_from" name="time_froms[]" value="{{$batch_date->time_from}}" required>
+                                                        <input type="time" class="input_time_to" name="time_tos[]" value="{{$batch_date->time_to}}" required>
                                                         <input type="button" class="btn btn-danger btn-sm btn_remove_custom_dates" value="-" style="margin-top: 10px;margin-bottom: 10px;">
                                                     </div>
                                                 @endforeach
@@ -152,7 +170,7 @@
             date_range_el.daterangepicker();
 
             //populate date_range
-            var edit_check = `<?php echo(empty($content->id) || empty($content->date_range)); ?>`;
+            var edit_check = `<?php echo(empty($content->id) || empty($content->active_batch()->date_range)); ?>`;
             if(edit_check) {
                 date_range_el.val('');
                 date_range_time_from_el.val('');
@@ -225,6 +243,20 @@
                     custom_dates_wrapper.prop('hidden', false);
                 }
             });
+
+            //on is_physical click
+            $('#is_physical').on('change', function() {
+                if ($(this).prop('checked')) {
+                    $('#number_of_seats').prop('hidden', false);
+                    $('#number_of_seats').prop('required', true);
+                } else {
+                    $('#number_of_seats').prop('hidden', true);
+                    $('#number_of_seats').prop('required', false);
+                }
+            });
+
+            //trigger is_physical change
+            $('#is_physical').trigger('change');
         });
     </script>
 @endsection

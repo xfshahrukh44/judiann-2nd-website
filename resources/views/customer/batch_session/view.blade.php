@@ -43,8 +43,8 @@
 {{--                            @if(course_is_joinable($content->course->id))--}}
 {{--                                <button class="btn btn-success" style="float: right;">Join</button>--}}
 {{--                            @endif--}}
-                            @if($content->class_type == 'online' && $content->course->is_streaming)
-                                <a target="_blank" href="{{route('customer.stream', $content->course->id)}}" class="btn btn-success" style="float: right;">Join</a>
+                            @if($content->class_type == 'online' && $content->batch->is_streaming)
+                                <a target="_blank" href="{{route('customer.stream', [$content->batch->course_id, $content->batch_id])}}" class="btn btn-success" style="float: right;">Join</a>
                             @endif
                         </div>
 
@@ -60,12 +60,12 @@
 
                                     <tr>
                                         <th>Course Name</th>
-                                        <td>{{$content->course->name??''}}</td>
+                                        <td>{{$content->batch->course->name??''}}</td>
                                     </tr>
 
                                     <tr>
                                         <th>Course Fees</th>
-                                        <td>{{$content->course->fees??''}}</td>
+                                        <td>{{$content->batch->course->fees??''}}</td>
                                     </tr>
 
                                     <tr>
@@ -97,18 +97,18 @@
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                    @if(!is_null($content->course->date_range))
+                                    @if(!is_null($content->batch->date_range))
                                         <tr>
                                             <th>Date</th>
-                                            <td>{{$content->course->date_range??''}}</td>
+                                            <td>{{$content->batch->date_range??''}}</td>
                                         </tr>
                                         <tr>
                                             <th>From</th>
-                                            <td>{{Carbon\Carbon::parse($content->course->time_from)->format('g:i A')??''}}</td>
+                                            <td>{{Carbon\Carbon::parse($content->batch->time_from)->format('g:i A')??''}}</td>
                                         </tr>
                                         <tr>
                                             <th>To</th>
-                                            <td>{{Carbon\Carbon::parse($content->course->time_to)->format('g:i A')??''}}</td>
+                                            <td>{{Carbon\Carbon::parse($content->batch->time_to)->format('g:i A')??''}}</td>
                                         </tr>
                                     @else
                                         <tr>
@@ -116,11 +116,11 @@
                                             <th>From</th>
                                             <th>To</th>
                                         </tr>
-                                        @foreach($content->course->course_dates as $course_date)
+                                        @foreach($content->batch->batch_dates as $batch_date)
                                             <tr>
-                                                <td>{{$course_date->date}}</td>
-                                                <td>{{Carbon\Carbon::parse($course_date->time_from)->format('g:i A')}}</td>
-                                                <td>{{Carbon\Carbon::parse($course_date->time_to)->format('g:i A')}}</td>
+                                                <td>{{$batch_date->date}}</td>
+                                                <td>{{Carbon\Carbon::parse($batch_date->time_from)->format('g:i A')}}</td>
+                                                <td>{{Carbon\Carbon::parse($batch_date->time_to)->format('g:i A')}}</td>
                                             </tr>
                                         @endforeach
                                     @endif

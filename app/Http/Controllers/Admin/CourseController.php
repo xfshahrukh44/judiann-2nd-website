@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
+use App\Models\BatchDate;
 use App\Models\Course;
 use App\Models\CourseDate;
 use Carbon\Carbon;
@@ -36,11 +38,12 @@ class CourseController extends Controller
     public function addCourse(Request $request)
     {
         if ($request->method() == 'POST') {
-//            dd($request->all());
             $this->validate($request, array(
                 'name' => 'required|string|max:50',
                 'description' => 'required|string|max:500',
                 'fees' => 'required',
+                'batch_name' => 'required',
+                'number_of_seats' => 'sometimes',
             ));
 
             //date range work
@@ -52,12 +55,20 @@ class CourseController extends Controller
                 $date_range_to = Carbon::parse($dates[1]);
             }
 
+            //create course
             $course = Course::create([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'fees' => $request->input('fees'),
+            ]);
+
+            //create first batch
+            $batch = Batch::create([
+                'course_id' => $course->id,
+                'name' => $request->input('batch_name'),
                 'is_online' => key_exists('is_online', $request->all()) ? 1 : 0,
                 'is_physical' => key_exists('is_physical', $request->all()) ? 1 : 0,
+                'number_of_seats' => $request->input('number_of_seats'),
                 'date_range' => $request->input('date_range'),
                 'date_range_from' => $date_range_from,
                 'date_range_to' => $date_range_to,
@@ -68,8 +79,8 @@ class CourseController extends Controller
             //custom dates work
             if(!empty($request->custom_dates)) {
                 foreach ($request->custom_dates as $key => $custom_date) {
-                    CourseDate::create([
-                        'course_id' => $course->id,
+                    BatchDate::create([
+                        'batch_id' => $batch->id,
                         'date' => $custom_date,
                         'time_from' => $request->time_froms[$key],
                         'time_to' => $request->time_tos[$key]
@@ -109,20 +120,20 @@ class CourseController extends Controller
                 $date_range_to = Carbon::parse($dates[1]);
 
                 //delete old ones
-                foreach ($course->course_dates as $course_date) {
-                    $course_date->delete();
+                foreach ($course->active_batch()->batch_dates as $batch_date) {
+                    $batch_date->delete();
                 }
             }
 
             //custom dates work
             if(!empty($request->custom_dates)) {
                 //delete old ones
-                foreach ($course->course_dates as $course_date) {
-                    $course_date->delete();
+                foreach ($course->active_batch()->batch_dates as $batch_date) {
+                    $batch_date->delete();
                 }
                 foreach ($request->custom_dates as $key => $custom_date) {
-                    CourseDate::create([
-                        'course_id' => $course->id,
+                    BatchDate::create([
+                        'batch_id' => $course->active_batch()->id,
                         'date' => $custom_date,
                         'time_from' => $request->time_froms[$key],
                         'time_to' => $request->time_tos[$key]
@@ -133,15 +144,19 @@ class CourseController extends Controller
             $course->name = $request->input('name');
             $course->description = $request->input('description');
             $course->fees = $request->input('fees');
-            $course->is_online = key_exists('is_online', $request->all()) ? 1 : 0;
-            $course->is_physical = key_exists('is_physical', $request->all()) ? 1 : 0;
-            $course->date_range = $request->input('date_range');
-            $course->date_range_from = $date_range_from;
-            $course->date_range_to = $date_range_to;
-            $course->time_from = $request->time_from;
-            $course->time_to = $request->time_to;
 
-            if ($course->save()) {
+            $active_batch = Batch::find($course->active_batch()->id);
+            $active_batch->name = $request->input('batch_name');
+            $active_batch->is_online = key_exists('is_online', $request->all()) ? 1 : 0;
+            $active_batch->is_physical = key_exists('is_physical', $request->all()) ? 1 : 0;
+            $active_batch->number_of_seats = $request->input('number_of_seats');
+            $active_batch->date_range = $request->input('date_range');
+            $active_batch->date_range_from = $date_range_from;
+            $active_batch->date_range_to = $date_range_to;
+            $active_batch->time_from = $request->time_from;
+            $active_batch->time_to = $request->time_to;
+
+            if ($course->save() && $active_batch->save()) {
                 return redirect()->route('course')->with(['success' => 'Course Edit Successfully']);
             }
         }else {

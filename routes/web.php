@@ -34,8 +34,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::delete('course/destroy/{id}', 'CourseController@destroy');
 
     //course
-    Route::get('order', 'CourseSessionController@index')->name('order');
-    Route::get('/order-view/{id}', 'CourseSessionController@show')->name('order-view');
+    Route::get('order', 'BatchSessionController@index')->name('order');
+    Route::get('/order-view/{id}', 'BatchSessionController@show')->name('order-view');
 
     //customer
     Route::get('customer', 'CustomerController@index')->name('customer');
@@ -79,11 +79,11 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     route::post('/updateProfile', [CustomerController::class, 'updateProfile'])->name('customer.updateProfile');
 
     //CourseSession (registered courses)
-    Route::get('course-session', 'CourseSessionController@index')->name('customer.course_session');
-    Route::get('/course-session-view/{id}', 'CourseSessionController@show')->name('customer.course_session.view');
+    Route::get('batch-session', 'BatchSessionController@index')->name('customer.course_session');
+    Route::get('/batch-session-view/{id}', 'BatchSessionController@show')->name('customer.course_session.view');
 
     //stream
-    route::get('/stream/{course_id}', [SC::class, 'stream'])->name('customer.stream');
+    route::get('/stream/{course_id}/{batch_id}', [SC::class, 'stream'])->name('customer.stream');
     route::get('/raise-hand/{course_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
     route::get('/stream/get-publisher-token/{session_id}', function($session_id) {
         session()->put('publisher_token', get_fresh_publisher_opentok_token($session_id));

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
+use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\CourseSession;
 use App\Models\LatestUpdate;
@@ -20,7 +22,7 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
-        $latest_updates = LatestUpdate::with('course.course_dates')->orderBy('created_at', 'DESC')->get();
+        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
 
         return view('front.home', compact('latest_updates'));
     }
@@ -28,7 +30,7 @@ class FrontController extends Controller
     public function schedule(Request $request)
     {
         $courses = Course::all();
-        $latest_updates = LatestUpdate::with('course.course_dates')->orderBy('created_at', 'DESC')->get();
+        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
 
         return view('front.schedule', compact('courses', 'latest_updates'));
     }
@@ -59,6 +61,13 @@ class FrontController extends Controller
         } else {
             $user = $user_check[0];
 
+            //check if user already registered on course
+            $course = Course::find($request->input('course_id'));
+            $batch_check = BatchSession::where('user_id', $user->id)->where('batch_id', $course->active_batch()->id)->first();
+            if($batch_check) {
+                return back()->withErrors(['You have already registered in the batch.']);
+            }
+
             //if user has already not yet registered a course (should generate password only then)
             if(count($user->course_sessions) == 0) {
                 $user->password = hash::make($password);
@@ -66,17 +75,19 @@ class FrontController extends Controller
             }
         }
 
-        $course_session_array = [
+        $course = Course::find($request->input('course_id'));
+        $active_batch = Batch::find($course->active_batch()->id);
+        $batch_session_array = [
             'user_id' => $user->id,
-            'course_id' => $request->input('course_id'),
+            'batch_id' => $active_batch->id,
+            'course_id' => $course->id,
             'class_type' => $request->input('class_type'),
             'physical_class_type' => $request->input('physical_class_type'),
         ];
 
         session()->put('user', $user);
-        session()->put('course_session_array', $course_session_array);
-        session()->put('password', (count($user->course_sessions) == 0) ? $password : null);
-        $course = Course::find($course_session_array['course_id']);
+        session()->put('batch_session_array', $batch_session_array);
+        session()->put('password', (count($user->batch_sessions) == 0) ? $password : null);
         session()->put('course_fees', $course->fees);
 
         return view('front.payment');
@@ -109,7 +120,7 @@ class FrontController extends Controller
         $stripe = get_payment_keys();
 
         $user = session()->get('user');
-        $course_session_array = session()->get('course_session_array');
+        $batch_session_array = session()->get('batch_session_array');
         $password = session()->get('password');
 
         try {
@@ -147,11 +158,11 @@ class FrontController extends Controller
                 if ($charge['status'] === 'succeeded') {
 
                     //create course session
-                    CourseSession::create($course_session_array);
+                    BatchSession::create($batch_session_array);
 
                     //send mail to customer
                     $data = [];
-                    $course = Course::find($course_session_array['course_id']);
+                    $course = Course::find($batch_session_array['course_id']);
                     $data['name'] = $user->name;
                     $data['course_name'] = $course->name;
                     $data['email'] = $user->email;
@@ -210,12 +221,6 @@ class FrontController extends Controller
 
             $this->customMail('admin@judiann.com', $email, 'Course Booked', $message);
 
-//            Mail::send([], [], function ($msg) use ($email, $message) {
-//                $msg->to($email)
-//                    ->subject('New order placed')
-//                    ->setBody($message, 'text/html');
-//            });
-
             return 1;
         } catch (\Exception $exception) {
             return redirect()->back()->with('errors', $exception->getMessage());
@@ -249,12 +254,6 @@ class FrontController extends Controller
 //            \mail($email,"Contact Request From Website",$message);
 
             $this->customMail('admin@judiann.com', $email, 'Contact Request From Website', $message);
-
-//            Mail::send([], [], function ($msg) use ($email, $message) {
-//                $msg->to($email)
-//                    ->subject('Contact Request From Website')
-//                    ->setBody($message);
-//            });
 
             return redirect()->route('front.home')->with('success', 'Email sent successfully!');
         } catch (\Exception $exception) {

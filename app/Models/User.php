@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\CourseSession');
     }
+
+    public function batch_sessions()
+    {
+        return $this->hasMany('App\Models\BatchSession');
+    }
 }

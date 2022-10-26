@@ -10,11 +10,11 @@ function course_is_joinable($course_id) {
     $course = Course::find($course_id);
     $now = Carbon::now();
 
-    if(!is_null($course->date_range)) {
-        return ($now->toDateString() >= $course->date_range_from && $now->toDateString() <= $course->date_range_to && $now->toTimeString() >= $course->time_from && $now->toTimeString() <= $course->time_to);
-    } else if(count($course->course_dates) > 0) {
-        foreach ($course->course_dates as $course_date) {
-            if($now->toDateString() == $course_date->date && $now->toTimeString() >= $course_date->time_from && $now->toTimeString() <= $course_date->time_to) {
+    if(!is_null($course->active_batch()->date_range)) {
+        return ($now->toDateString() >= $course->active_batch()->date_range_from && $now->toDateString() <= $course->active_batch()->date_range_to && $now->toTimeString() >= $course->active_batch()->time_from && $now->toTimeString() <= $course->active_batch()->time_to);
+    } else if(count($course->active_batch()->batch_dates) > 0) {
+        foreach ($course->active_batch()->batch_dates as $batch_date) {
+            if($now->toDateString() == $batch_date->date && $now->toTimeString() >= $batch_date->time_from && $now->toTimeString() <= $batch_date->time_to) {
                 return true;
             }
         }
@@ -72,20 +72,20 @@ function get_payment_keys() {
 
 function get_course_timings($course) {
     //if course has multiple dates
-    if(is_null($course->date_range)) {
+    if(is_null($course->active_batch()->date_range)) {
         $string = "";
-        foreach ($course->course_dates as $course_date)
+        foreach ($course->active_batch()->batch_dates as $batch_date)
         {
-            $date = Carbon::parse($course_date->date)->format('d M Y');
-            $time_from = Carbon::parse($course_date->time_from)->format('g:i A');
-            $time_to = Carbon::parse($course_date->time_to)->format('g:i A');
+            $date = Carbon::parse($batch_date->date)->format('d M Y');
+            $time_from = Carbon::parse($batch_date->time_from)->format('g:i A');
+            $time_to = Carbon::parse($batch_date->time_to)->format('g:i A');
             $string .= "<h6 class='text-white'>".$date." [".$time_from." - ".$time_to."]"."</h6>";
         }
     } else {
-        $date_from = Carbon::parse($course->date_range_from)->format('d M Y');
-        $date_to = Carbon::parse($course->date_range_to)->format('d M Y');
-        $time_from = Carbon::parse($course->time_from)->format('g:i A');
-        $time_to = Carbon::parse($course->time_to)->format('g:i A');
+        $date_from = Carbon::parse($course->active_batch()->date_range_from)->format('d M Y');
+        $date_to = Carbon::parse($course->active_batch()->date_range_to)->format('d M Y');
+        $time_from = Carbon::parse($course->active_batch()->time_from)->format('g:i A');
+        $time_to = Carbon::parse($course->active_batch()->time_to)->format('g:i A');
         $string = "<h6 class='text-white'>".$date_from." to ".$date_to." [".$time_from." - ".$time_to."]"."</h6>";
     }
 

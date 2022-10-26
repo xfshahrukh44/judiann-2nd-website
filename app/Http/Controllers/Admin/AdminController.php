@@ -44,22 +44,22 @@ class AdminController extends Controller
         foreach ($courses as $course) {
             $random_index = array_rand($colors);
 
-            if(is_null($course->date_range)) {
-                foreach ($course->course_dates as $course_date) {
+            if(is_null($course->active_batch()->date_range)) {
+                foreach ($course->active_batch()->batch_dates as $batch_date) {
                     $events[] = [
                         'title' => $course->name,
-                        'date' => $course_date->date,
-                        'time' => $course_date->time_from . ' to ' . $course_date->time_to,
+                        'date' => $batch_date->date,
+                        'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                         'color' => $colors[$random_index],
                     ];
                 }
             } else {
-                $current_date = Carbon::parse($course->date_range_from);
-                while ($current_date <= Carbon::parse($course->date_range_to)) {
+                $current_date = Carbon::parse($course->active_batch()->date_range_from);
+                while ($current_date <= Carbon::parse($course->active_batch()->date_range_to)) {
                     $events[] = [
                         'title' => $course->name,
                         'date' => $current_date,
-                        'time' => $course->time_from . ' to ' . $course->time_to,
+                        'time' => $course->active_batch()->time_from . ' to ' . $course->active_batch()->time_to,
                         'color' => $colors[$random_index],
                     ];
                     $current_date = Carbon::parse($current_date)->addDay();

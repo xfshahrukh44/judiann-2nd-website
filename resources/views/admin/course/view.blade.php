@@ -83,25 +83,25 @@
                     <!-- Course Schedule -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Course Schedule</h3>
+                            <h3 class="card-title">Course Schedule <strong>[Batch: {{$content->active_batch()->name}}]</strong></h3>
                         </div>
 
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
-                                @if(!is_null($content->date_range))
+                                @if(!is_null($content->active_batch()->date_range))
                                     <tr>
                                         <th>Date</th>
-                                        <td>{{$content->date_range??''}}</td>
+                                        <td>{{$content->active_batch()->date_range??''}}</td>
                                     </tr>
                                     <tr>
                                         <th>From</th>
-                                        <td>{{Carbon\Carbon::parse($content->time_from)->format('g:i A')??''}}</td>
+                                        <td>{{Carbon\Carbon::parse($content->active_batch()->time_from)->format('g:i A')??''}}</td>
                                     </tr>
                                     <tr>
                                         <th>To</th>
-                                        <td>{{Carbon\Carbon::parse($content->time_to)->format('g:i A')??''}}</td>
+                                        <td>{{Carbon\Carbon::parse($content->active_batch()->time_to)->format('g:i A')??''}}</td>
                                     </tr>
                                 @else
                                     <tr>
@@ -109,11 +109,11 @@
                                         <th>From</th>
                                         <th>To</th>
                                     </tr>
-                                    @foreach($content->course_dates as $course_date)
+                                    @foreach($content->active_batch()->batch_dates as $batch_date)
                                         <tr>
-                                            <td>{{$course_date->date}}</td>
-                                            <td>{{Carbon\Carbon::parse($course_date->time_from)->format('g:i A')}}</td>
-                                            <td>{{Carbon\Carbon::parse($course_date->time_to)->format('g:i A')}}</td>
+                                            <td>{{$batch_date->date}}</td>
+                                            <td>{{Carbon\Carbon::parse($batch_date->time_from)->format('g:i A')}}</td>
+                                            <td>{{Carbon\Carbon::parse($batch_date->time_to)->format('g:i A')}}</td>
                                         </tr>
                                     @endforeach
                                 @endif

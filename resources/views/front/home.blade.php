@@ -102,7 +102,7 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-12">
-                        <h2 class="headOne">Latest Updates</h2>
+                        <h2 class="headOne">Course Updates</h2>
                     </div>
                     <div class="col-12">
                         <div class="lastSlider">

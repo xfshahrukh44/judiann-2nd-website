@@ -21,6 +21,9 @@ class CourseController extends Controller
             if (request()->ajax()) {
                 return datatables()->of(Course::get())
                     ->addIndexColumn()
+                    ->addColumn('image', function($data) {
+                        return $data->get_course_image();
+                    })
                     ->editColumn('created_at', function($data){
                         $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y');
                         return $formatedDate;
@@ -61,6 +64,11 @@ class CourseController extends Controller
                 'description' => $request->input('description'),
                 'fees' => $request->input('fees'),
             ]);
+
+            //course image
+            if($request->has('image')) {
+                $course->addMediaFromRequest('image')->toMediaCollection('course_images');
+            }
 
             //create first batch
             $batch = Batch::create([
@@ -110,6 +118,12 @@ class CourseController extends Controller
             ));
 
             $course = Course::find($id);
+
+            //course image
+            if($request->has('image')) {
+                $course->clearMediaCollection('course_images');
+                $course->addMediaFromRequest('image')->toMediaCollection('course_images');
+            }
 
             //date range work
             $date_range_from = Null;

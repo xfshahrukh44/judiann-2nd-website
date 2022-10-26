@@ -49,6 +49,7 @@
                                     <thead>
                                     <tr style="text-align: center">
                                         <th>#</th>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Desciption</th>
                                         <th>Fees</th>
@@ -124,6 +125,13 @@
 
 
                     {data: 'id', name: 'id'},
+                    {
+                        data: 'image',
+                        name: 'image',
+                        render: function( data, type, full, meta ) {
+                            return `<img src="`+data+`" height="80"/>`;
+                        }
+                    },
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
                     {data: 'fees', name: 'fees'},

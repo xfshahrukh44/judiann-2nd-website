@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Course extends Model
+class Course extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -29,12 +31,15 @@ class Course extends Model
 
         //while creating/inserting item into db
         static::created(function ($query) {
-//            $query->opentok_session_id = get_fresh_opentok_session_id();
             LatestUpdate::create([
                 'course_id' => $query->id,
                 'title' => $query->name,
                 'description' => $query->description,
             ]);
+        });
+
+        static::deleting(function ($query) {
+            LatestUpdate::where('course_id', $query->id)->delete();
         });
     }
 
@@ -56,5 +61,11 @@ class Course extends Model
     public function active_batch()
     {
         return $this->hasMany('App\Models\Batch')->where('has_ended', false)->first();
+    }
+
+    public function get_course_image()
+    {
+        $image_check =  $this->getMedia('course_images')->first();
+        return $image_check ? $image_check->getUrl() : asset("front/images/class1.jpg");
     }
 }

@@ -22,7 +22,7 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
-        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
+        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
 
         return view('front.home', compact('latest_updates'));
     }

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', (isset($content->id) ?  'Edit' : 'Add').' Latest Update')
+@section('title', (isset($content->id) ?  'Edit' : 'Add').' Course Update')
 @section('section')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Latest Update Form</h1>
+                        <h1>Course Update Form</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Latest Update Form</li>
+                            <li class="breadcrumb-item active">Course Update Form</li>
                         </ol>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Latest Update</h3>
+                                <h3 class="card-title">Course Update</h3>
                             </div>
                             <form class="course-form" method="post" action="{{!empty($content->id)?url('admin/latest-update-edit/'.$content->id):route('admin.add-latest-update')}}" enctype="multipart/form-data">
                                 @csrf
@@ -37,8 +37,8 @@
                                         <div class="alert alert-success">{{Session::get('msg')}}</div>
                                     @endif
                                     <div class="form-group">
-                                        <label for="title">Latest Update Name</label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{$content->title?? old('title')}}" placeholder="Latest Update" required>
+                                        <label for="title">Course Update Name</label>
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" id="title" value="{{$content->title?? old('title')}}" placeholder="Course Update" required>
                                         @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -46,8 +46,8 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="description">Latest Update Description</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Latest Update Description" required rows="15">{{$content->description?? old('description')}}</textarea>
+                                        <label for="description">Course Update Description</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Course Update Description" required rows="15">{{$content->description?? old('description')}}</textarea>
                                         @error('description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

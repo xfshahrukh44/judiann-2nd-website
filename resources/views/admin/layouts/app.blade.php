@@ -184,7 +184,7 @@
                         <a href="{{route('latest-update')}}"
                            class="nav-link {{ request()->IS('admin/latest-update') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-angle-double-right"></i>
-                            <p>Latest Updates</p>
+                            <p>Course Updates</p>
                         </a>
                     </li>
                     <li class="nav-item">

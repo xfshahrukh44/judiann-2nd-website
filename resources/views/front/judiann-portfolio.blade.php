@@ -27,206 +27,63 @@
 
     <!-- END: Main Slider -->
 
-
-    <section class="portfolioSec">
+    <section class="portfolioSec inner">
         <div class="container-fluid">
             <h2 class="headOne">Judiann’s Portfolio</h2>
             <div class="row">
-                <div class="col">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio1.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio1.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio2.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio2.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio1.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio1.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio3.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio3.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio4.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio4.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio3.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio3.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio5.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio5.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio6.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio6.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio5.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio5.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio1.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio1.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio2.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio2.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio7.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio7.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio3.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio3.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio4.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio4.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio2.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio2.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio5.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio5.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio6.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio6.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio4.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio4.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio1.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio1.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio2.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio2.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio6.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio6.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio3.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio3.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio4.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio4.jpg')}}"
-                                 alt="img">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio5.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio5.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio6.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio6.jpg')}}"
-                                 alt="img">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio1.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio1.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio2.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio2.jpg')}}"
-                                 alt="img">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio3.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio3.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio4.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio4.jpg')}}"
-                                 alt="img">
-                        </a>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="portfolioBox">
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio5.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio5.jpg')}}"
-                                 alt="img">
-                        </a>
-                        <a data-fancybox
-                           href="{{asset('front/images/portfolio6.jpg')}}">
-                            <img class="img-fluid"
-                                 src="{{asset('front/images/portfolio6.jpg')}}"
-                                 alt="img">
+                        <a data-fancybox href="{{asset('front/images/portfolio8.jpg')}}">
+                            <img class="img-fluid" src="{{asset('front/images/portfolio8.jpg')}}" alt="img">
                         </a>
                     </div>
                 </div>

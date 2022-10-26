@@ -149,6 +149,20 @@ Route::get('/students-work', function () {
 Route::get('/video-chatting', function () {
     return view('front.videoChatting');
 })->name('front.videoChatting');
+
+Route::get('/testimonial', function () {
+    return view('front.testimonial');
+})->name('front.testimonial');
+Auth::routes();
+
+Route::get('/policy', function () {
+    return view('front.policy');
+})->name('front.policy');
+Auth::routes();
+
+Route::get('/terms', function () {
+    return view('front.terms');
+})->name('front.terms');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

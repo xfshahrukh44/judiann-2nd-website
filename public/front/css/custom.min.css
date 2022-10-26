@@ -438,11 +438,14 @@ header {
 
 .portfolioBox a img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .portfolioBox a {
     display: block;
     margin-bottom: 2rem;
+    height: 100%;
 }
 
 .portfolioSec .col-md-5 .portfolioBox a img {
@@ -458,10 +461,19 @@ header {
 .wrkSec a {
     display: block;
     margin: 0 0 1.7rem;
+    overflow: hidden;
+}
+
+.wrkSec h6 {
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
 }
 
 .wrkSec a img {
     width: 100%;
+    transition: all 0.4s ease;
 }
 
 .wrkSec .themeBtn {
@@ -984,6 +996,9 @@ footer {
 
 .lastBox p {
     font-size: 1.3rem;
+    max-height: 250px;
+    overflow-y: scroll;
+    padding: 1rem 0.5rem;
 }
 
 .lastBox p strong {
@@ -1214,4 +1229,223 @@ footer {
 
 .videoControllers button i {
     transform: rotate(225deg);
+}
+
+.inner.portfolioSec .row [class*='col-'] {
+    display: flex;
+    justify-content: center;
+}
+
+.inner.portfolioSec .row {
+    gap: 2.5rem 0;
+}
+
+.wrkSec a img:hover {
+    transform: scale(1.2);
+}
+
+.formSec {
+    padding: 8rem 0;
+}
+
+.formSec form label {
+    display: block;
+    color: #eb5828;
+}
+
+.formSec form input, .formSec form textarea {
+    width: 100%;
+    padding: 1rem 1rem;
+}
+
+div.switcher label {
+    padding: 0 !important;
+    display: initial !important;
+}
+
+div.switcher label * {
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+div.switcher label input {
+    display: none;
+}
+
+div.switcher label input + span {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    width: 50px;
+    height: 26px;
+    background: #ddd;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+div.switcher label input + span small {
+    position: absolute;
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+    left: 0;
+}
+
+div.switcher label input:checked + span {
+    background: #eb5828;
+    border-color: #eb5828;
+}
+
+div.switcher label input:checked + span small {
+    left: 50%;
+}
+
+
+.rating-stars {
+    float: left;
+    border-style: none;
+}
+
+.rating-stars:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0, 0, 0, 0);
+    visibility: hidden;
+}
+
+.rating-stars:not(:checked) > label {
+    float: right;
+    width: 1.125em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    color: lightgrey;
+}
+
+.rating-stars > label {
+    margin-right: 5px !important;
+}
+
+.rating-stars:not(:checked) > label:before {
+    content: "\f005";
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 900;
+}
+
+.rating-stars > input:checked ~ label {
+    color: gold;
+}
+
+.rating-stars:not(:checked) > label:hover,
+.rating-stars:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+
+.rating-stars > input:checked + label:hover,
+.rating-stars > input:checked + label:hover ~ label,
+.rating-stars > input:checked ~ label:hover,
+.rating-stars > input:checked ~ label:hover ~ label,
+.rating-stars > label:hover ~ input:checked ~ label {
+    color: gold;
+}
+
+.formSec form .form-group {
+    clear: both;
+}
+
+.testiBox .head h3 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin: 0 0 1rem;
+}
+
+.testiBox .head .ratingBox {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.testiBox .head .ratingBox ul {
+    display: flex;
+    gap: .5rem;
+}
+
+.testiBox .head .ratingBox ul li i {
+    font-size: 1.25rem;
+}
+
+.testiBox .head .ratingBox ul li i.active {
+    color: gold;
+}
+
+.testiBox .head .ratingBox span {
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.testiBox .body p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.8;
+    margin: 1rem 0 0;
+}
+
+.testiBox .body {
+    border-top: 1px solid #fff;
+    margin-top: 1rem;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 1rem;
+}
+
+.testimonialSec .row {
+    gap: 1.5rem 0;
+}
+
+.policySec h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin: 1rem 0;
+}
+
+.policySec p {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.contactInnr .nav-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: none;
+    margin-bottom: 3rem;
+}
+
+.contactInnr .nav-tabs button {
+    padding: 0.5rem 2rem;
+    height: auto;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.fc .fc-toolbar-title {
+    color: #fff;
+}
+
+.fc-toolbar-chunk {
+    display: flex;
+}
+
+
+.fc-theme-standard td a, .fc-theme-standard th a {
+    color: #fff;
+}
+
+.fc .fc-button-primary {
+    background: #e2571c;
 }

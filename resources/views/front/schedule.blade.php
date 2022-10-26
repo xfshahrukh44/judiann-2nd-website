@@ -15,7 +15,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="slideContent">
-                            <h2 class="headOne">Contact Us</h2>
+                            <h2 class="headOne">Schedule A Class</h2>
                         </div>
                     </div>
                 </div>
@@ -26,45 +26,104 @@
     <!-- END: Main Slider -->
 
     <section class="contactInnr">
-        <div class="container">
-            @foreach($latest_updates as $key => $latest_update)
-                <div class="row align-items-center">
-                    @if($key % 2 == 0)
-                        <div class="col-md-6">
-                            <div class="lastBox">
-                                <h3>{{$latest_update->title}}</h3>
-                                <p>{!! get_readable_description($latest_update->description) !!}</p>
-                                    <h4 class="text-white">TIMINGS</h4>
-                                    {!! get_course_timings($latest_update->course) !!}
-                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
-                            </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#Online" type="button"
+                        role="tab" aria-controls="home" aria-selected="true">Online
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#onsite" type="button"
+                        role="tab" aria-controls="profile" aria-selected="false">On-Site
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container">
+                    @foreach($latest_updates as $key => $latest_update)
+                        <div class="row align-items-center">
+                            @if($key % 2 == 0)
+                                <div class="col-md-6">
+                                    <div class="lastBox">
+                                        <h3>{{$latest_update->title}}</h3>
+                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <h4 class="text-white">TIMINGS</h4>
+                                        {!! get_course_timings($latest_update->course) !!}
+                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <figure>
+                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                    </figure>
+                                </div>
+                            @else
+                                <div class="col-md-6">
+                                    <figure>
+                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                    </figure>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="lastBox">
+                                        <h3>{{$latest_update->title}}</h3>
+                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <h4 class="text-white">TIMINGS</h4>
+                                        {!! get_course_timings($latest_update->course) !!}
+                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                        <div class="col-md-6">
-                            <figure>
-                                <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
-                            </figure>
-                        </div>
-                    @else
-                        <div class="col-md-6">
-                            <figure>
-                                <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
-                            </figure>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="lastBox">
-                                <h3>{{$latest_update->title}}</h3>
-                                <p>{!! get_readable_description($latest_update->description) !!}</p>
-                                    <h4 class="text-white">TIMINGS</h4>
-                                    {!! get_course_timings($latest_update->course) !!}
-                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
-                            </div>
-                        </div>
-                    @endif
+                    @endforeach
                 </div>
-            @endforeach
+            </div>
+            <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                    @foreach($latest_updates as $key => $latest_update)
+                        <div class="row align-items-center">
+                            @if($key % 2 == 0)
+                                <div class="col-md-6">
+                                    <div class="lastBox">
+                                        <h3>{{$latest_update->title}}</h3>
+                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <h4 class="text-white">TIMINGS</h4>
+                                        {!! get_course_timings($latest_update->course) !!}
+                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <figure>
+                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                    </figure>
+                                </div>
+                            @else
+                                <div class="col-md-6">
+                                    <figure>
+                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                    </figure>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="lastBox">
+                                        <h3>{{$latest_update->title}}</h3>
+                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <h4 class="text-white">TIMINGS</h4>
+                                        {!! get_course_timings($latest_update->course) !!}
+                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="container">
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-9">
-                    <h2 class="headOne text-center mb-5">Schedule A Class</h2>
+                <div class="col-12">
+                    <h2 class="headOne text-center my-5">Schedule A Class</h2>
+                </div>
+                <div class="col-md-6">
                     <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
                           data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
                           data-message-success="Thank you! We will be in touch soon."
@@ -75,63 +134,49 @@
                         <div class="hf-fields-wrap">
                             <div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder=" First  Name"
                                                    name="first_name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="Last Name"
                                                    name="last_name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email" name="email"
+                                            <input type="email" class="form-control" placeholder="Email"
+                                                   name="email"
                                                    required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Contact" name="phone"
+                                            <input type="text" class="form-control" placeholder="Contact"
+                                                   name="phone"
                                                    required>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="">
-                                        <label>Select Class Type</label>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="class_type" value="online"
-                                                   class="custom-control-input radio_class_type" required>
-                                            <label class="custom-control-label" for="customRadio1">Online Class</label>
-                                        </div>
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio2" name="class_type" value="physical"
-                                                   class="custom-control-input radio_class_type" required>
-                                            <label class="custom-control-label" for="customRadio2">Physical
-                                                Class</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12" style="">
-                                        &nbsp;
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <label>Select Course Type:</label>
-                                            <select class="form-control course_type" placeholder="Select Course Type"
+                                            <select class="form-control course_type"
+                                                    placeholder="Select Course Type"
                                                     name="course_id" required>
                                                 <option disabled selected value="">Select Course Type:</option>
                                                 @foreach($courses as $course)
                                                     <option class="option_course_type"
-                                                            data-online="{{$course->active_batch()->is_online}}"
-                                                            data-physical="{{$course->active_batch()->is_physical}}"
+                                                            data-online="{{$course->is_online}}"
+                                                            data-physical="{{$course->is_physical}}"
                                                             value="{{$course->id}}">{{$course->name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 physical_class_type_wrapper" hidden>
+                                    <div class="col-12 physical_class_type_wrapper" hidden>
                                         <div class="form-group">
                                             <label>Select Physical Class Type:</label>
                                             <select class="form-control physical_class_type"
@@ -150,6 +195,9 @@
                             <noscript>Please enable JavaScript for this form to work.</noscript>
                         </div>
                     </form>
+                </div>
+                <div class="col-md-6">
+                    <div id="calendar"></div>
                 </div>
             </div>
         </div>

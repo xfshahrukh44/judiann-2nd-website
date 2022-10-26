@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('front/css/all.min.css')}}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
     <link rel="stylesheet" href="{{asset('front/css/custom.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}"/>
     <title>@yield('title') | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
@@ -94,6 +95,7 @@
                                                 href="{{route('front.students-work')}}"><span>Student’s Work</span></a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}"><span>Contact Us</span></a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}"><span>Schedule A Class</span></a>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.testimonial')}}"><span>Testimonials</span></a>
                         </li>
                     </ul>
                 </div>
@@ -118,8 +120,8 @@
                 </div>
                 <div class="col-md-4">
                     <ul class="policy">
-                        <li><a href="#">Policies,</a></li>
-                        <li><a href="#">terms and conditions, </a></li>
+                        <li><a href="{{route('front.policy')}}">Policies</a></li>
+                        <li><a href="{{route('front.terms')}}">terms and conditions</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -140,6 +142,7 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{{asset('front/js/all.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
 <script src="{{asset('front/js/custom.min.js')}}"></script>
 @if(session()->has('success'))

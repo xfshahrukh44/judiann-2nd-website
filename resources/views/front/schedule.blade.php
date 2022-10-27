@@ -65,7 +65,7 @@
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="lastBox">
+                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
                                         <p>{!! get_readable_description($latest_update->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>

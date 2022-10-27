@@ -801,7 +801,7 @@ footer {
 }
 
 .contactInnr img {
-    height: 700px;
+    height: 600px;
     width: 100%;
     object-fit: cover;
 }
@@ -1457,4 +1457,11 @@ div.switcher label input:checked + span small {
 
 .fc .fc-button-primary {
     background: #e2571c;
+}
+
+
+.scheduleBox p{
+    padding: 0;
+    line-height: 1.6;
+    margin: 0 0 1rem;
 }

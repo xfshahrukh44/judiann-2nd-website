@@ -45,7 +45,7 @@
                         <div class="row align-items-center">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
-                                    <div class="lastBox">
+                                    <div class="lastBox" style="height: 300px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
                                         <p>{!! get_readable_description($latest_update->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>

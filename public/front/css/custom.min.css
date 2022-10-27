@@ -997,8 +997,17 @@ footer {
 .lastBox p {
     font-size: 1.3rem;
     max-height: 250px;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     padding: 1rem 0.5rem;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.lastBox::-webkit-scrollbar {
+    display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.lastBox {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .lastBox p strong {

@@ -803,7 +803,8 @@ footer {
 .contactInnr img {
     height: 600px;
     width: 100%;
-    object-fit: cover;
+    /*object-fit: cover;*/
+    object-fit: contain;
 }
 
 .contactInnr .row + .row {

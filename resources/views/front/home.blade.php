@@ -107,7 +107,7 @@
                     <div class="col-12">
                         <div class="lastSlider">
                             @foreach($latest_updates as $latest_update)
-                                <div class="lastBox">
+                                <div class="lastBox" style="height: 300px; overflow-y: scroll;">
                                     <h3>{{$latest_update->title}}</h3>
                                     {!! get_readable_description($latest_update->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>

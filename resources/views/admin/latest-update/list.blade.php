@@ -23,7 +23,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Category</li>
+{{--                            <li class="breadcrumb-item active">Category</li>--}}
                         </ol>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn btn-primary pull-right addBtn" href="{{route('admin.add-latest-update')}}">Add Course Update</a>
+{{--                                <a class="btn btn-primary pull-right addBtn" href="{{route('admin.add-latest-update')}}">Add Course Update</a>--}}
                             </div>
                             <div class="col-md-12">
 

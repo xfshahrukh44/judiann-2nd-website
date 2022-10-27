@@ -47,7 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_course_timings($latest_update->course) !!}
                                         <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_course_timings($latest_update->course) !!}
                                         <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
@@ -84,9 +84,9 @@
                         <div class="row align-items-center">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
-                                    <div class="lastBox">
+                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_course_timings($latest_update->course) !!}
                                         <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
@@ -104,9 +104,9 @@
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="lastBox">
+                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->description) !!}</p>
+                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_course_timings($latest_update->course) !!}
                                         <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>

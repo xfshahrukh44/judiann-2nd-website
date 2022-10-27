@@ -109,7 +109,7 @@
                             @foreach($latest_updates as $latest_update)
                                 <div class="lastBox" style="height: 300px; overflow-y: scroll;">
                                     <h3>{{$latest_update->title}}</h3>
-                                    {!! get_readable_description($latest_update->description) !!}
+                                    {!! get_readable_description($latest_update->course->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>
                                     {!! get_course_timings($latest_update->course) !!}
                                     <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>

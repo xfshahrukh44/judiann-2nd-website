@@ -63,6 +63,9 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     route::get('/revert-stream/{course_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
     route::get('/viewer-toggle-back/{course_id}/{customer_id}', [StreamController::class, 'viewerToggleBack'])->name('admin.viewerToggleBack');
     route::post('/stream/stop/{course}', [StreamController::class, 'stop'])->name('admin.stopStream');
+
+    //cms
+    Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
 });
 
 //Customer routes

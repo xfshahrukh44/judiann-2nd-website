@@ -165,7 +165,6 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{route('course')}}"
                            class="nav-link {{ request()->IS('admin/course') ? 'active' : '' }}">
@@ -173,6 +172,28 @@
                             <p>Course</p>
                         </a>
                     </li>
+                        {{--CMS--}}
+{{--                    <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') ? 'menu-is-opening menu-open' : '' }}">--}}
+{{--                        <a href="#" class="nav-link ">--}}
+{{--                            <i class="nav-icon fas fa-tags fw"></i>--}}
+{{--                            <p>--}}
+{{--                                CMS--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                        <ul class="nav nav-treeview"--}}
+{{--                            style="{{ request()->IS('admin/emailsetting') || request()->IS('admin/paymentgatway') ? 'display:block;' : '' }}">--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{route('admin.cms.aboutUs')}}"--}}
+{{--                                   class="nav-link {{ request()->IS('admin/cms/about-us') ? 'active' : '' }}">--}}
+{{--                                    <i class="nav-icon fas fa-angle-double-right"></i>--}}
+{{--                                    <p>--}}
+{{--                                        About Us Section--}}
+{{--                                    </p>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+
                     <li class="nav-item">
                         <a href="{{route('customer')}}"
                            class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">

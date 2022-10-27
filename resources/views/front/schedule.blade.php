@@ -55,13 +55,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                        <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                        <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">

@@ -210,6 +210,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href=""
+                                   class="nav-link {{ request()->IS('admin/cms/judiann-portfolio') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Judiann's Portfolio
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.faq')}}"
                                    class="nav-link {{ request()->IS('admin/cms/faq') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>

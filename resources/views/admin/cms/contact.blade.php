@@ -62,12 +62,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>About Form</h1>
+                        <h1>Contact Form</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">About Form</li>
+                            <li class="breadcrumb-item active">Contact Form</li>
                         </ol>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">About Form</h3>
+                                <h3 class="card-title">Contact Form</h3>
                             </div>
-                            <form class="category-form" method="post" action="{{route('admin.cms.aboutUs')}}" enctype="multipart/form-data">
+                            <form class="category-form" method="post" action="{{route('admin.cms.contactUs')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -96,13 +96,13 @@
                                             <div class="form-group">
                                                 <label for="name">Meta Title</label>
                                                 <input type="text" class="form-control" name="meta_title"
-                                                       value="{{!empty($about) ? ($data->meta_title ?? '') : ''}}"
+                                                       value="{{!empty($contact) ? ($data->meta_title ?? '') : ''}}"
                                                        placeholder="Meta Title">
                                             </div>
                                             <div class="form-group">
                                                 <label for="name">Meta Description</label>
                                                 <input type="text" class="form-control" name="meta_description"
-                                                       value="{{!empty($about) ? ($data->meta_description ?? '') : ''}}"
+                                                       value="{{!empty($contact) ? ($data->meta_description ?? '') : ''}}"
                                                        placeholder="Meta Description">
                                             </div>
                                             <div class="form-group">
@@ -111,7 +111,7 @@
                                             <div class="form-group">
                                                 <label for="name">Banner Title</label>
                                                 <input type="text" class="form-control" name="banner_title"
-                                                       value="{{!empty($about) ? ($data->banner_title ?? '') : ''}}"
+                                                       value="{{!empty($contact) ? ($data->banner_title ?? '') : ''}}"
                                                        placeholder="Banner Title">
                                             </div>
                                             <div class="form-group">
@@ -119,7 +119,7 @@
                                                     <label>Banner Image</label>
                                                     <div class="img-upload">
                                                         <div id="image-preview" class="img-preview"
-                                                             style="background: url({{ !empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : '') : '' }});">
+                                                             style="background: url({{ !empty($contact) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : '') : '' }});">
                                                             <label for="image-upload" class="img-label"
                                                                    id="image-label">{{ __('Upload Image') }}</label>
                                                             <input type="file" name="banner_image" class="img-upload"
@@ -129,37 +129,13 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <h3>About Section</h3>
+                                                <h3>Form Section</h3>
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Heading</label>
-                                                <input type="text" class="form-control" name="abt_heading"
-                                                       value="{{!empty($about) ? ($data->abt_heading ?? '') : ''}}"
+                                                <label for="name">Title</label>
+                                                <input type="text" class="form-control" name="form_title"
+                                                       value="{{!empty($contact) ? ($data->form_title ?? '') : ''}}"
                                                        placeholder="Title">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name">Sub Content</label>
-                                                <textarea class="form-control" name="sub_content" rows="4"
-                                                          placeholder="Sub Content">{{!empty($about) ? ($data->sub_content ?? '') : ''}}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name">Main Content</label>
-                                                <textarea class="form-control" name="main_content" rows="4"
-                                                          placeholder="Main Content">{{!empty($about) ? ($data->main_content ?? '') : ''}}</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-4">
-                                                    <label>About Image</label>
-                                                    <div class="img-upload">
-                                                        <div id="image-preview" class="img-preview"
-                                                             style="background: url({{ !empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : '') : '' }});">
-                                                            <label for="image-upload" class="img-label"
-                                                                   id="image-label">{{ __('Upload Image') }}</label>
-                                                            <input type="file" name="abt_image" class="img-upload"
-                                                                   id="image-upload">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="card-footer float-right">
                                                 <button type="submit" onclick="validateinputs()"

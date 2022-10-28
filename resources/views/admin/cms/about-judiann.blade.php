@@ -62,12 +62,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>About Form</h1>
+                        <h1>About Judiann Form</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">About Form</li>
+                            <li class="breadcrumb-item active">About Judiann Form</li>
                         </ol>
                     </div>
                 </div>
@@ -83,9 +83,9 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">About Form</h3>
+                                <h3 class="card-title">About Judiann Form</h3>
                             </div>
-                            <form class="category-form" method="post" action="{{route('admin.cms.aboutUs')}}" enctype="multipart/form-data">
+                            <form class="category-form" method="post" action="" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -129,7 +129,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <h3>About Section</h3>
+                                                <h3>About Section # 1</h3>
                                             </div>
                                             <div class="form-group">
                                                 <label for="name">Heading</label>
@@ -138,13 +138,8 @@
                                                        placeholder="Title">
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Sub Content</label>
-                                                <textarea class="form-control" name="sub_content" rows="4"
-                                                          placeholder="Sub Content">{{!empty($about) ? ($data->sub_content ?? '') : ''}}</textarea>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="name">Main Content</label>
-                                                <textarea class="form-control" name="main_content" rows="4"
+                                                <textarea class="form-control" name="main_content" rows="6"
                                                           placeholder="Main Content">{{!empty($about) ? ($data->main_content ?? '') : ''}}</textarea>
                                             </div>
                                             <div class="form-group">
@@ -160,6 +155,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h3>About Section # 2</h3>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Heading</label>
+                                                <input type="text" class="form-control" name="abt_heading2"
+                                                       value="{{!empty($about) ? ($data->abt_heading2 ?? '') : ''}}"
+                                                       placeholder="Title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Content</label>
+                                                <textarea class="form-control" name="abt_content" rows="4" id="description"
+                                                          placeholder="Content">{{!empty($about) ? ($data->abt_content ?? '') : ''}}</textarea>
                                             </div>
                                             <div class="card-footer float-right">
                                                 <button type="submit" onclick="validateinputs()"
@@ -180,6 +189,7 @@
 @endsection
 @section('script')
     <script src="{{URL::asset('admin/custom_js/custom.js')}}"></script>
+    <script src="{{ asset('admin/ckeditor/ckeditor.js') }}"></script>
     <script>
         $(document).ready(function () {
             // IMAGE UPLOADING :)
@@ -200,6 +210,12 @@
                 }
             }
         });
+        window.onload = function () {
+            CKEDITOR.replace('description', {
+                {{--filebrowserUploadUrl: '{{ route('project.document-image-upload',['_token' => csrf_token() ]) }}',--}}
+                {{--filebrowserUploadMethod: 'form'--}}
+            });
+        }
     </script>
 @endsection
 

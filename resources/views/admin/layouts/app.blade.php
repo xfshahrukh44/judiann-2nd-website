@@ -182,7 +182,7 @@
                         </a>
                         <ul class="nav nav-treeview"
                             style="{{ request()->IS('admin/emailsetting') || request()->IS('admin/paymentgatway') ? 'display:block;' : '' }}">
-                            {{--<li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.aboutUs')}}"
                                    class="nav-link {{ request()->IS('admin/cms/about-us') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>
@@ -190,7 +190,34 @@
                                         About Us
                                     </p>
                                 </a>
-                            </li>--}}
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.aboutJudiann')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/about-judiann') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        About Judiann
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.contactUs')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/contact') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Contact Us
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href=""
+                                   class="nav-link {{ request()->IS('admin/cms/judiann-portfolio') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Judiann's Portfolio
+                                    </p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{route('admin.cms.faq')}}"
                                    class="nav-link {{ request()->IS('admin/cms/faq') ? 'active' : '' }}">

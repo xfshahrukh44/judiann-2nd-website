@@ -70,6 +70,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/faq', 'CmsController@faq')->name('admin.cms.faq');
     Route::match(['get', 'post'], '/cms/about-judiann', 'CmsController@aboutJudiann')->name('admin.cms.aboutJudiann');
     Route::match(['get', 'post'], '/cms/contact', 'CmsController@contactUs')->name('admin.cms.contactUs');
+    Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
 
     //faq section
     Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
@@ -77,6 +78,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
     Route::get('/faq/edit/{id}', 'FaqController@edit')->name('admin.faq.edit');
     Route::post('/faq/update/{id}', 'FaqController@update')->name('admin.faq.update');
+
+    //portfolio section
+    Route::get('/portfolio', 'PortfolioController@index')->name('admin.portfolio.index');
+    Route::post('/portfolio/create', 'PortfolioController@store')->name('admin.portfolio.create');
+    Route::get('/portfolio/edit/{id}', 'PortfolioController@edit')->name('admin.portfolio.edit');
+    Route::post('/portfolio/update/{id}', 'PortfolioController@update')->name('admin.portfolio.update');
+    Route::delete('/portfolio/delete/{id}', 'PortfolioController@delete')->name('admin.portfolio.destroy');
 });
 
 //Customer routes
@@ -167,7 +175,13 @@ Route::get('/faqs', function () {
 })->name('front.faqs');
 
 Route::get('/judiann-portfolio', function () {
-    return view('front.judiann-portfolio');
+    $sort_portfolio = \App\Models\Portfolio::all()->sortBy('image_order');
+    $portfolio = Page::where('name', 'Portfolio')->first();
+    if($portfolio){
+        $data = json_decode($portfolio->content);
+        return view('front.judiann-portfolio', compact('data', 'portfolio', 'sort_portfolio'));
+    }
+    return view('front.judiann-portfolio', compact('portfolio', 'sort_portfolio'));
 })->name('front.judiann-portfolio');
 
 //Route::get('/schedule', function () {

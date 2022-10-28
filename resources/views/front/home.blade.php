@@ -7,7 +7,7 @@
 @section('content')
 
         <div class="anloader">
-            <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">
+            <video muted autoplay loop preload src="{{asset('c')}}">
             </video>
         </div>
     <!-- Begin: Main Slider -->

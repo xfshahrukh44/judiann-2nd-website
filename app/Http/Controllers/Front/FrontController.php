@@ -8,6 +8,7 @@ use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\CourseSession;
 use App\Models\LatestUpdate;
+use App\Models\Page;
 use App\Models\Settings;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,6 @@ class FrontController extends Controller
     public function home(Request $request)
     {
         $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
-
         return view('front.home', compact('latest_updates'));
     }
 

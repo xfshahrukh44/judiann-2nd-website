@@ -68,12 +68,12 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     //cms
     Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
     Route::match(['get', 'post'], '/cms/faq', 'CmsController@faq')->name('admin.cms.faq');
+    Route::match(['get', 'post'], '/cms/about-judiann', 'CmsController@aboutJudiann')->name('admin.cms.aboutJudiann');
 
     //faq section
     Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
     Route::post('/faq/create', 'FaqController@store')->name('admin.faq.create');
     Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
-//    Route::get('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
     Route::get('/faq/edit/{id}', 'FaqController@edit')->name('admin.faq.edit');
     Route::post('/faq/update/{id}', 'FaqController@update')->name('admin.faq.update');
 });
@@ -132,7 +132,12 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 });
 
 Route::get('/about-judiann', function () {
-    return view('front.about-judiann');
+    $about = Page::where('name', 'About Judiann')->first();
+    if($about){
+        $data = json_decode($about->content);
+        return view('front.about-judiann', compact('data', 'about'));
+    }
+    return view('front.about-judiann', compact('about'));
 })->name('front.about-judiann');
 
 Route::get('/about-us', function () {

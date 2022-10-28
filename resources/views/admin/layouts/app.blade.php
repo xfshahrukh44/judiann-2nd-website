@@ -192,6 +192,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('admin.cms.aboutJudiann')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/about-judiann') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        About Judiann
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.faq')}}"
                                    class="nav-link {{ request()->IS('admin/cms/faq') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>

@@ -210,7 +210,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href=""
+                                <a href="{{route('admin.cms.portfolio')}}"
                                    class="nav-link {{ request()->IS('admin/cms/judiann-portfolio') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>
                                     <p>

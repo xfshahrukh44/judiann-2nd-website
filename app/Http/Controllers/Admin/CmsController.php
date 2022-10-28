@@ -275,4 +275,67 @@ CmsController extends Controller
             return view('admin.cms.contact', compact('contact'));
         }
     }
+
+    public function portfolio(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $rules = [
+                'banner_title' => 'required',
+            ];
+            $customs = [
+                'banner_title.required' => 'Banner Title Field is Required',
+            ];
+            $validator = Validator::make($request->all(), $rules, $customs);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->getMessageBag()->first());
+            }
+
+            $portfolio = Page::where('name', 'Portfolio')->first();
+
+            try{
+                if($portfolio){
+                    $decodedContent = json_decode($portfolio->content);
+                }
+
+                //bannerImage
+                if ($request->hasFile('banner_image')) {
+                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+                }
+
+                $content = [
+                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                    'section_title' => !empty($request['section_title']) ? $request['section_title'] : ''
+                ];
+
+                $page = Page::updateOrCreate(
+                    [
+                        'name' => 'Portfolio',
+                    ],
+                    [
+                        'slug' => $home->slug ?? 'portfolio',
+                        'content' => json_encode($content) ?? '',
+                        'meta_title' => $request['meta_title'] ?? '',
+                        'meta_description' => $request['meta_description'] ?? ''
+                    ],
+                );
+
+                return back()->with('success', 'Page Updated Successfully');
+
+
+            }catch (\Exception $exception){
+                return back()->with('error', $exception->getMessage());
+            }
+        } else {
+            $portfolios = \App\Models\Portfolio::all();
+            $portfolio = Page::where('name', 'Portfolio')->first();
+            if($portfolio){
+                $data = json_decode($portfolio->content);
+                return view('admin.cms.portfolio', compact('portfolio', 'data', 'portfolios'));
+            }
+            return view('admin.cms.portfolio', compact('portfolio', 'portfolios'));
+        }
+    }
 }

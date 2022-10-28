@@ -73,6 +73,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
     Route::post('/faq/create', 'FaqController@store')->name('admin.faq.create');
     Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
+//    Route::get('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
     Route::get('/faq/edit/{id}', 'FaqController@edit')->name('admin.faq.edit');
     Route::post('/faq/update/{id}', 'FaqController@update')->name('admin.faq.update');
 });

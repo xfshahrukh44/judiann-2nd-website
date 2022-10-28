@@ -85,7 +85,8 @@
                             <div class="card-header">
                                 <h3 class="card-title">FAQ's Form</h3>
                             </div>
-                            <form class="category-form" method="post" action="{{route('admin.cms.faq')}}" enctype="multipart/form-data">
+                            <form class="category-form" method="post" action="{{route('admin.cms.faq')}}"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -96,12 +97,14 @@
                                             <div class="form-group">
                                                 <label for="name">Meta Title</label>
                                                 <input type="text" class="form-control" name="meta_title"
-                                                       value="{{!empty($faqPage) ? ($data->meta_title ?? '') : ''}}" placeholder="Meta Title">
+                                                       value="{{!empty($faqPage) ? ($data->meta_title ?? '') : ''}}"
+                                                       placeholder="Meta Title">
                                             </div>
                                             <div class="form-group">
                                                 <label for="name">Meta Description</label>
                                                 <input type="text" class="form-control" name="meta_description"
-                                                       value="{{!empty($faqPage) ? ($data->meta_description ?? '') : ''}}" placeholder="Meta Description">
+                                                       value="{{!empty($faqPage) ? ($data->meta_description ?? '') : ''}}"
+                                                       placeholder="Meta Description">
                                             </div>
                                             <div class="form-group">
                                                 <h3>Banner Section</h3>
@@ -109,7 +112,8 @@
                                             <div class="form-group">
                                                 <label for="name">Banner Title</label>
                                                 <input type="text" class="form-control" name="banner_title"
-                                                       value="{{!empty($faqPage) ? ($data->banner_title ?? '') : ''}}" placeholder="Banner Title">
+                                                       value="{{!empty($faqPage) ? ($data->banner_title ?? '') : ''}}"
+                                                       placeholder="Banner Title">
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-4">
@@ -125,50 +129,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="float-right">
-                                                <a href="{{route('admin.faq.index')}}" class="btn btn-primary">ADD
-                                                    FAQ's</a>
-                                            </div>
+
                                             <div class="form-group">
                                                 <h3>FAQ's Section</h3>
                                             </div>
                                             <div class="form-group">
                                                 <label for="name">Title</label>
                                                 <input type="text" class="form-control" name="faq_title"
-                                                       value="{{!empty($faqPage) ? ($data->faq_title ?? '') : ''}}" placeholder="Title">
+                                                       value="{{!empty($faqPage) ? ($data->faq_title ?? '') : ''}}"
+                                                       placeholder="Title">
                                             </div>
-                                            <br>
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">S.No</th>
-                                                    <th scope="col">Question</th>
-                                                    <th scope="col">Answer</th>
-                                                    <th scope="col">Actions</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($faqs as $key => $faq)
-                                                    <tr>
-                                                        <th scope="row">{{($key + 1)}}</th>
-                                                        <td>{{$faq->question}}</td>
-                                                        <td>{!! $faq->answer !!}</td>
-                                                        <td>
-                                                            <a class="btn btn-primary"
-                                                               href="{{route('admin.faq.edit', $faq->id)}}"><i
-                                                                    class="fa fa-edit"></i></a>
-                                                            <form action="{{route('admin.faq.destroy',$faq->id)}}"
-                                                                  method="POST">
-                                                                @csrf
-                                                                {{method_field('delete')}}
-                                                                <button type="submit" class="btn btn-danger"><i
-                                                                        class="fa fa-trash"></i></button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
                                             <div class="card-footer float-right">
                                                 <button type="submit" onclick="validateinputs()"
                                                         class="btn btn-primary">Submit
@@ -176,7 +146,56 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">FAQ's Form</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="float-right">
+                                            <a href="{{route('admin.faq.index')}}" class="btn btn-primary mb-4">ADD
+                                                FAQ's</a>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Question</th>
+                                                <th scope="col">Answer</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($faqs as $key => $faq)
+                                                <tr>
+                                                    <th scope="row">{{($key + 1)}}</th>
+                                                    <td>{{$faq->question}}</td>
+                                                    <td>{!! $faq->answer !!}</td>
+                                                    <td>
+                                                        <a class="btn btn-primary"
+                                                           href="{{route('admin.faq.edit', $faq->id)}}"><i
+                                                                class="fa fa-edit"></i></a>
+                                                        <form action="{{ route('admin.faq.destroy', $faq->id) }}" class="form-group d-inline-flex" method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>

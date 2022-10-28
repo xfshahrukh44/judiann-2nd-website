@@ -182,7 +182,7 @@
                         </a>
                         <ul class="nav nav-treeview"
                             style="{{ request()->IS('admin/emailsetting') || request()->IS('admin/paymentgatway') ? 'display:block;' : '' }}">
-                            {{--<li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.aboutUs')}}"
                                    class="nav-link {{ request()->IS('admin/cms/about-us') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>
@@ -190,7 +190,7 @@
                                         About Us
                                     </p>
                                 </a>
-                            </li>--}}
+                            </li>
                             <li class="nav-item">
                                 <a href="{{route('admin.cms.faq')}}"
                                    class="nav-link {{ request()->IS('admin/cms/faq') ? 'active' : '' }}">

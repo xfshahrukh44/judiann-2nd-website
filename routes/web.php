@@ -66,7 +66,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     route::post('/stream/stop/{course}', [StreamController::class, 'stop'])->name('admin.stopStream');
 
     //cms
-//    Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
+    Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
     Route::match(['get', 'post'], '/cms/faq', 'CmsController@faq')->name('admin.cms.faq');
 
     //faq section
@@ -136,7 +136,12 @@ Route::get('/about-judiann', function () {
 })->name('front.about-judiann');
 
 Route::get('/about-us', function () {
-    return view('front.about-us');
+    $about = Page::where('name', 'About')->first();
+    if($about){
+        $data = json_decode($about->content);
+        return view('front.about-us', compact('data', 'about'));
+    }
+    return view('front.about-us', compact('about'));
 })->name('front.about-us');
 
 Route::get('/faqs', function () {

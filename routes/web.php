@@ -69,6 +69,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
     Route::match(['get', 'post'], '/cms/faq', 'CmsController@faq')->name('admin.cms.faq');
     Route::match(['get', 'post'], '/cms/about-judiann', 'CmsController@aboutJudiann')->name('admin.cms.aboutJudiann');
+    Route::match(['get', 'post'], '/cms/contact', 'CmsController@contactUs')->name('admin.cms.contactUs');
 
     //faq section
     Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
@@ -125,7 +126,13 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     //contact us
     Route::post('/contact', 'FrontController@send_front_mail')->name('front.send_front_mail');
     Route::get('/contact', function () {
-        return view('front.contact');
+        $setting = \App\Models\Settings::all();
+        $contact = Page::where('name', 'Contact')->first();
+        if($contact){
+            $data = json_decode($contact->content);
+            return view('front.contact', compact('contact', 'data', 'setting'));
+        }
+        return view('front.contact', compact('setting', 'contact'));
     })->name('front.contact');
 
 //    return view('front.contact');

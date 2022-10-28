@@ -201,6 +201,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{route('admin.cms.contactUs')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/contact') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Contact Us
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.faq')}}"
                                    class="nav-link {{ request()->IS('admin/cms/faq') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>

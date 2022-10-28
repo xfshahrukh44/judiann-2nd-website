@@ -213,4 +213,66 @@ CmsController extends Controller
             return view('admin.cms.about-judiann', compact('about'));
         }
     }
+
+    public function contactUs(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $rules = [
+                'banner_title' => 'required',
+            ];
+            $customs = [
+                'banner_title.required' => 'Banner Title Field is Required',
+            ];
+            $validator = Validator::make($request->all(), $rules, $customs);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->getMessageBag()->first());
+            }
+
+            $about = Page::where('name', 'About Judiann')->first();
+
+            try{
+                if($about){
+                    $decodedContent = json_decode($about->content);
+                }
+
+                //bannerImage
+                if ($request->hasFile('banner_image')) {
+                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+                }
+
+                $content = [
+                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                    'form_title' => !empty($request['form_title']) ? $request['form_title'] : ''
+                ];
+
+                $page = Page::updateOrCreate(
+                    [
+                        'name' => 'Contact',
+                    ],
+                    [
+                        'slug' => $home->slug ?? 'contact-us',
+                        'content' => json_encode($content) ?? '',
+                        'meta_title' => $request['meta_title'] ?? '',
+                        'meta_description' => $request['meta_description'] ?? ''
+                    ],
+                );
+
+                return back()->with('success', 'Page Updated Successfully');
+
+
+            }catch (\Exception $exception){
+                return back()->with('error', $exception->getMessage());
+            }
+        } else {
+            $contact = Page::where('name', 'Contact')->first();
+            if($contact){
+                $data = json_decode($contact->content);
+                return view('admin.cms.contact', compact('contact', 'data'));
+            }
+            return view('admin.cms.contact', compact('contact'));
+        }
+    }
 }

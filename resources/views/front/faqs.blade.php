@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
-@section('title', 'FAQ`s')
-@section('description', '')
+@section('title', !empty($faqPage) ? (!empty($data->meta_title) ? $data->meta_title : 'FAQ`s') : 'FAQ`s')
+@section('description', !empty($faqPage) ? (!empty($data->meta_description) ? $data->meta_description : 'FAQ`s') : 'FAQ`s')
 @section('keywords', '')
 
 @section('content')
@@ -10,14 +10,14 @@
 
     <div class="main-slider">
         <img class="img-fluid w-100"
-             src="{{asset('front/images/BannerImg.jpg')}}"
+             src="{{!empty($faqPage) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="slideContent">
-                            <h2 class="headOne">Faq&#8217;s</h2>
+                            <h2 class="headOne">{{!empty($faqPage) ? (!empty($data->banner_title) ? $data->banner_title : 'Faq`s') : 'Faq`s'}}</h2>
                         </div>
                     </div>
                 </div>
@@ -32,24 +32,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="headOne mb-5">Faq's</h2>
+                    <h2 class="headOne mb-5">{{!empty($faqPage) ? (!empty($data->faq_title) ? $data->faq_title : 'Faq`s') : 'Faq`s'}}</h2>
                     <div id="accordion">
-                        <div class="card">
+                        @foreach($faqs as $key => $faq)
+                            <div class="card">
                             <div id="headingOne">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <span>01</span>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry ?
+                                            data-target="#collapse{{($key+1)}}" aria-expanded="true" aria-controls="collapse{{($key+1)}}">
+                                        <span>{{($key + 1)}}</span>
+                                        {{$faq->question}}
+{{--                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry ?--}}
                                         <i class="fas fa-chevron-down"></i>
                                     </button>
                                 </h5>
                             </div>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            <div id="collapse{{($key+1)}}" class="collapse show" aria-labelledby="headingOne"
                                  data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="lisetd">
-                                        <p>It is a long established fact that a reader will be distracted by the
+                                        {!! $faq->answer !!}
+                                        {{--<p>It is a long established fact that a reader will be distracted by the
                                             readable content of a page when looking at its layout. The point of using
                                             Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
                                             opposed to using Content here, content here making it look like readable
@@ -57,69 +60,12 @@
                                             the readable content of a page when looking at its layout. The point of
                                             using Lorem Ipsum is that it has a more-or-less normal distribution of
                                             letters, as opposed to using Content here, content here making it look like
-                                            readable English.</p>
+                                            readable English.</p>--}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">
-                                        <span>02</span>
-                                        Why do we use it?
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                 data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="lisetd">
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout. The point of using
-                                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-                                            opposed to using Content here, content here making it look like readable
-                                            English It is a long established fact that a reader will be distracted by
-                                            the readable content of a page when looking at its layout. The point of
-                                            using Lorem Ipsum is that it has a more-or-less normal distribution of
-                                            letters, as opposed to using Content here, content here making it look like
-                                            readable English.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                            data-target="#collapseThree" aria-expanded="false"
-                                            aria-controls="collapseThree">
-                                        <span>03</span>
-                                        Where does it come from?
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                 data-parent="#accordion">
-                                <div class="card-body">
-                                    <div class="lisetd">
-                                        <p>It is a long established fact that a reader will be distracted by the
-                                            readable content of a page when looking at its layout. The point of using
-                                            Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
-                                            opposed to using Content here, content here making it look like readable
-                                            English It is a long established fact that a reader will be distracted by
-                                            the readable content of a page when looking at its layout. The point of
-                                            using Lorem Ipsum is that it has a more-or-less normal distribution of
-                                            letters, as opposed to using Content here, content here making it look like
-                                            readable English.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\SettingController;
+use App\Models\Page;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Admin\StreamController;
@@ -65,7 +66,16 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     route::post('/stream/stop/{course}', [StreamController::class, 'stop'])->name('admin.stopStream');
 
     //cms
-    Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
+//    Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
+    Route::match(['get', 'post'], '/cms/faq', 'CmsController@faq')->name('admin.cms.faq');
+
+    //faq section
+    Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
+    Route::post('/faq/create', 'FaqController@store')->name('admin.faq.create');
+    Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
+//    Route::get('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
+    Route::get('/faq/edit/{id}', 'FaqController@edit')->name('admin.faq.edit');
+    Route::post('/faq/update/{id}', 'FaqController@update')->name('admin.faq.update');
 });
 
 //Customer routes
@@ -130,7 +140,13 @@ Route::get('/about-us', function () {
 })->name('front.about-us');
 
 Route::get('/faqs', function () {
-    return view('front.faqs');
+    $faqs = \App\Models\Faq::all();
+    $faqPage = Page::where('name', 'FAQ')->first();
+    if($faqPage){
+        $data = json_decode($faqPage->content);
+        return view('front.faqs', compact('data', 'faqs', 'faqPage'));
+    }
+    return view('front.faqs', compact('faqPage', 'faqs'));
 })->name('front.faqs');
 
 Route::get('/judiann-portfolio', function () {

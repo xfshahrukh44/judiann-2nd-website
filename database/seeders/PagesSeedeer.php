@@ -14,6 +14,7 @@ class PagesSeedeer extends Seeder
      */
     public function run()
     {
+        Page::query()->truncate();
         Page::create([
             'name' => 'About Judiann',
             'slug' => 'about-judiann',

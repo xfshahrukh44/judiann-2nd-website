@@ -9,7 +9,10 @@ use App\Models\Course;
 use App\Models\CourseSession;
 use App\Models\LatestUpdate;
 use App\Models\Page;
+use App\Models\PortfolioImage;
+use App\Models\ProductImage;
 use App\Models\Settings;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +27,9 @@ class FrontController extends Controller
     public function home(Request $request)
     {
         $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
-        return view('front.home', compact('latest_updates'));
+        $students = Student::all();
+
+        return view('front.home', compact('latest_updates', 'students'));
     }
 
     public function schedule(Request $request)
@@ -259,5 +264,19 @@ class FrontController extends Controller
         } catch (\Exception $exception) {
             return redirect()->back()->with('errors', $exception->getMessage());
         }
+    }
+
+    public function studentsWork(Request $request)
+    {
+        $portfolio_images = PortfolioImage::all();
+
+        return view('front.students-work', compact('portfolio_images'));
+    }
+
+    public function individualStudentsWork(Request $request, $student_id)
+    {
+        $student = Student::find($student_id);
+
+        return view('front.individual-students-work', compact('student'));
     }
 }

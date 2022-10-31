@@ -168,42 +168,16 @@
         <div class="container-fluid">
             <h2 class="headOne">Student’s Work</h2>
             <div class="row">
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student1.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student1.jpg')}}" alt="img">
-                    </a>
-                    <h6>Julie Moon</h6>
-                </div>
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student2.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student2.jpg')}}" alt="img">
-                    </a>
-                    <h6>Julie Moon</h6>
-                </div>
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student6.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student6.jpg')}}" alt="img">
-                    </a>
-                    <h6>Julie Moon</h6>
-                </div>
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student15.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student15.jpg')}}" alt="img">
-                    </a>
-                    <h6>Julie Moon</h6>
-                </div>
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student7.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student7.jpg')}}" alt="img">
-                    </a>
-                    <h6>Julie Moon</h6>
-                </div>
-                <div class="col-md-4">
-                    <a data-fancybox href="{{asset('front/images/student5.jpg')}}">
-                        <img class="img-fluid" src="{{asset('front/images/student5.jpg')}}" alt="img">
-                    </a>
-                    <h6>Camey Liu</h6>
-                </div>
+
+                @foreach($students as $student)
+                    <div class="col-md-4">
+                        <a href="{{route('front.individual-students-work', $student->id)}}">
+                            <img class="img-fluid" src="{{$student->get_student_image()}}" alt="img">
+                        </a>
+                        <h6>{{$student->name}}</h6>
+                    </div>
+                @endforeach
+
                 <div class="col-md-12 mt-4 text-center">
                     <a href="{{route('front.students-work')}}" class="themeBtn">View All</a>
                 </div>

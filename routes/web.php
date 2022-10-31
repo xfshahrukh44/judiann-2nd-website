@@ -72,6 +72,14 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/contact', 'CmsController@contactUs')->name('admin.cms.contactUs');
     Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
 
+    //cms - student's work
+    Route::get('student', 'CmsController@student_index')->name('student');
+    Route::match(['get', 'post'], '/add-student', 'CmsController@student_add')->name('admin.add-student');
+    Route::match(['get', 'post'], '/student-edit/{id}', 'CmsController@student_edit')->name('admin.edit-student');
+    Route::get('/student-view/{id}', 'CmsController@student_show')->name('student-view');
+    Route::delete('student/delete/{id}', 'CmsController@student_destroy');
+    Route::get('portfolio-image/delete/{id}', 'CmsController@portfolio_image_destroy')->name('admin.portfolio-image-destroy');
+
     //faq section
     Route::get('/faq', 'FaqController@index')->name('admin.faq.index');
     Route::post('/faq/create', 'FaqController@store')->name('admin.faq.create');
@@ -130,6 +138,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
+
+    //student work
+    Route::get('/students-work', 'FrontController@studentsWork')->name('front.students-work');
+    Route::get('/individual-students-work/{student_id}', 'FrontController@individualStudentsWork')->name('front.individual-students-work');
 
     //contact us
     Route::post('/contact', 'FrontController@send_front_mail')->name('front.send_front_mail');
@@ -191,10 +203,6 @@ Route::get('/judiann-portfolio', function () {
 Route::get('/services', function () {
     return view('front.services');
 })->name('front.services');
-
-Route::get('/students-work', function () {
-    return view('front.students-work');
-})->name('front.students-work');
 
 Route::get('/video-chatting', function () {
     return view('front.videoChatting');

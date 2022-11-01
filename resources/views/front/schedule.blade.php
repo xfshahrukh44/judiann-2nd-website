@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
-@section('title', 'Schedule')
-@section('description', '')
+@section('title', !empty($schedule) ? (!empty($data->meta_title) ? $data->meta_title : 'Schedule') : 'Schedule')
+@section('description', !empty($schedule) ? (!empty($data->meta_description) ? $data->meta_description : '') : '')
 @section('keywords', '')
 
 @section('content')
@@ -9,13 +9,15 @@
 
 
     <div class="main-slider">
-        <img class="img-fluid w-100" src="{{asset('front/images/BannerImg.jpg')}}" alt="First slide">
+        <img class="img-fluid w-100"
+             src="{{!empty($schedule) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
+             alt="First slide">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="slideContent">
-                            <h2 class="headOne">Schedule A Class</h2>
+                            <h2 class="headOne">{{!empty($schedule) ? (!empty($data->banner_title) ? $data->banner_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
                         </div>
                     </div>
                 </div>
@@ -28,12 +30,14 @@
     <section class="contactInnr">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online" type="button"
+                <button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online"
+                        type="button"
                         role="tab" aria-controls="home" aria-selected="true">Online
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link btn_physical_batches" id="profile-tab" data-toggle="tab" data-target="#onsite" type="button"
+                <button class="nav-link btn_physical_batches" id="profile-tab" data-toggle="tab" data-target="#onsite"
+                        type="button"
                         role="tab" aria-controls="profile" aria-selected="false">On-Site
                 </button>
             </li>
@@ -121,7 +125,7 @@
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-12">
-                    <h2 class="headOne text-center my-5">Schedule A Class</h2>
+                    <h2 class="headOne text-center my-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
                 </div>
                 <div class="col-md-6">
                     <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
@@ -252,7 +256,7 @@
                 }
             });
 
-            $('.btn_online_batches').on('click', function() {
+            $('.btn_online_batches').on('click', function () {
                 $('.online_course_type').prop('hidden', false);
                 $('.online_course_type').prop('required', true);
                 $('.physical_course_type').prop('hidden', true);
@@ -262,7 +266,7 @@
                 $('.physical_class_type').val('');
                 $('.physical_class_type_wrapper').prop('hidden', true);
             });
-            $('.btn_physical_batches').on('click', function() {
+            $('.btn_physical_batches').on('click', function () {
                 $('.online_course_type').prop('hidden', true);
                 $('.online_course_type').prop('required', false);
                 $('.physical_course_type').prop('hidden', false);

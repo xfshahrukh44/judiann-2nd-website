@@ -41,7 +41,7 @@
                         </div>
                         <div class="videoControllers" style="z-index: 1;">
                             <a href="#" id="btn_revert_stream" data-user="" hidden><i class="fas fa-undo"></i></a>
-                            <form action="{{route('admin.stopStream', $course->id)}}" method="POST">
+                            <form action="{{route('admin.stopStream', $batch->id)}}" method="POST">
                                 @csrf
                                 <button type="submit">
                                     <i class="fas fa-phone"></i>
@@ -80,11 +80,11 @@
     <script src="{{asset('js/video-streaming-utils.js')}}"></script>
     <script>
         let auth_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
-        let course_id = `{{ $course->id }}`;
+        let batch_id = `{{ $batch->id }}`;
         let avatar_image_url = '{{asset('images/avatar.png')}}';
 
         $(document).ready(function () {
-            //establish course_id, session_id, token
+            //establish batch_id, session_id, token
 
             userMediaPermission()
                 .then(stream => {
@@ -103,7 +103,7 @@
                                 // addVideoStream(video, userVideoStream, call.peer);
                             });
                         });*/
-                        broadcasterInitPresenceChannel({echo: window.Echo, auth_id, channel_id: course_id});
+                        broadcasterInitPresenceChannel({echo: window.Echo, auth_id, channel_id: batch_id});
                     });
 
                 })
@@ -111,7 +111,7 @@
                     alert('Error! ' + err.message)
                 })
 
-            /*var conn = peer.connect('peer-course-' + course_id, {
+            /*var conn = peer.connect('peer-batch-' + batch_id, {
                 'host': '/',
                 'port': '6002'
             });
@@ -124,10 +124,10 @@
 
             //call
             // var constraints = { video: true, audio: true };
-            // var call = peer.call('peer-course-' + course_id, userMediaPermission().then().catch());
+            // var call = peer.call('peer-batch-' + batch_id, userMediaPermission().then().catch());
 
             //socket: on viewer raise hand
-            window.Echo.channel('user-raised-hand-' + course_id)
+            window.Echo.channel('user-raised-hand-' + batch_id)
                 .listen('ViewerRaisedHand', (e) => {
                     toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
                     $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
@@ -146,7 +146,7 @@
                 $('#btn_revert_stream').prop('hidden', false);
                 $('#btn_revert_stream').data('user', customer_id);
 
-                const viewer_stream_c = viewer_streams['peer-course-user-' + customer_id]
+                const viewer_stream_c = viewer_streams['peer-batch-user-' + customer_id]
                 const [videoTrack] = viewer_stream_c.getVideoTracks();
                 const [audioTrack] = viewer_stream_c.getAudioTracks();
                 showMyVideo(viewer_stream_c)
@@ -177,7 +177,7 @@
                 }*/
 
 
-                // console.log('user stream', viewer_streams['peer-course-user-' + customer_id], broadcaster_stream.getTracks())
+                // console.log('user stream', viewer_streams['peer-batch-user-' + customer_id], broadcaster_stream.getTracks())
 
                 // //toggle session
                 // // $('#subscriber').html('');
@@ -191,7 +191,7 @@
 
                 {{--//ajax to fire event--}}
                 /*var url = "{{route('admin.allowUserScreen', ['temp', 'tump'])}}";
-                url = url.replace('temp', course_id);
+                url = url.replace('temp', batch_id);
                 url = url.replace('tump', customer_id);
                 $.ajax({
                     url: url,

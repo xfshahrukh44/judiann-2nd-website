@@ -13,33 +13,31 @@ use Illuminate\Http\Request;
 
 class StreamController extends Controller
 {
-    public function stream(Request $request, $course_id)
+    public function stream(Request $request, $batch_id)
     {
-        $course = Course::find($course_id);
-        $active_batch = Batch::find($course->active_batch()->id);
-        $active_batch->is_streaming = true;
-        $active_batch->save();
+        $batch = Batch::find($batch_id);
+        $batch->is_streaming = true;
+        $batch->save();
 
-        return view('admin.stream.peer', compact('course'));
+        return view('admin.stream.peer', compact('batch'));
     }
 
-    public function allowUserScreen(Request $request, $course_id, $customer_id) {
-        return event(new AllowUserScreen($course_id, $customer_id));
+    public function allowUserScreen(Request $request, $batch_id, $customer_id) {
+        return event(new AllowUserScreen($batch_id, $customer_id));
     }
 
-    public function revertStream(Request $request, $course_id, $customer_id) {
-        return event(new RevertStream($course_id, $customer_id));
+    public function revertStream(Request $request, $batch_id, $customer_id) {
+        return event(new RevertStream($batch_id, $customer_id));
     }
 
-    public function viewerToggleBack(Request $request, $course_id, $customer_id) {
-        return event(new ViewerToggleBack($course_id, $customer_id));
+    public function viewerToggleBack(Request $request, $batch_id, $customer_id) {
+        return event(new ViewerToggleBack($batch_id, $customer_id));
     }
 
-    public function stop(Request $request, Course $course) {
-        $active_batch = Batch::find($course->active_batch()->id);
-        $active_batch->is_streaming = false;
-        $active_batch->save();
-        event(new StopStreaming($course->id));
+    public function stop(Request $request, Batch $batch) {
+        $batch->is_streaming = false;
+        $batch->save();
+        event(new StopStreaming($batch->id));
         return view('blank');
     }
 }

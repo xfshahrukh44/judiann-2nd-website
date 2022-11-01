@@ -14,16 +14,16 @@ class UserJoined implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $data, $course_id;
+    public $data, $batch_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($customer, $course_id)
+    public function __construct($customer, $batch_id)
     {
-        $this->course_id = $course_id;
+        $this->batch_id = $batch_id;
         $this->data = [
             'customer' => $customer
         ];
@@ -36,6 +36,6 @@ class UserJoined implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('user-joined-' . $this->course_id);
+        return new Channel('user-joined-' . $this->batch_id);
     }
 }

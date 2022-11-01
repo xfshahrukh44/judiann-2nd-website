@@ -76,7 +76,7 @@
     <script src="{{asset('js/video-streaming-utils.js')}}"></script>
     <script>
         let auth_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
-        let course_id = `{{ $course->id }}`;
+        let batch_id = `{{ $batch->id }}`;
         let avatar_image_url = '{{asset('images/avatar.png')}}';
 
         $(document).ready(function() {
@@ -96,7 +96,7 @@
                                 // addVideoStream(video, userVideoStream, call.peer);
                             });
                         });
-                        let channel = customerInitPresenceChannel({echo: window.Echo, channel_id: course_id});
+                        let channel = customerInitPresenceChannel({echo: window.Echo, channel_id: batch_id});
                         channel.listen('StopStreaming', () => {
                             $('.class_ended_wrapper').css('z-index', 1);
                             $('.class_ended_wrapper').prop('hidden', false);
@@ -114,7 +114,7 @@
                 var url = "{{route('customer.raise_hand', 'temp')}}";
                 let _this = $(this);
                 _this.prop('disabled', true);
-                url = url.replace('temp', course_id);
+                url = url.replace('temp', batch_id);
                 $.ajax({
                     url: url,
                     type: 'GET',

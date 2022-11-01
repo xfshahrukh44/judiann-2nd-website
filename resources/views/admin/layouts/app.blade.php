@@ -172,6 +172,14 @@
                             <p>Course</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('batch')}}"
+                           class="nav-link {{ request()->IS('admin/batch') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Batch</p>
+                        </a>
+                    </li>
                         {{--CMS--}}
                     <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-judiann') || request()->IS('admin/cms/contact') || request()->IS('admin/cms/portfolio') || request()->IS('admin/cms/faq') || request()->IS('admin/student') ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link ">
@@ -211,7 +219,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('admin.cms.portfolio')}}"
-                                   class="nav-link {{ request()->IS('admin/cms/portfolio') ? 'active' : '' }}">
+                                   class="nav-link {{ request()->IS('admin/cms/judiann-portfolio') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>
                                     <p>
                                         Judiann's Portfolio

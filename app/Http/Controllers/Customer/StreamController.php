@@ -5,28 +5,25 @@ namespace App\Http\Controllers\Customer;
 use App\Events\UserJoined;
 use App\Events\ViewerRaisedHand;
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StreamController extends Controller
 {
-    public function stream(Request $request, $course_id, $batch_id)
+    public function stream(Request $request, $batch_id)
     {
-        $course = Course::find($course_id);
-
-        if($course->active_batch()->id != $batch_id) {
-            return redirect()->back()->with('error', 'You are not part of the active batch.');
-        }
+        $batch = Batch::find($batch_id);
 
         //fire user has joined event
-        event(new UserJoined(Auth::user(), $course_id));
+        event(new UserJoined(Auth::user(), $batch_id));
 
-        return view('customer.stream.peer', compact('course'));
+        return view('customer.stream.peer', compact('batch'));
     }
 
-    public function raiseHand(Request $request, $course_id)
+    public function raiseHand(Request $request, $batch_id)
     {
-        return event(new ViewerRaisedHand(Auth::user(), $course_id));
+        return event(new ViewerRaisedHand(Auth::user(), $batch_id));
     }
 }

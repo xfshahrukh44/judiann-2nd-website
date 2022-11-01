@@ -34,7 +34,14 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::get('/course-view/{id}', 'CourseController@show')->name('course-view');
     Route::delete('course/destroy/{id}', 'CourseController@destroy');
 
-    //course
+    //batch
+    Route::get('batch', 'BatchController@index')->name('batch');
+    Route::match(['get', 'post'], '/add-batch', 'BatchController@addBatch')->name('admin.add-batch');
+    Route::match(['get', 'post'], '/batch-edit/{id}', 'BatchController@edit')->name('admin.edit-batch');
+    Route::get('/batch-view/{id}', 'BatchController@show')->name('batch-view');
+    Route::delete('batch/destroy/{id}', 'BatchController@destroy');
+
+    //order
     Route::get('order', 'BatchSessionController@index')->name('order');
     Route::get('/order-view/{id}', 'BatchSessionController@show')->name('order-view');
 
@@ -59,11 +66,11 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/paymentgatway', 'PaymentGatewayController@index')->name('paymentgatway');
 
     //stream
-    route::get('/stream/{course_id}', [StreamController::class, 'stream'])->name('admin.stream');
-    route::get('/allow-user-screen/{course_id}/{customer_id}', [StreamController::class, 'allowUserScreen'])->name('admin.allowUserScreen');
-    route::get('/revert-stream/{course_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
-    route::get('/viewer-toggle-back/{course_id}/{customer_id}', [StreamController::class, 'viewerToggleBack'])->name('admin.viewerToggleBack');
-    route::post('/stream/stop/{course}', [StreamController::class, 'stop'])->name('admin.stopStream');
+    route::get('/stream/{batch_id}', [StreamController::class, 'stream'])->name('admin.stream');
+    route::get('/allow-user-screen/{batch_id}/{customer_id}', [StreamController::class, 'allowUserScreen'])->name('admin.allowUserScreen');
+    route::get('/revert-stream/{batch_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
+    route::get('/viewer-toggle-back/{batch_id}/{customer_id}', [StreamController::class, 'viewerToggleBack'])->name('admin.viewerToggleBack');
+    route::post('/stream/stop/{batch}', [StreamController::class, 'stop'])->name('admin.stopStream');
 
     //cms
     Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
@@ -113,8 +120,8 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     Route::get('/batch-session-view/{id}', 'BatchSessionController@show')->name('customer.course_session.view');
 
     //stream
-    route::get('/stream/{course_id}/{batch_id}', [SC::class, 'stream'])->name('customer.stream');
-    route::get('/raise-hand/{course_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
+    route::get('/stream/{batch_id}', [SC::class, 'stream'])->name('customer.stream');
+    route::get('/raise-hand/{batch_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
     route::get('/stream/get-publisher-token/{session_id}', function($session_id) {
         session()->put('publisher_token', get_fresh_publisher_opentok_token($session_id));
 //        return get_fresh_publisher_opentok_token($session_id);

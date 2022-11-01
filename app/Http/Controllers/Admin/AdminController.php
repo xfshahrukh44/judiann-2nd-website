@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Customers;
 use App\Models\Order;
@@ -14,7 +15,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $courses = Course::all();
+        $batches = Batch::all();
 
         $events = [];
         $colors = [
@@ -41,25 +42,25 @@ class AdminController extends Controller
             'mediumvioletred',
             'orangered',
         ];
-        foreach ($courses as $course) {
+        foreach ($batches as $batch) {
             $random_index = array_rand($colors);
 
-            if(is_null($course->active_batch()->date_range)) {
-                foreach ($course->active_batch()->batch_dates as $batch_date) {
+            if(is_null($batch->date_range)) {
+                foreach ($batch->batch_dates as $batch_date) {
                     $events[] = [
-                        'title' => $course->name,
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
                         'date' => $batch_date->date,
                         'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                         'color' => $colors[$random_index],
                     ];
                 }
             } else {
-                $current_date = Carbon::parse($course->active_batch()->date_range_from);
-                while ($current_date <= Carbon::parse($course->active_batch()->date_range_to)) {
+                $current_date = Carbon::parse($batch->date_range_from);
+                while ($current_date <= Carbon::parse($batch->date_range_to)) {
                     $events[] = [
-                        'title' => $course->name,
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
                         'date' => $current_date,
-                        'time' => $course->active_batch()->time_from . ' to ' . $course->active_batch()->time_to,
+                        'time' => $batch->time_from . ' to ' . $batch->time_to,
                         'color' => $colors[$random_index],
                     ];
                     $current_date = Carbon::parse($current_date)->addDay();

@@ -44,7 +44,7 @@
 {{--                                <button class="btn btn-success" style="float: right;">Join</button>--}}
 {{--                            @endif--}}
                             @if($content->class_type == 'online' && $content->batch->is_streaming)
-                                <a target="_blank" href="{{route('customer.stream', [$content->batch->course_id, $content->batch_id])}}" class="btn btn-success" style="float: right;">Join</a>
+                                <a target="_blank" href="{{route('customer.stream', [$content->batch_id])}}" class="btn btn-success" style="float: right;">Join</a>
                             @endif
                         </div>
 
@@ -61,6 +61,11 @@
                                     <tr>
                                         <th>Course Name</th>
                                         <td>{{$content->batch->course->name??''}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Batch Name</th>
+                                        <td>{{$content->batch->name??''}}</td>
                                     </tr>
 
                                     <tr>

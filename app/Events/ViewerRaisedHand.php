@@ -20,11 +20,11 @@ class ViewerRaisedHand implements ShouldBroadcast
      * @return void
      */
 
-    public $data, $course_id, $customer;
+    public $data, $batch_id, $customer;
 
-    public function __construct($customer, $course_id)
+    public function __construct($customer, $batch_id)
     {
-        $this->course_id = $course_id;
+        $this->batch_id = $batch_id;
         $this->data = [
             'customer' => $customer
         ];
@@ -37,6 +37,6 @@ class ViewerRaisedHand implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('user-raised-hand-' . $this->course_id);
+        return new Channel('user-raised-hand-' . $this->batch_id);
     }
 }

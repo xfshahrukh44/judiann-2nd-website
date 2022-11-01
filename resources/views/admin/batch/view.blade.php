@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', (isset($content->name) ? $content->name : ''). ' Course')
+@section('title', (isset($content->name) ? $content->name : ''). ' Batch')
 @section('page_css')
 <!-- Datatables -->
 <link href="{{ asset('admin/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
                 <div class="col-sm-6 offset-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Course Detail</li>
+                        <li class="breadcrumb-item active">Batch Detail</li>
                     </ol>
                 </div>
             </div>
@@ -39,11 +39,11 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Course Detail</h3>
+                            <h3 class="card-title">Batch Detail</h3>
 {{--                            @if(course_is_joinable($content->id))--}}
 {{--                                <button class="btn btn-success" style="float: right;">Start streaming</button>--}}
 {{--                            @endif--}}
-{{--                            <a target="_blank" href="{{route('admin.stream', $content->id)}}" class="btn btn-success" style="float: right;">Start streaming</a>--}}
+                            <a target="_blank" href="{{route('admin.stream', $content->id)}}" class="btn btn-success" style="float: right;">Start streaming</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -51,25 +51,40 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-
-                                        <td>{{$content->id??''}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>Course Name</th>
+                                        <th>Batch Name</th>
                                         <td>{{$content->name??''}}</td>
                                     </tr>
-
                                     <tr>
-                                        <th>Course Description</th>
-                                        <td>{{$content->description??''}}</td>
+                                        <th>Course</th>
+                                        <td>{{$content->course->name??''}}</td>
                                     </tr>
-
-                                    <tr>
-                                        <th>Course Fees</th>
-                                        <td>{{$content->fees??''}}</td>
-                                    </tr>
+                                    @if(!is_null($content->date_range))
+                                        <tr>
+                                            <th>Date</th>
+                                            <td>{{$content->date_range??''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>From</th>
+                                            <td>{{Carbon\Carbon::parse($content->time_from)->format('g:i A')??''}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>To</th>
+                                            <td>{{Carbon\Carbon::parse($content->time_to)->format('g:i A')??''}}</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                        </tr>
+                                        @foreach($content->batch_dates as $batch_date)
+                                            <tr>
+                                                <td>{{$batch_date->date}}</td>
+                                                <td>{{Carbon\Carbon::parse($batch_date->time_from)->format('g:i A')}}</td>
+                                                <td>{{Carbon\Carbon::parse($batch_date->time_to)->format('g:i A')}}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </thead>
                                 <tbody>
 

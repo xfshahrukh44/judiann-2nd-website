@@ -26,18 +26,22 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
-        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
+        $batches = Batch::all();
+//        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
         $students = Student::all();
 
-        return view('front.home', compact('latest_updates', 'students'));
+        return view('front.home', compact('batches', 'students'));
     }
 
     public function schedule(Request $request)
     {
-        $courses = Course::all();
-        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
+        $online_batches = Batch::where('is_online', 1)->get();
+        $physical_batches = Batch::where('is_physical', 1)->get();
 
-        return view('front.schedule', compact('courses', 'latest_updates'));
+//        $courses = Course::all();
+//        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
+
+        return view('front.schedule', compact('online_batches', 'physical_batches'));
     }
 
     public function schedule_class(Request $request)
@@ -48,7 +52,6 @@ class FrontController extends Controller
             'email' => 'required|email',
             'phone' => 'required',
             'class_type' => 'required',
-            'course_id' => 'required',
             'physical_class_type' => 'sometimes',
         ));
 
@@ -68,24 +71,22 @@ class FrontController extends Controller
 
             //check if user already registered on course
             $course = Course::find($request->input('course_id'));
-            $batch_check = BatchSession::where('user_id', $user->id)->where('batch_id', $course->active_batch()->id)->first();
+            $batch_check = BatchSession::where('user_id', $user->id)->where('batch_id', $request->input('batch_id'))->first();
             if($batch_check) {
                 return back()->withErrors(['You have already registered in the batch.']);
             }
 
             //if user has already not yet registered a course (should generate password only then)
-            if(count($user->course_sessions) == 0) {
+            if(count($user->batch_sessions) == 0) {
                 $user->password = hash::make($password);
                 $user->save();
             }
         }
 
-        $course = Course::find($request->input('course_id'));
-        $active_batch = Batch::find($course->active_batch()->id);
+        $batch = Batch::find($request->input('batch_id'));
         $batch_session_array = [
             'user_id' => $user->id,
-            'batch_id' => $active_batch->id,
-            'course_id' => $course->id,
+            'batch_id' => $batch->id,
             'class_type' => $request->input('class_type'),
             'physical_class_type' => $request->input('physical_class_type'),
         ];
@@ -93,7 +94,7 @@ class FrontController extends Controller
         session()->put('user', $user);
         session()->put('batch_session_array', $batch_session_array);
         session()->put('password', (count($user->batch_sessions) == 0) ? $password : null);
-        session()->put('course_fees', $course->fees);
+        session()->put('course_fees', $batch->course->fees);
 
         return view('front.payment');
     }
@@ -163,13 +164,12 @@ class FrontController extends Controller
                 if ($charge['status'] === 'succeeded') {
 
                     //create course session
-                    BatchSession::create($batch_session_array);
+                    $batch_session = BatchSession::create($batch_session_array);
 
                     //send mail to customer
                     $data = [];
-                    $course = Course::find($batch_session_array['course_id']);
                     $data['name'] = $user->name;
-                    $data['course_name'] = $course->name;
+                    $data['course_name'] = $batch_session->batch->course->name;
                     $data['email'] = $user->email;
                     $data['password'] = $password;
                     $data['customer_portal_link'] = route('customer.dashboard');
@@ -177,7 +177,7 @@ class FrontController extends Controller
 
                     //delete session variables
                     session()->remove('user');
-                    session()->remove('course_session_array');
+                    session()->remove('batch_session_array');
                     session()->remove('password');
                     session()->remove('course_fees');
 

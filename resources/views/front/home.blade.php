@@ -97,7 +97,7 @@
         </div>
     </section>
 
-    @if(count($latest_updates) > 0)
+    @if(count($batches) > 0)
         <section class="lastestSec">
             <div class="container">
                 <div class="row align-items-center">
@@ -106,13 +106,13 @@
                     </div>
                     <div class="col-12">
                         <div class="lastSlider">
-                            @foreach($latest_updates as $latest_update)
+                            @foreach($batches as $batch)
                                 <div class="lastBox" style="height: 300px; overflow-y: scroll;">
-                                    <h3>{{$latest_update->title}}</h3>
-                                    {!! get_readable_description($latest_update->course->description) !!}
+                                    <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                    {!! get_readable_description($batch->course->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>
-                                    {!! get_course_timings($latest_update->course) !!}
-                                    <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                    {!! get_batch_timings($batch) !!}
+                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                 </div>
                             @endforeach
                         </div>

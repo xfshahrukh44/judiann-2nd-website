@@ -76,6 +76,39 @@
                             </form>
                         </div>
                         <!-- /.card -->
+
+                        @if(isset($content) && count($content->portfolio_images) > 0)
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Portfolio Images</h3>
+                                </div>
+
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr style="word-break: break-all">
+                                            <td>
+                                                <div class="row">
+                                                    @foreach($content->portfolio_images as $portfolio_image)
+                                                        <div class="col-md-3">
+                                                            <img height="200" src="{{$portfolio_image->get_portfolio_image()}}" alt="">
+                                                            <a href="{{route('admin.portfolio-image-destroy', $portfolio_image->id)}}" class="btn btn-danger btn-sm" style="position: absolute; left: 8px;"><i class="fa fa-trash"></i></a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        @endif
                     </div>
                 </div>
             </div>

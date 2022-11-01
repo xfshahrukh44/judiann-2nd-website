@@ -14,16 +14,16 @@ class RevertStream implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $customer_id, $course_id;
+    public $customer_id, $batch_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($course_id, $customer_id)
+    public function __construct($batch_id, $customer_id)
     {
-        $this->course_id = $course_id;
+        $this->batch_id = $batch_id;
         $this->customer_id = $customer_id;
     }
 
@@ -34,6 +34,6 @@ class RevertStream implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('revert-screen-'.$this->course_id.'-'.$this->customer_id);
+        return new Channel('revert-screen-'.$this->batch_id.'-'.$this->customer_id);
     }
 }

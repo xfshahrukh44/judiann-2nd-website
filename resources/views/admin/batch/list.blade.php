@@ -1,5 +1,5 @@
- @extends('customer.layouts.app')
-@section('title', 'Courses')
+@extends('admin.layouts.app')
+@section('title', 'Batches')
 @section('page_css')
     <style>
         .addBtn{
@@ -18,12 +18,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Courses</h1>
+                        <h1>Batches</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ url('customer/dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Registered Courses</li>
+                            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Category</li>
                         </ol>
                     </div>
                 </div>
@@ -37,6 +37,9 @@
                         <!-- /.card -->
 
                         <div class="card">
+                            <div class="card-header">
+                                <a class="btn btn-primary pull-right addBtn" href="{{route('admin.add-batch')}}">Add Batch</a>
+                            </div>
                             <div class="col-md-12">
 
                             </div>
@@ -46,12 +49,12 @@
                                     <thead>
                                     <tr style="text-align: center">
                                         <th>#</th>
-                                        <th>Course Name</th>
-                                        <th>Batch Name</th>
-                                        <th>Course Fees</th>
-                                        <th>Class Type</th>
-                                        <th>Physical Class Type</th>
-                                        <th>Registration Date</th>
+                                        <th>Name</th>
+                                        <th>Course</th>
+                                        <th>Is online</th>
+                                        <th>Is physical</th>
+                                        <th># of Seats</th>
+                                        <th>Created At</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -117,22 +120,23 @@
                 serverSide: true,
                 pageLength: 10,
                 ajax: {
-                    url: `{{route('customer.course_session')}}`,
+                    url: `{{route(request()->segment(2))}}`,
                 },
                 columns: [
 
 
                     {data: 'id', name: 'id'},
-                    {data: 'batch.course.name', name: 'course_name'},
-                    {data: 'batch.name', name: 'batch_name'},
-                    {data: 'batch.course.fees', name: 'course_fees'},
-                    {data: 'class_type', name: 'class_type'},
-                    {data: 'physical_class_type', name: 'physical_class_type'},
+                    {data: 'name', name: 'name'},
+                    {data: 'course', name: 'course'},
+                    {data: 'is_online', name: 'is_online'},
+                    {data: 'is_physical', name: 'is_physical'},
+                    {data: 'number_of_seats', name: 'number_of_seats'},
                     {data: 'created_at', name: 'created_at'},
 
                     {data: 'action', name: 'action', orderable: false}
                 ],
-                order: []
+
+                "order": [[ 6, "desc" ]]
 
             });
             var delete_id;

@@ -28,12 +28,12 @@
     <section class="contactInnr">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#Online" type="button"
+                <button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online" type="button"
                         role="tab" aria-controls="home" aria-selected="true">Online
                 </button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#onsite" type="button"
+                <button class="nav-link btn_physical_batches" id="profile-tab" data-toggle="tab" data-target="#onsite" type="button"
                         role="tab" aria-controls="profile" aria-selected="false">On-Site
                 </button>
             </li>
@@ -41,36 +41,36 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
-                    @foreach($latest_updates as $key => $latest_update)
+                    @foreach($online_batches as $key => $batch)
                         <div class="row align-items-center">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
+                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_course_timings($latest_update->course) !!}
-                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                        {!! get_batch_timings($batch) !!}
+                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{$latest_update->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
+                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_course_timings($latest_update->course) !!}
-                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                        {!! get_batch_timings($batch) !!}
+                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                             @endif
@@ -80,36 +80,36 @@
             </div>
             <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
-                    @foreach($latest_updates as $key => $latest_update)
+                    @foreach($physical_batches as $key => $batch)
                         <div class="row align-items-center">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
+                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_course_timings($latest_update->course) !!}
-                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                        {!! get_batch_timings($batch) !!}
+                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{asset("front/images/class3.jpg")}}" alt="img">
+                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$latest_update->title}}</h3>
-                                        <p>{!! get_readable_description($latest_update->course->description) !!}</p>
+                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_course_timings($latest_update->course) !!}
-                                        <h4 class="text-white">Fees: ${{round($latest_update->course->fees, 2)}}</h4>
+                                        {!! get_batch_timings($batch) !!}
+                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                             @endif
@@ -163,19 +163,33 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Select Course Type:</label>
-                                            <select class="form-control course_type"
+                                            <select class="form-control course_type online_course_type"
                                                     placeholder="Select Course Type"
-                                                    name="course_id" required>
+                                                    name="batch_id" required>
                                                 <option disabled selected value="">Select Course Type:</option>
-                                                @foreach($courses as $course)
-                                                    <option class="option_course_type"
-                                                            data-online="{{$course->is_online}}"
-                                                            data-physical="{{$course->is_physical}}"
-                                                            value="{{$course->id}}">{{$course->name}} </option>
+                                                @foreach($online_batches as $batch)
+                                                    <option class="option_batch_type"
+                                                            data-online="{{$batch->is_online}}"
+                                                            data-physical="{{$batch->is_physical}}"
+                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                @endforeach
+                                            </select>
+                                            <select class="form-control course_type physical_course_type"
+                                                    placeholder="Select Course Type"
+                                                    name="batch_id" hidden>
+                                                <option disabled selected value="">Select Course Type:</option>
+                                                @foreach($physical_batches as $batch)
+                                                    <option class="option_batch_type"
+                                                            data-online="{{$batch->is_online}}"
+                                                            data-physical="{{$batch->is_physical}}"
+                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+
+                                    <input type="hidden" name="class_type" class="class_type" value="online">
+
                                     <div class="col-12 physical_class_type_wrapper" hidden>
                                         <div class="form-group">
                                             <label>Select Physical Class Type:</label>
@@ -237,6 +251,30 @@
                     $('.physical_class_type_wrapper').prop('hidden', false);
                 }
             });
+
+            $('.btn_online_batches').on('click', function() {
+                $('.online_course_type').prop('hidden', false);
+                $('.online_course_type').prop('required', true);
+                $('.physical_course_type').prop('hidden', true);
+                $('.physical_course_type').prop('required', false);
+                $('.class_type').val('online');
+                $('.physical_class_type').prop('required', false);
+                $('.physical_class_type').val('');
+                $('.physical_class_type_wrapper').prop('hidden', true);
+            });
+            $('.btn_physical_batches').on('click', function() {
+                $('.online_course_type').prop('hidden', true);
+                $('.online_course_type').prop('required', false);
+                $('.physical_course_type').prop('hidden', false);
+                $('.physical_course_type').prop('required', true);
+                $('.class_type').val('physical');
+                $('.physical_class_type').prop('required', true);
+                $('.physical_class_type').val('');
+                $('.physical_class_type_wrapper').prop('hidden', false);
+            });
+            //on online <-> physical toggle
+            // online_course_type
+            // physical_course_type
         });
     </script>
 @endsection

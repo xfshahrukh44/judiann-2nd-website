@@ -245,6 +245,16 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.schedule')}}"
+                                   class="nav-link {{ request()->IS('admin/schedule') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Schedule a Class
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

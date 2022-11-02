@@ -38,10 +38,17 @@ class FrontController extends Controller
         $online_batches = Batch::where('is_online', 1)->get();
         $physical_batches = Batch::where('is_physical', 1)->get();
 
+        $schedule = Page::where('name', 'Schedule')->first();
+        if ($schedule) {
+            $data = json_decode($schedule->content);
+            return view('front.schedule', compact('schedule', 'data', 'online_batches', 'physical_batches'));
+        }
+        return view('front.schedule', compact('schedule', 'online_batches', 'physical_batches'));
+
 //        $courses = Course::all();
 //        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
 
-        return view('front.schedule', compact('online_batches', 'physical_batches'));
+//        return view('front.schedule', compact('online_batches', 'physical_batches'));
     }
 
     public function schedule_class(Request $request)
@@ -58,7 +65,7 @@ class FrontController extends Controller
         //check if user already exists on basis of email
         $user_check = User::where('email', $request->email)->where('role_id', '=', 2)->get();
         $password = $this->generateRandomString(8);
-        if(count($user_check) == 0) {
+        if (count($user_check) == 0) {
             $user = User::create([
                 'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
                 'email' => $request->email,
@@ -72,12 +79,12 @@ class FrontController extends Controller
             //check if user already registered on course
             $course = Course::find($request->input('course_id'));
             $batch_check = BatchSession::where('user_id', $user->id)->where('batch_id', $request->input('batch_id'))->first();
-            if($batch_check) {
+            if ($batch_check) {
                 return back()->withErrors(['You have already registered in the batch.']);
             }
 
             //if user has already not yet registered a course (should generate password only then)
-            if(count($user->batch_sessions) == 0) {
+            if (count($user->batch_sessions) == 0) {
                 $user->password = hash::make($password);
                 $user->save();
             }
@@ -217,10 +224,10 @@ class FrontController extends Controller
             $customer_portal_link = $data['customer_portal_link'];
 
             $message = 'Dear ' . $name . "<br /><br />";
-            $message .= 'Thank you for booking our '.$course_name.' course. Your system generated login details are below:' . "<br /><br />";
+            $message .= 'Thank you for booking our ' . $course_name . ' course. Your system generated login details are below:' . "<br /><br />";
             $message .= 'Email: ' . $email . "<br />";
             $message .= (!is_null($password)) ? 'Password: ' . $password . "<br />" : '';
-            $message .= 'Customer Portal Link: <a href="'.$customer_portal_link.'">'.$customer_portal_link.'</a>' . "<br /><br />";
+            $message .= 'Customer Portal Link: <a href="' . $customer_portal_link . '">' . $customer_portal_link . '</a>' . "<br /><br />";
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
@@ -232,7 +239,8 @@ class FrontController extends Controller
         }
     }
 
-    public function generateRandomString($length = 10) {
+    public function generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -269,8 +277,12 @@ class FrontController extends Controller
     public function studentsWork(Request $request)
     {
         $portfolio_images = PortfolioImage::all();
-
-        return view('front.students-work', compact('portfolio_images'));
+        $student_work = Page::where('name', 'Students Work')->first();
+        if ($student_work) {
+            $data = json_decode($student_work->content);
+            return view('front.students-work', compact('data', 'student_work', 'portfolio_images'));
+        }
+        return view('front.students-work', compact('portfolio_images', 'student_work'));
     }
 
     public function individualStudentsWork(Request $request, $student_id)

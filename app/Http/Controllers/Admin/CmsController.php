@@ -514,6 +514,7 @@ CmsController extends Controller
     final public function student_destroy(int $id)
     {
         $content = Student::find($id);
+        $portfolio = PortfolioImage::where('student_id', $id)->delete();
         $content->delete();
         echo 1;
     }

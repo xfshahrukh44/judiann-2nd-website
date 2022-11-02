@@ -14,6 +14,7 @@ use App\Models\ProductImage;
 use App\Models\Settings;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -38,17 +39,105 @@ class FrontController extends Controller
         $online_batches = Batch::where('is_online', 1)->get();
         $physical_batches = Batch::where('is_physical', 1)->get();
 
+        $online_events = [];
+        $physical_events = $online_events;
+        $online_colors = [
+            'black',
+            'red',
+            'purple',
+            'purple',
+            'fuchsia',
+            'green',
+            'lime',
+            'yellow',
+            'teal',
+            'aqua',
+            'blueviolet',
+            'coral',
+            'cornflowerblue',
+            'cyan',
+            'crimson',
+            'darkorange',
+            'gold',
+            'goldenrod',
+            'greenyellow',
+            'indianred',
+            'mediumvioletred',
+            'orangered',
+        ];
+        $physical_colors = $online_colors;
+
+        foreach ($online_batches as $batch) {
+            $random_index = array_rand($online_colors);
+
+            if(is_null($batch->date_range)) {
+                foreach ($batch->batch_dates as $batch_date) {
+                    $online_events[] = [
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'date' => $batch_date->date,
+                        'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
+                        'color' => $online_colors[$random_index],
+                        'description' => $batch->course->description,
+                        'img_src' => $batch->course->get_course_image()
+                    ];
+                }
+            } else {
+                $current_date = Carbon::parse($batch->date_range_from);
+                while ($current_date <= Carbon::parse($batch->date_range_to)) {
+                    $online_events[] = [
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'date' => $current_date,
+                        'time' => $batch->time_from . ' to ' . $batch->time_to,
+                        'color' => $online_colors[$random_index],
+                        'description' => $batch->course->description,
+                        'img_src' => $batch->course->get_course_image()
+                    ];
+                    $current_date = Carbon::parse($current_date)->addDay();
+                }
+            }
+
+            unset($online_colors[$random_index]);
+        }
+        foreach ($physical_batches as $batch) {
+            $random_index = array_rand($physical_colors);
+
+            if(is_null($batch->date_range)) {
+                foreach ($batch->batch_dates as $batch_date) {
+                    $physical_events[] = [
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'date' => $batch_date->date,
+                        'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
+                        'color' => $physical_colors[$random_index],
+                        'description' => $batch->course->description,
+                        'img_src' => $batch->course->get_course_image()
+                    ];
+                }
+            } else {
+                $current_date = Carbon::parse($batch->date_range_from);
+                while ($current_date <= Carbon::parse($batch->date_range_to)) {
+                    $physical_events[] = [
+                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'date' => $current_date,
+                        'time' => $batch->time_from . ' to ' . $batch->time_to,
+                        'color' => $physical_colors[$random_index],
+                        'description' => $batch->course->description,
+                        'img_src' => $batch->course->get_course_image()
+                    ];
+                    $current_date = Carbon::parse($current_date)->addDay();
+                }
+            }
+
+            unset($physical_colors[$random_index]);
+        }
+
         $schedule = Page::where('name', 'Schedule')->first();
+        $data = null;
+
         if ($schedule) {
             $data = json_decode($schedule->content);
-            return view('front.schedule', compact('schedule', 'data', 'online_batches', 'physical_batches'));
         }
-        return view('front.schedule', compact('schedule', 'online_batches', 'physical_batches'));
 
-//        $courses = Course::all();
-//        $latest_updates = LatestUpdate::with('course')->orderBy('created_at', 'DESC')->get();
-
-//        return view('front.schedule', compact('online_batches', 'physical_batches'));
+        return view('front.schedule', compact('online_batches', 'physical_batches', 'online_events', 'physical_events', 'schedule', 'data'));
     }
 
     public function schedule_class(Request $request)

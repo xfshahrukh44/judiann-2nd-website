@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\Settings;
 use Carbon\Carbon;
@@ -112,4 +113,14 @@ function get_batch_timings($batch) {
     }
 
     return $string;
+}
+
+function batch_is_full($batch) {
+    if(!$batch->is_physical || $batch->physical_class_type == 'in_person') {
+        return false;
+    }
+
+    $batch_sessions_count = BatchSession::where('batch_id', $batch->id)->where('class_type', 'physical')->where('physical_class_type', 'group')->count();
+
+    return $batch_sessions_count >= $batch->number_of_seats;
 }

@@ -77,9 +77,23 @@
                                         </span>
                                         @enderror
                                     </div>
+                                    <div class="form-group physical_class_type_wrapper" hidden>
+                                        <label for="is_physical">Physical Class Type</label>
+                                        <select class="form-control @error('physical_class_type') is-invalid @enderror physical_class_type" name="physical_class_type" id="physical_class_type">
+                                            <option value="">Select Physical Class Type:</option>
+                                            <option value="group" {!! isset($content) && $content->physical_class_type == 'group' ? 'selected' : '' !!}>Group classes</option>
+                                            <option value="in_person" {!! isset($content) && $content->physical_class_type == 'in_person' ? 'selected' : '' !!}>In-person</option>
+                                        </select>
+                                        @error('physical_class_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
-                                        <label for="is_physical" class="number_of_seats">Number of Seats</label>
-                                        <input type="text" class="form-control @error('number_of_seats') is-invalid @enderror" name="number_of_seats" id="number_of_seats" placeholder="Number of Seats" value="{{isset($content) && $content->number_of_seats ? $content->number_of_seats : 0}}" hidden>
+                                        <label for="is_physical" class="number_of_seats" {!! !isset($content) || $content->physical_class_type != 'group' ? 'hidden' : '' !!}>Number of Seats</label>
+                                        <input type="text" class="form-control @error('number_of_seats') is-invalid @enderror" name="number_of_seats" id="number_of_seats" placeholder="Number of Seats" value="{{isset($content) && $content->number_of_seats ? $content->number_of_seats : 0}}"
+                                            {!! !isset($content) || $content->physical_class_type != 'group' ? 'hidden' : '' !!}>
                                         @error('number_of_seats')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -234,6 +248,24 @@
             //on is_physical click
             $('#is_physical').on('change', function() {
                 if ($(this).prop('checked')) {
+                    $('.physical_class_type_wrapper').prop('hidden', false);
+                    $('.physical_class_type').prop('required', true);
+                } else {
+                    $('.physical_class_type_wrapper').prop('hidden', true);
+                    $('.physical_class_type').prop('required', false);
+
+                    $('#physical_class_type').val('');
+                    $('#number_of_seats').prop('hidden', true);
+                    $('.number_of_seats').prop('hidden', true);
+                    $('#number_of_seats').prop('required', false);
+                    $('.number_of_seats').prop('required', false);
+                }
+            });
+
+            //on physical_class_type change
+            $('#physical_class_type').on('change', function() {
+                //in_person
+                if ($(this).val() == 'group') {
                     $('#number_of_seats').prop('hidden', false);
                     $('.number_of_seats').prop('hidden', false);
                     $('#number_of_seats').prop('required', true);

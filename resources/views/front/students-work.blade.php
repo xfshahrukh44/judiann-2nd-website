@@ -177,7 +177,7 @@
             <div class="row">
                 @foreach($portfolio_images as $portfolio_image)
                     <div class="col-md-4">
-                        <a data-fancybox="" href="">
+                        <a data-fancybox="" href="{{$portfolio_image->get_portfolio_image()}}">
                             <img class="img-fluid" src="{{$portfolio_image->get_portfolio_image()}}" alt="img">
                         </a>
                         <h6 style="">{{$portfolio_image->student->name}}</h6>

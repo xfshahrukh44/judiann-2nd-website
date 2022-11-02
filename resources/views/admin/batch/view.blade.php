@@ -58,6 +58,31 @@
                                         <th>Course</th>
                                         <td>{{$content->course->name??''}}</td>
                                     </tr>
+
+                                    <tr>
+                                        <th>Is online</th>
+                                        <td>{{$content->is_online ? 'yes' : 'no'}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>Is Physical</th>
+                                        <td>{{$content->is_physical ? 'yes' : 'no'}}</td>
+                                    </tr>
+
+                                    @if($content->is_physical)
+                                        <tr>
+                                            <th>Physical Class Type</th>
+                                            <td>{{$content->physical_class_type}}</td>
+                                        </tr>
+
+                                        @if($content->physical_class_type == 'group')
+                                            <tr>
+                                                <th>Number of Seats</th>
+                                                <td>{{$content->number_of_seats}}</td>
+                                            </tr>
+                                        @endif
+                                    @endif
+
                                     @if(!is_null($content->date_range))
                                         <tr>
                                             <th>Date</th>

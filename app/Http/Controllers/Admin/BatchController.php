@@ -64,6 +64,7 @@ class BatchController extends Controller
                 'name' => $request->input('name'),
                 'is_online' => key_exists('is_online', $request->all()) ? 1 : 0,
                 'is_physical' => key_exists('is_physical', $request->all()) ? 1 : 0,
+                'physical_class_type' => $request->input('physical_class_type'),
                 'number_of_seats' => $request->input('number_of_seats'),
                 'date_range' => $request->input('date_range'),
                 'date_range_from' => $date_range_from,
@@ -141,6 +142,7 @@ class BatchController extends Controller
             $batch->name = $request->input('name');
             $batch->is_online = key_exists('is_online', $request->all()) ? 1 : 0;
             $batch->is_physical = key_exists('is_physical', $request->all()) ? 1 : 0;
+            $batch->physical_class_type = $request->input('physical_class_type');
             $batch->number_of_seats = $request->input('number_of_seats');
             $batch->date_range = $request->input('date_range');
             $batch->date_range_from = $date_range_from;

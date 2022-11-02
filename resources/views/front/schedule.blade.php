@@ -7,7 +7,8 @@
 @section('content')
     <!-- Begin: Main Slider -->
 
-
+    <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
+    <div hidden id="physical_events" data-events="{{json_encode($physical_events)}}"></div>
     <div class="main-slider">
         <img class="img-fluid w-100" src="{{asset('front/images/BannerImg.jpg')}}" alt="First slide">
         <div class="carousel-caption">
@@ -39,6 +40,7 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
+            {{--online--}}
             <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
                     @foreach($online_batches as $key => $batch)
@@ -78,6 +80,7 @@
                     @endforeach
                 </div>
             </div>
+            {{--physical--}}
             <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     @foreach($physical_batches as $key => $batch)
@@ -89,6 +92,12 @@
                                         <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_batch_timings($batch) !!}
+                                        @if($batch->physical_class_type == 'group')
+                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
+                                        @endif
+                                        @if(batch_is_full($batch))
+                                            <h4 class="text-danger">SEATS FULL</h4>
+                                        @endif
                                         <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
@@ -109,6 +118,12 @@
                                         <p>{!! get_readable_description($batch->course->description) !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
                                         {!! get_batch_timings($batch) !!}
+                                        @if($batch->physical_class_type == 'group')
+                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
+                                        @endif
+                                        @if(batch_is_full($batch))
+                                            <h4 class="text-danger">SEATS FULL</h4>
+                                        @endif
                                         <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                     </div>
                                 </div>
@@ -179,10 +194,12 @@
                                                     name="batch_id" hidden>
                                                 <option disabled selected value="">Select Course Type:</option>
                                                 @foreach($physical_batches as $batch)
-                                                    <option class="option_batch_type"
+                                                    <option class="option_batch_type physical_option_batch"
+                                                            {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
                                                             data-online="{{$batch->is_online}}"
                                                             data-physical="{{$batch->is_physical}}"
-                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                            data-physical-class-type="{{$batch->physical_class_type}}"
+                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -211,47 +228,62 @@
                     </form>
                 </div>
                 <div class="col-md-6">
-                    <div id="calendar"></div>
+                    <div id="online_calendar"></div>
+                    <div id="physical_calendar"></div>
                 </div>
             </div>
         </div>
     </section>
+
+    {{--event detail modal--}}
+    <div class="modal fade" id="event_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center" colspan="2">
+                                    <img id="event_img" src="" alt="">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Course: </th>
+                                <td id="event_course"></td>
+                            </tr>
+                            <tr>
+                                <th>Time: </th>
+                                <td id="event_time"></td>
+                            </tr>
+                            <tr>
+                                <th>Description: </th>
+                                <td id="event_description"></td>
+                            </tr>
+
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function () {
-            //on class type change
-            $('.radio_class_type').on('change', function () {
-                let val = $(this).val();
-                if (val === 'online') {
-                    $('.course_type').val('');
-                    $('.option_course_type').each(function () {
-                        if ($(this).data('online') != 1) {
-                            $(this).prop('hidden', true);
-                        } else {
-                            $(this).prop('hidden', false);
-                        }
-                    });
-                    $('.physical_class_type').prop('required', false);
-                    $('.physical_class_type').val('');
-                    $('.physical_class_type_wrapper').prop('hidden', true);
-                }
-                if (val === 'physical') {
-                    $('.course_type').val('');
-                    $('.option_course_type').each(function () {
-                        if ($(this).data('physical') != 1) {
-                            $(this).prop('hidden', true);
-                        } else {
-                            $(this).prop('hidden', false);
-                        }
-                    });
-                    $('.physical_class_type').prop('required', true);
-                    $('.physical_class_type').val('');
-                    $('.physical_class_type_wrapper').prop('hidden', false);
-                }
-            });
+            //init online and physical calendars
+            init_calendars();
 
+            //online section
             $('.btn_online_batches').on('click', function() {
                 $('.online_course_type').prop('hidden', false);
                 $('.online_course_type').prop('required', true);
@@ -261,7 +293,12 @@
                 $('.physical_class_type').prop('required', false);
                 $('.physical_class_type').val('');
                 $('.physical_class_type_wrapper').prop('hidden', true);
+
+                $('#online_calendar').prop('hidden', false);
+                $('#physical_calendar').prop('hidden', true);
             });
+
+            //physical section
             $('.btn_physical_batches').on('click', function() {
                 $('.online_course_type').prop('hidden', true);
                 $('.online_course_type').prop('required', false);
@@ -271,10 +308,97 @@
                 $('.physical_class_type').prop('required', true);
                 $('.physical_class_type').val('');
                 $('.physical_class_type_wrapper').prop('hidden', false);
+
+                $('#online_calendar').prop('hidden', true);
+                $('#physical_calendar').prop('hidden', false);
             });
-            //on online <-> physical toggle
-            // online_course_type
-            // physical_course_type
+
+            //on physical_class_type change
+            $('.physical_class_type').on('change', function() {
+                if($(this).val() == 'group') {
+                    $('.physical_option_batch').each(function() {
+                        if($(this).data('physical-class-type') == 'in_person') {
+                            $(this).prop('hidden', true);
+                            $(this).prop('selected', false);
+                        } else {
+                            $(this).prop('hidden', false);
+                        }
+                    });
+                }
+                if($(this).val() == 'in_person') {
+                    $('.physical_option_batch').each(function() {
+                        if($(this).data('physical-class-type') == 'group') {
+                            $(this).prop('hidden', true);
+                            $(this).prop('selected', false);
+                        } else {
+                            $(this).prop('hidden', false);
+                        }
+                    });
+                }
+            })
         });
+
+        function init_calendars() {
+            var online_calendar_events = [];
+            var physical_calendar_events = [];
+            var online_events = $('#online_events').data('events');
+            var physical_events = $('#physical_events').data('events');
+
+            online_events.forEach(function(item) {
+                online_calendar_events.push({
+                    title: item.title,
+                    start: new Date(item.date),
+                    time: item.time,
+                    backgroundColor: item.color,
+                    borderColor: item.color,
+                    allDay: true,
+                    description: item.description,
+                    img_src: item.img_src,
+                });
+            });
+            physical_events.forEach(function(item) {
+                physical_calendar_events.push({
+                    title: item.title,
+                    start: new Date(item.date),
+                    time: item.time,
+                    backgroundColor: item.color,
+                    borderColor: item.color,
+                    allDay: true,
+                    description: item.description,
+                    img_src: item.img_src,
+                });
+            });
+
+            var online_calendarEl = document.getElementById('online_calendar');
+            var physical_calendarEl = document.getElementById('physical_calendar');
+
+            var online_calendar = new FullCalendar.Calendar(online_calendarEl, {
+                initialView: 'dayGridMonth',
+                events: online_calendar_events,
+                eventClick: function(info) {
+                    $('#event_course').html(info.event.title);
+                    $('#event_time').html(info.event.extendedProps.time);
+                    $('#event_description').html(info.event.extendedProps.description);
+                    $('#event_img').prop('src', info.event.extendedProps.img_src);
+                    $('#event_detail_modal').modal('show');
+                }
+            });
+            var physical_calendar = new FullCalendar.Calendar(physical_calendarEl, {
+                initialView: 'dayGridMonth',
+                events: physical_calendar_events,
+                eventClick: function(info) {
+                    $('#event_course').html(info.event.title);
+                    $('#event_time').html(info.event.extendedProps.time);
+                    $('#event_description').html(info.event.extendedProps.description);
+                    $('#event_img').prop('src', info.event.extendedProps.img_src);
+                    $('#event_detail_modal').modal('show');
+                }
+            });
+
+            online_calendar.render();
+            physical_calendar.render();
+
+            $('#physical_calendar').prop('hidden', true);
+        }
     </script>
 @endsection

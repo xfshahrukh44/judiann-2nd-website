@@ -14,6 +14,7 @@ class Batch extends Model
         'name',
         'is_online',
         'is_physical',
+        'physical_class_type',
         'is_streaming',
         'number_of_seats',
         'date_range',

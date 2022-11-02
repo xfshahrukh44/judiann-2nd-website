@@ -78,9 +78,11 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/about-judiann', 'CmsController@aboutJudiann')->name('admin.cms.aboutJudiann');
     Route::match(['get', 'post'], '/cms/contact', 'CmsController@contactUs')->name('admin.cms.contactUs');
     Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
+    Route::match(['get', 'post'], '/cms/schedule', 'CmsController@schedule')->name('admin.cms.schedule');
 
     //cms - student's work
     Route::get('student', 'CmsController@student_index')->name('student');
+    Route::post('/cms/student', 'CmsController@student_work')->name('admin.cms.student-work');
     Route::match(['get', 'post'], '/add-student', 'CmsController@student_add')->name('admin.add-student');
     Route::match(['get', 'post'], '/student-edit/{id}', 'CmsController@student_edit')->name('admin.edit-student');
     Route::get('/student-view/{id}', 'CmsController@student_show')->name('student-view');
@@ -152,56 +154,18 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //contact us
     Route::post('/contact', 'FrontController@send_front_mail')->name('front.send_front_mail');
-    Route::get('/contact', function () {
-        $setting = \App\Models\Settings::all();
-        $contact = Page::where('name', 'Contact')->first();
-        if($contact){
-            $data = json_decode($contact->content);
-            return view('front.contact', compact('contact', 'data', 'setting'));
-        }
-        return view('front.contact', compact('setting', 'contact'));
-    })->name('front.contact');
+    Route::get('/contact', 'IndexController@contact')->name('front.contact');
 
 //    return view('front.contact');
 });
 
-Route::get('/about-judiann', function () {
-    $about = Page::where('name', 'About Judiann')->first();
-    if($about){
-        $data = json_decode($about->content);
-        return view('front.about-judiann', compact('data', 'about'));
-    }
-    return view('front.about-judiann', compact('about'));
-})->name('front.about-judiann');
+Route::get('/about-judiann', 'App\Http\Controllers\Front\IndexController@aboutJudiann')->name('front.about-judiann');
 
-Route::get('/about-us', function () {
-    $about = Page::where('name', 'About')->first();
-    if($about){
-        $data = json_decode($about->content);
-        return view('front.about-us', compact('data', 'about'));
-    }
-    return view('front.about-us', compact('about'));
-})->name('front.about-us');
+Route::get('/about-us', 'App\Http\Controllers\Front\IndexController@aboutUs')->name('front.about-us');
 
-Route::get('/faqs', function () {
-    $faqs = \App\Models\Faq::all();
-    $faqPage = Page::where('name', 'FAQ')->first();
-    if($faqPage){
-        $data = json_decode($faqPage->content);
-        return view('front.faqs', compact('data', 'faqs', 'faqPage'));
-    }
-    return view('front.faqs', compact('faqPage', 'faqs'));
-})->name('front.faqs');
+Route::get('/faqs', 'App\Http\Controllers\Front\IndexController@faqs')->name('front.faqs');
 
-Route::get('/judiann-portfolio', function () {
-    $sort_portfolio = \App\Models\Portfolio::all()->sortBy('image_order');
-    $portfolio = Page::where('name', 'Portfolio')->first();
-    if($portfolio){
-        $data = json_decode($portfolio->content);
-        return view('front.judiann-portfolio', compact('data', 'portfolio', 'sort_portfolio'));
-    }
-    return view('front.judiann-portfolio', compact('portfolio', 'sort_portfolio'));
-})->name('front.judiann-portfolio');
+Route::get('/judiann-portfolio', 'App\Http\Controllers\Front\IndexController@judiannPortfolio')->name('front.judiann-portfolio');
 
 //Route::get('/schedule', function () {
 //    return view('front.schedule');

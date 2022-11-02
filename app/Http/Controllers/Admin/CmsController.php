@@ -32,8 +32,8 @@ CmsController extends Controller
 
             $about = Page::where('name', 'About')->first();
 
-            try{
-                if($about){
+            try {
+                if ($about) {
                     $decodedContent = json_decode($about->content);
                 }
 
@@ -72,12 +72,12 @@ CmsController extends Controller
                 return back()->with('success', 'Page Updated Successfully');
 
 
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
         } else {
             $about = Page::where('name', 'About')->first();
-            if($about){
+            if ($about) {
                 $data = json_decode($about->content);
                 return view('admin.cms.about', compact('about', 'data'));
             }
@@ -103,8 +103,8 @@ CmsController extends Controller
 
             $faq = Page::where('name', 'FAQ')->first();
 
-            try{
-                if($faq){
+            try {
+                if ($faq) {
                     $decodedContent = json_decode($faq->content);
                 }
 
@@ -134,12 +134,12 @@ CmsController extends Controller
 
                 return back()->with('success', 'Page Updated Successfully');
 
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
         } else {
             $faqPage = Page::where('name', 'FAQ')->first();
-            if($faqPage){
+            if ($faqPage) {
                 $data = json_decode($faqPage->content);
                 return view('admin.cms.faq', compact('faqs', 'data', 'faqPage'));
             }
@@ -164,8 +164,8 @@ CmsController extends Controller
 
             $about = Page::where('name', 'About Judiann')->first();
 
-            try{
-                if($about){
+            try {
+                if ($about) {
                     $decodedContent = json_decode($about->content);
                 }
 
@@ -205,12 +205,12 @@ CmsController extends Controller
                 return back()->with('success', 'Page Updated Successfully');
 
 
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
         } else {
             $about = Page::where('name', 'About Judiann')->first();
-            if($about){
+            if ($about) {
                 $data = json_decode($about->content);
                 return view('admin.cms.about-judiann', compact('about', 'data'));
             }
@@ -235,8 +235,8 @@ CmsController extends Controller
 
             $about = Page::where('name', 'About Judiann')->first();
 
-            try{
-                if($about){
+            try {
+                if ($about) {
                     $decodedContent = json_decode($about->content);
                 }
 
@@ -267,12 +267,12 @@ CmsController extends Controller
                 return back()->with('success', 'Page Updated Successfully');
 
 
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
         } else {
             $contact = Page::where('name', 'Contact')->first();
-            if($contact){
+            if ($contact) {
                 $data = json_decode($contact->content);
                 return view('admin.cms.contact', compact('contact', 'data'));
             }
@@ -297,8 +297,8 @@ CmsController extends Controller
 
             $portfolio = Page::where('name', 'Portfolio')->first();
 
-            try{
-                if($portfolio){
+            try {
+                if ($portfolio) {
                     $decodedContent = json_decode($portfolio->content);
                 }
 
@@ -329,18 +329,72 @@ CmsController extends Controller
                 return back()->with('success', 'Page Updated Successfully');
 
 
-            }catch (\Exception $exception){
+            } catch (\Exception $exception) {
                 return back()->with('error', $exception->getMessage());
             }
         } else {
             $portfolios = \App\Models\Portfolio::all();
             $portfolio = Page::where('name', 'Portfolio')->first();
-            if($portfolio){
+            if ($portfolio) {
                 $data = json_decode($portfolio->content);
                 return view('admin.cms.portfolio', compact('portfolio', 'data', 'portfolios'));
             }
             return view('admin.cms.portfolio', compact('portfolio', 'portfolios'));
         }
+    }
+
+    public function student_work(Request $request)
+    {
+        $rules = [
+            'banner_title' => 'required',
+        ];
+        $customs = [
+            'banner_title.required' => 'Banner Title Field is Required',
+        ];
+        $validator = Validator::make($request->all(), $rules, $customs);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->getMessageBag()->first());
+        }
+
+        $student_work = Page::where('name', 'Students Work')->first();
+
+        try {
+            if ($student_work) {
+                $decodedContent = json_decode($student_work->content);
+            }
+
+            //bannerImage
+            if ($request->hasFile('banner_image')) {
+                $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+            }
+
+            $content = [
+                'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                'section_title' => !empty($request['section_title']) ? $request['section_title'] : ''
+            ];
+
+            $page = Page::updateOrCreate(
+                [
+                    'name' => 'Students Work',
+                ],
+                [
+                    'slug' => $home->slug ?? 'students-work',
+                    'content' => json_encode($content) ?? '',
+                    'meta_title' => $request['meta_title'] ?? '',
+                    'meta_description' => $request['meta_description'] ?? ''
+                ],
+            );
+
+            return back()->with('success', 'Page Updated Successfully');
+
+
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
     }
 
     public function student_index()
@@ -349,10 +403,10 @@ CmsController extends Controller
             if (request()->ajax()) {
                 return datatables()->of(Student::get())
                     ->addIndexColumn()
-                    ->addColumn('image', function($data) {
+                    ->addColumn('image', function ($data) {
                         return $data->get_student_image();
                     })
-                    ->editColumn('created_at', function($data){
+                    ->editColumn('created_at', function ($data) {
                         $formatedDate = Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)->format('d-m-Y');
                         return $formatedDate;
                     })
@@ -363,7 +417,13 @@ CmsController extends Controller
         } catch (\Exception $ex) {
             return redirect('/')->with('error', $ex->getMessage());
         }
-        return view('admin.student.list');
+        $student_work = Page::where('name', 'Students Work')->first();
+        if ($student_work) {
+            $data = json_decode($student_work->content);
+            return view('admin.cms.student-work', compact('student_work', 'data', 'student_work'));
+        }
+        return view('admin.cms.student-work', compact('student_work', 'student_work'));
+//        return view('admin.cms.student-work');
     }
 
     public function student_add(Request $request)
@@ -381,12 +441,12 @@ CmsController extends Controller
             ]);
 
             //student image
-            if($request->has('image')) {
+            if ($request->has('image')) {
                 $student->addMediaFromRequest('image')->toMediaCollection('student_images');
             }
 
             //portfolio images
-            if($request->has('portfolio_images')) {
+            if ($request->has('portfolio_images')) {
                 $portfolio_array = $request['portfolio_images'];
                 foreach ($portfolio_array as $image) {
                     $portfolio_image = PortfolioImage::create([
@@ -405,12 +465,14 @@ CmsController extends Controller
         return view('admin.student.add-student');
     }
 
-    final public function student_show(int $id){
-        $content= Student::find($id);
-        return view('admin.student.view',compact('content'));
+    final public function student_show(int $id)
+    {
+        $content = Student::find($id);
+        return view('admin.student.view', compact('content'));
     }
 
-    final public function student_edit(Request $request, $id){
+    final public function student_edit(Request $request, $id)
+    {
         if ($request->method() == 'POST') {
             $this->validate($request, array(
                 'name' => 'required|string|max:50',
@@ -423,13 +485,13 @@ CmsController extends Controller
             $student->name = $request->input('name');
 
             //student image
-            if($request->has('image')) {
+            if ($request->has('image')) {
                 $student->clearMediaCollection('student_images');
                 $student->addMediaFromRequest('image')->toMediaCollection('student_images');
             }
 
             //portfolio images
-            if($request->has('portfolio_images')) {
+            if ($request->has('portfolio_images')) {
                 $portfolio_array = $request['portfolio_images'];
                 foreach ($portfolio_array as $image) {
                     $portfolio_image = PortfolioImage::create([
@@ -443,15 +505,16 @@ CmsController extends Controller
             if ($student->save()) {
                 return redirect()->route('student')->with(['success' => 'Course Edit Successfully']);
             }
-        }else {
-            $content=Student::findOrFail($id);
+        } else {
+            $content = Student::findOrFail($id);
             return view('admin.student.add-student', compact('content'));
         }
     }
 
     final public function student_destroy(int $id)
     {
-        $content=Student::find($id);
+        $content = Student::find($id);
+        $portfolio = PortfolioImage::where('student_id', $id)->delete();
         $content->delete();
         echo 1;
     }
@@ -465,5 +528,67 @@ CmsController extends Controller
         $portfolio_image->delete();
 
         return redirect()->back()->with('success', 'Portfolio Image deleted successfully!');
+    }
+
+    public function schedule(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $rules = [
+                'banner_title' => 'required',
+            ];
+            $customs = [
+                'banner_title.required' => 'Banner Title Field is Required',
+            ];
+            $validator = Validator::make($request->all(), $rules, $customs);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->getMessageBag()->first());
+            }
+
+            $schedule = Page::where('name', 'Schedule')->first();
+
+            try {
+                if ($schedule) {
+                    $decodedContent = json_decode($schedule->content);
+                }
+
+                //bannerImage
+                if ($request->hasFile('banner_image')) {
+                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+                }
+
+                $content = [
+                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                    'section_title' => !empty($request['section_title']) ? $request['section_title'] : ''
+                ];
+
+                $page = Page::updateOrCreate(
+                    [
+                        'name' => 'Schedule',
+                    ],
+                    [
+                        'slug' => $home->slug ?? 'schedule',
+                        'content' => json_encode($content) ?? '',
+                        'meta_title' => $request['meta_title'] ?? '',
+                        'meta_description' => $request['meta_description'] ?? ''
+                    ],
+                );
+
+                return back()->with('success', 'Page Updated Successfully');
+
+
+            } catch (\Exception $exception) {
+                return back()->with('error', $exception->getMessage());
+            }
+        } else {
+            $schedule = Page::where('name', 'Schedule')->first();
+            if ($schedule) {
+                $data = json_decode($schedule->content);
+                return view('admin.cms.schedule', compact('schedule', 'data'));
+            }
+            return view('admin.cms.schedule', compact('schedule'));
+        }
     }
 }

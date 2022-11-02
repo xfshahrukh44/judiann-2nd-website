@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
-@section('title', 'Student`s Work')
-@section('description', '')
+@section('title', !empty($student_work) ? (!empty($data->meta_title) ? $data->meta_title : 'Student’s Work') : 'Student’s Work')
+@section('description', !empty($student_work) ? (!empty($data->meta_description) ? $data->meta_description : '') : '')
 @section('keywords', '')
 
 @section('content')
@@ -10,14 +10,14 @@
 
     <div class="main-slider">
         <img class="img-fluid w-100"
-             src="{{asset('front/images/BannerImg.jpg')}}"
+             src="{{!empty($student_work) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="slideContent">
-                            <h2 class="headOne">Student&#8217;s Work</h2>
+                            <h2 class="headOne">{{!empty($student_work) ? (!empty($data->banner_title) ? $data->banner_title : 'Student’s Work') : 'Student’s Work'}}</h2>
                         </div>
                     </div>
                 </div>
@@ -30,9 +30,9 @@
 
     <section class="wrkSec">
         <div class="container-fluid">
-            <h2 class="headOne">Student’s Work</h2>
 {{--            <div class="row">--}}
-{{--                <div class="col-md-4">--}}
+            <h2 class="headOne">{{!empty($student_work) ? (!empty($data->section_title) ? $data->section_title : 'Student’s Work') : 'Student’s Work'}}</h2>
+            {{--                <div class="col-md-4">--}}
 {{--                    <a data-fancybox--}}
 {{--                       href="{{asset('front/images/student1.jpg')}}">--}}
 {{--                        <img class="img-fluid"--}}
@@ -177,7 +177,7 @@
             <div class="row">
                 @foreach($portfolio_images as $portfolio_image)
                     <div class="col-md-4">
-                        <a data-fancybox="" href="">
+                        <a data-fancybox="" href="{{$portfolio_image->get_portfolio_image()}}">
                             <img class="img-fluid" src="{{$portfolio_image->get_portfolio_image()}}" alt="img">
                         </a>
                         <h6 style="">{{$portfolio_image->student->name}}</h6>

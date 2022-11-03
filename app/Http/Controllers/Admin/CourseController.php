@@ -42,7 +42,7 @@ class CourseController extends Controller
     {
         if ($request->method() == 'POST') {
             $this->validate($request, array(
-                'name' => 'required|string|max:50',
+                'name' => 'required|string',
                 'description' => 'required|string',
                 'fees' => 'required'
             ));
@@ -75,7 +75,7 @@ class CourseController extends Controller
     final public function edit(Request $request, $id){
         if ($request->method() == 'POST') {
             $this->validate($request, array(
-                'name' => 'required|string|max:50',
+                'name' => 'required|string',
                 'description' => 'required|string',
                 'fees' => 'required',
             ));

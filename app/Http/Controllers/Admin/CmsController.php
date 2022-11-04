@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Page;
 use App\Models\PortfolioImage;
+use App\Models\Services;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -591,4 +592,71 @@ CmsController extends Controller
             return view('admin.cms.schedule', compact('schedule'));
         }
     }
+
+    public function services(Request $request)
+    {
+        $all_services = Services::all();
+        if ($request->method() == 'POST') {
+            $rules = [
+                'banner_title' => 'required',
+            ];
+            $customs = [
+                'banner_title.required' => 'Banner Title Field is Required',
+            ];
+            $validator = Validator::make($request->all(), $rules, $customs);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->getMessageBag()->first());
+            }
+
+            $services = Page::where('name', 'Services')->first();
+
+            try {
+                if ($services) {
+                    $decodedContent = json_decode($services->content);
+                }
+
+                //bannerImage
+                if ($request->hasFile('banner_image')) {
+                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+                }
+
+                $content = [
+                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                    'service_title' => !empty($request['service_title']) ? $request['service_title'] : '',
+                    'service_content' => !empty($request['service_content']) ? $request['service_content'] : '',
+                    'offer_title' => !empty($request['offer_title']) ? $request['offer_title'] : '',
+                    'offer_content1' => !empty($request['offer_content1']) ? $request['offer_content1'] : '',
+                    'offer_content2' => !empty($request['offer_content2']) ? $request['offer_content2'] : '',
+                ];
+
+                $page = Page::updateOrCreate(
+                    [
+                        'name' => 'Services',
+                    ],
+                    [
+                        'slug' => $home->slug ?? 'services',
+                        'content' => json_encode($content) ?? '',
+                        'meta_title' => $request['meta_title'] ?? '',
+                        'meta_description' => $request['meta_description'] ?? ''
+                    ],
+                );
+
+                return back()->with('success', 'Page Updated Successfully');
+
+            } catch (\Exception $exception) {
+                return back()->with('error', $exception->getMessage());
+            }
+        } else {
+            $services = Page::where('name', 'Services')->first();
+            if ($services) {
+                $data = json_decode($services->content);
+                return view('admin.cms.services', compact( 'all_services', 'data', 'services'));
+            }
+            return view('admin.cms.services', compact( 'all_services', 'services'));
+        }
+    }
+
 }

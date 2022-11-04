@@ -119,7 +119,7 @@
                                                     <label>Banner Image</label>
                                                     <div class="img-upload">
                                                         <div id="image-preview" class="img-preview"
-                                                             style="background: url({{ !empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : '') : '' }});">
+                                                             style="background: url({{ !empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg') }});">
                                                             <label for="image-upload" class="img-label"
                                                                    id="image-label">{{ __('Upload Image') }}</label>
                                                             <input type="file" name="banner_image" class="img-upload"
@@ -152,7 +152,7 @@
                                                     <label>About Image</label>
                                                     <div class="img-upload">
                                                         <div id="image-preview" class="img-preview"
-                                                             style="background: url({{ !empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : '') : '' }});">
+                                                             style="background: url({{ !empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : asset('front/images/aboutImg.jpg')) : asset('front/images/aboutImg.jpg') }});">
                                                             <label for="image-upload" class="img-label"
                                                                    id="image-label">{{ __('Upload Image') }}</label>
                                                             <input type="file" name="abt_image" class="img-upload"

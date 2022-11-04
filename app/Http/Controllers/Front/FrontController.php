@@ -11,6 +11,7 @@ use App\Models\LatestUpdate;
 use App\Models\Page;
 use App\Models\PortfolioImage;
 use App\Models\ProductImage;
+use App\Models\Services;
 use App\Models\Settings;
 use App\Models\Student;
 use App\Models\User;
@@ -30,8 +31,9 @@ class FrontController extends Controller
         $batches = Batch::all();
 //        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
         $students = Student::all();
+        $services = Services::all();
 
-        return view('front.home', compact('batches', 'students'));
+        return view('front.home', compact('batches', 'students', 'services'));
     }
 
     public function schedule(Request $request)

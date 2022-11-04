@@ -65,6 +65,12 @@ class ServiceController extends Controller
 
         $service->title = $inputs['title'];
         $service->service = $inputs['service'];
+
+        if($request->has('image')) {
+            $service->clearMediaCollection('service_images');
+            $service->addMediaFromRequest('image')->toMediaCollection('service_images');
+        }
+
         $service->update();
 
         return redirect()->route('admin.cms.services')->with('success', 'Service Updated Successfully');

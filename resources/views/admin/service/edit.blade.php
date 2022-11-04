@@ -106,6 +106,10 @@
                                                 <div class="img-upload">
                                                     <div id="image-preview" class="img-preview"
                                                          style="background: url({{$service->get_service_image()}});">
+                                                        <label for="image-upload" class="img-label"
+                                                               id="image-label">{{ __('Upload Image') }}</label>
+                                                        <input type="file" name="image" class="img-upload"
+                                                               id="image-upload">
                                                     </div>
                                                 </div>
                                             </div>

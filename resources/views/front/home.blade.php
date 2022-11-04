@@ -6,10 +6,10 @@
 
 @section('content')
 
-        <div class="anloader">
-            <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">
-            </video>
-        </div>
+    <div class="anloader">
+        <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">
+        </video>
+    </div>
     <!-- Begin: Main Slider -->
 
     <div class="main-slider">
@@ -307,7 +307,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

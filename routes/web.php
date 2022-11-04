@@ -79,6 +79,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/contact', 'CmsController@contactUs')->name('admin.cms.contactUs');
     Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
     Route::match(['get', 'post'], '/cms/schedule', 'CmsController@schedule')->name('admin.cms.schedule');
+    Route::match(['get', 'post'], '/cms/services', 'CmsController@services')->name('admin.cms.services');
 
     //cms - student's work
     Route::get('student', 'CmsController@student_index')->name('student');
@@ -95,6 +96,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::delete('/faq/delete/{id}', 'FaqController@delete')->name('admin.faq.destroy');
     Route::get('/faq/edit/{id}', 'FaqController@edit')->name('admin.faq.edit');
     Route::post('/faq/update/{id}', 'FaqController@update')->name('admin.faq.update');
+
+    //service section
+    Route::get('/service', 'ServiceController@index')->name('admin.service.index');
+    Route::post('/service/create', 'ServiceController@store')->name('admin.service.create');
+    Route::delete('/service/delete/{id}', 'ServiceController@delete')->name('admin.service.destroy');
+    Route::get('/service/edit/{id}', 'ServiceController@edit')->name('admin.service.edit');
+    Route::post('/service/update/{id}', 'ServiceController@update')->name('admin.service.update');
 
     //portfolio section
     Route::get('/portfolio', 'PortfolioController@index')->name('admin.portfolio.index');
@@ -167,13 +175,15 @@ Route::get('/faqs', 'App\Http\Controllers\Front\IndexController@faqs')->name('fr
 
 Route::get('/judiann-portfolio', 'App\Http\Controllers\Front\IndexController@judiannPortfolio')->name('front.judiann-portfolio');
 
+Route::get('/services', 'App\Http\Controllers\Front\IndexController@services')->name('front.services');
+
 //Route::get('/schedule', function () {
 //    return view('front.schedule');
 //})->name('front.schedule');
-
-Route::get('/services', function () {
-    return view('front.services');
-})->name('front.services');
+//
+//Route::get('/services', function () {
+//    return view('front.services');
+//})->name('front.services');
 
 Route::get('/video-chatting', function () {
     return view('front.videoChatting');

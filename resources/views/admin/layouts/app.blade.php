@@ -255,6 +255,16 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.services')}}"
+                                   class="nav-link {{ request()->IS('admin/services') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Services
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 

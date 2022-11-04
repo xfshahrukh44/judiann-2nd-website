@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\Page;
 use App\Models\Portfolio;
+use App\Models\Services;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 
@@ -62,5 +63,16 @@ class IndexController extends Controller
             return view('front.contact', compact('contact', 'data', 'setting'));
         }
         return view('front.contact', compact('setting', 'contact'));
+    }
+
+    public function services()
+    {
+        $all_services = Services::all();
+        $services = Page::where('name', 'Services')->first();
+        if($services){
+            $data = json_decode($services->content);
+            return view('front.services', compact('all_services', 'services', 'data'));
+        }
+        return view('front.services', compact( 'all_services', 'services'));
     }
 }

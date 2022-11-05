@@ -191,6 +191,16 @@
                         <ul class="nav nav-treeview"
                             style="{{ request()->IS('admin/emailsetting') || request()->IS('admin/paymentgatway') ? 'display:block;' : '' }}">
                             <li class="nav-item">
+                                <a href="{{route('admin.cms.home')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/home') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Home
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{route('admin.cms.aboutUs')}}"
                                    class="nav-link {{ request()->IS('admin/cms/about-us') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-angle-double-right"></i>

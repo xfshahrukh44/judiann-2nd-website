@@ -122,5 +122,50 @@ class PagesSeedeer extends Seeder
                 'offer_content2' => 'College prep and College students specialized portfolio courses:'
             ]),
         ]);
+
+        //HOME
+        Page::create([
+            'name' => 'Home',
+            'slug' => 'home',
+            'content' => json_encode([
+                'banner_title' => 'Judiann’s Fashion Design Studios',
+                'banner_content' => 'Learn beginner, College level and industry professional
+                                        level skills through our Master Classes.',
+                'abt_title' => 'About Us',
+                'abt_content' => 'Our in-house programs and remote learning classes create a hands-on,
+                                  collaborative learning experience.',
+                'portfolio_title' => 'Judiann’s Portfolio',
+                'stdnt_title' => 'Student’s Work',
+                'vogue_content' => 'Students in the news showcased in Vogue Magazine',
+                'vogue_url' => 'https://www.vogue.com/fashion-shows/fall-2022-ready-to-wear/pratt-institute#review',
+                'master_title' => 'MASTER CLASS',
+                'master_content' => '<h3 class="headTwo">Portfolio Development for College Applications</h3>
+                    <p>Are you looking to apply to a Fashion or Art school and need help in preparing a
+                        professional portfolio to include with your applications? Most Art schools will require
+                        some type of portfolio to be included when you apply.</p>
+                    <p>We offer private sessions where we work with you individually on the development of your
+                        portfolio. </p>
+                    <h3 class="headTwo">What is a Portfolio?</h3>
+                    <p>Think of the portfolio as a visual resume which is used to express the best of your work
+                        that is well edited and curated. Your portfolio is a very important tool that you will
+                        use to sell yourself to a prospective school.</p>
+                    <p>Your portfolio should be able to express to the viewer your ideas, aesthetics, vision and
+                        who you are as a designer. It should communicate your quality, values and skills.</p>
+                    <p>Individual Classes dates and times will be determined after a consultation. We can
+                        schedule these based on your needs and my availability. </p>
+                    <p>12 classes over a 3 month period. (1 class per week x 3 months) This can be adjusted if
+                        needed. Each class is one hour. The student will be expected to do the work discussed in
+                        the session and have it ready for the next session.<br>Cost $2500</p>',
+                'service_title' => 'Services',
+                'service_content' => '5-15 day intensive training courses are devoted to creating a garment. These intensives offer classes for specific garments such as couture garments (such as evening wear or a wedding dress). Learn to tailor a coat, jacket or pair of trousers.',
+                'offer_title' => 'What we Offer',
+                'offer_content1' => 'Sewing classes from beginner to advanced. Classes will be offered as private classes and group classes. Please see the schedule for class times or contact us for a one on one class. Classes are hold online and in person',
+                'offer_content2' => 'College prep and College students specialized portfolio courses:',
+                'vid_url1' => 'https://www.youtube.com/watch?v=cKjdTA91xPQ&feature=youtu.be',
+                'vid_url2' => 'https://www.youtube.com/watch?v=cKjdTA91xPQ&feature=youtu.be',
+                'vid_url3' => 'https://www.youtube.com/watch?v=cKjdTA91xPQ&feature=youtu.be',
+                'vid_url4' => 'https://www.youtube.com/watch?v=cKjdTA91xPQ&feature=youtu.be',
+            ]),
+        ]);
     }
 }

@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
-@section('title', 'Home')
-@section('description', '')
+@section('title', !empty($home) ? (!empty($data->meta_title) ? $data->meta_title : 'Home') : 'Home')
+@section('description', !empty($home) ? (!empty($data->meta_description) ? $data->meta_description : '') : '')
 @section('keywords', '')
 
 @section('content')
@@ -16,15 +16,16 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active wow fadeInLeft" data-wow-delay="0.5s">
-                    <img class="img-fluid w-100" src="{{asset('front/images/BannerImg.jpg')}}" alt="First slide">
+                    <img class="img-fluid w-100"
+                         src="{{!empty($home) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
+                         alt="First slide">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
                                     <div class="slideContent">
-                                        <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
-                                        <p>Learn beginner, College level and industry professional<br>
-                                            level skills through our Master Classes.</p>
+                                        <h2 class="headOne">{{!empty($home) ? (!empty($data->banner_title) ? $data->banner_title : '') : ''}}</h2>
+                                        <p>{!! nl2br(e(!empty($home) ? (!empty($data->banner_content) ? ($data->banner_content) : '') : '')) !!}</p>
                                         <a href="{{route('front.schedule')}}" class="themeBtn">Schedule A Class</a>
                                     </div>
                                 </div>
@@ -33,15 +34,17 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="img-fluid w-100" src="{{asset('front/images/BannerImg.jpg')}}" alt="First slide">
+                    <img class="img-fluid w-100"
+                         src="{{!empty($home) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
+                         alt="First slide">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
                                     <div class="slideContent">
-                                        <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
-                                        <p>Learn beginner, College level and industry professional<br>
-                                            level skills through our Master Classes.</p>
+                                        <h2 class="headOne">{{!empty($home) ? (!empty($data->banner_title) ? $data->banner_title : '') : ''}}</h2>
+                                        {{--                                        <h2 class="headOne">Judiann’s Fashion Design Studios</h2>--}}
+                                        <p>{!! nl2br(e(!empty($home) ? (!empty($data->banner_content) ? ($data->banner_content) : '') : '')) !!}</p>
                                         <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
                                     </div>
                                 </div>
@@ -50,15 +53,16 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="img-fluid w-100" src="{{asset('front/images/BannerImg.jpg')}}" alt="First slide">
+                    <img class="img-fluid w-100"
+                         src="{{!empty($home) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
+                         alt="First slide">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
                                     <div class="slideContent">
-                                        <h2 class="headOne">Judiann’s Fashion Design Studios</h2>
-                                        <p>Learn beginner, College level and industry professional<br>
-                                            level skills through our Master Classes.</p>
+                                        <h2 class="headOne">{{!empty($home) ? (!empty($data->banner_title) ? $data->banner_title : '') : ''}}</h2>
+                                        <p>{!! nl2br(e(!empty($home) ? (!empty($data->banner_content) ? ($data->banner_content) : '') : '')) !!}</p>
                                         <a href="{{route('front.schedule')}}" class="themeBtn">Class Schedules</a>
                                     </div>
                                 </div>
@@ -87,9 +91,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="abtContent">
-                        <h2 class="headOne">About Us</h2>
-                        <p>Our in-house programs and remote learning classes create a hands-on,<br>collaborative
-                            learning experience.</p>
+                        <h2 class="headOne">{{ !empty($home) ? (!empty($data->abt_title) ? ($data->abt_title) : '') : '' }}</h2>
+                        <p>{!! nl2br(e(!empty($home) ? (!empty($data->abt_content) ? ($data->abt_content) : '') : '')) !!}</p>
                         <a href="{{route('front.about-us')}}" class="themeBtn">Learn More</a>
                     </div>
                 </div>
@@ -123,7 +126,7 @@
     @endif
     <section class="portfolioSec">
         <div class="container-fluid">
-            <h2 class="headOne">Judiann’s Portfolio</h2>
+            <h2 class="headOne">{{ !empty($home) ? (!empty($data->portfolio_title) ? ($data->portfolio_title) : '') : '' }}</h2>
             <div class="row">
                 <div class="col">
                     <div class="portfolioBox">
@@ -166,7 +169,7 @@
 
     <section class="wrkSec">
         <div class="container-fluid">
-            <h2 class="headOne">Student’s Work</h2>
+            <h2 class="headOne">{{ !empty($home) ? (!empty($data->stdnt_title) ? ($data->stdnt_title) : '') : '' }}</h2>
             <div class="row">
 
                 @foreach($students as $student)
@@ -190,9 +193,9 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="headOne">Students in the news showcased in Vogue Magazine</h2>
-                    <a href="https://www.vogue.com/fashion-shows/fall-2022-ready-to-wear/pratt-institute#review"
-                       target="_blank">https://www.vogue.com/fashion-shows/fall-2022-ready-to-wear/pratt-institute#review </a>
+                    <h2 class="headOne">{{ !empty($home) ? (!empty($data->vogue_content) ? ($data->vogue_content) : '') : '' }}</h2>
+                    <a href="{{ !empty($home) ? (!empty($data->vogue_url) ? ($data->vogue_url) : '') : '' }}"
+                       target="_blank">{{ !empty($home) ? (!empty($data->vogue_url) ? ($data->vogue_url) : '') : '' }}</a>
                 </div>
             </div>
         </div>
@@ -202,8 +205,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="headOne">MASTER CLASS</h2>
-                    <h3 class="headTwo">Portfolio Development for College Applications</h3>
+                    <h2 class="headOne">{{ !empty($home) ? (!empty($data->master_title) ? ($data->master_title) : '') : '' }}</h2>
+                    {!! !empty($home) ? (!empty($data->master_content) ? ($data->master_content) : '') : '' !!}
+                    {{--<h3 class="headTwo">Portfolio Development for College Applications</h3>
                     <p>Are you looking to apply to a Fashion or Art school and need help in preparing a
                         professional portfolio to include with your applications? Most Art schools will require
                         some type of portfolio to be included when you apply.</p>
@@ -219,23 +223,18 @@
                         schedule these based on your needs and my availability. </p>
                     <p>12 classes over a 3 month period. (1 class per week x 3 months) This can be adjusted if
                         needed. Each class is one hour. The student will be expected to do the work discussed in
-                        the session and have it ready for the next session.<br>Cost $2500</p>
+                        the session and have it ready for the next session.<br>Cost $2500</p>--}}
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="headOne">Services</h2>
-                    <p>5-15 day intensive training courses are devoted to creating a garment. These intensives
-                        offer classes for specific garments such as couture garments (such as evening wear or a
-                        wedding dress). Learn to tailor a coat, jacket or pair of trousers.</p>
-                    <h3 class="headTwo">What we Offer</h3>
+                    <h2 class="headOne">{{ !empty($home) ? (!empty($data->service_title) ? ($data->service_title) : '') : '' }}</h2>
+                    <p>{{ !empty($home) ? (!empty($data->service_content) ? ($data->service_content) : '') : '' }}</p>
+                    <h3 class="headTwo">{{ !empty($home) ? (!empty($data->offer_title) ? ($data->offer_title) : '') : '' }}</h3>
                     <ul>
-                        <li>Sewing classes from beginner to advanced. Classes will be offered as private classes
-                            and group classes. Please see the schedule for class times or contact us for a one
-                            on one class.
-                            Classes are hold online and in person
+                        <li>{{ !empty($home) ? (!empty($data->offer_content1) ? ($data->offer_content1) : '') : '' }}
                         </li>
-                        <li>College prep and College students specialized portfolio courses:</li>
+                        <li>{{ !empty($home) ? (!empty($data->offer_content2) ? ($data->offer_content2) : '') : '' }}</li>
                     </ul>
                 </div>
             </div>
@@ -392,9 +391,11 @@
                     <div class="col-md-4">
                         <div class="vdeoImg">
                             <figure>
-                                <img class="img-fluid" src="{{asset('front/images/video1.jpg')}}" alt="img">
+                                <img class="img-fluid"
+                                     src="{{!empty($home) ? (!empty($data->vid_img1) ? asset('front/images/cms/'.$data->vid_img1) : asset('front/images/video1.jpg')) : asset('front/images/video1.jpg')}}"
+                                     alt="img">
                                 <a data-fancybox=""
-                                   href="https://www.youtube.com/watch?v=cKjdTA91xPQ&amp;feature=youtu.be">
+                                   href="{{ !empty($home) ? (!empty($data->vid_url1) ? ($data->vid_url1) : '') : '' }}">
                                     <div><i class="fas fa-play"></i></div>
                                 </a>
                             </figure>
@@ -403,9 +404,11 @@
                     <div class="col-md-4">
                         <div class="vdeoImg">
                             <figure>
-                                <img class="img-fluid" src="{{asset('front/images/video2.jpg')}}" alt="img">
+                                <img class="img-fluid"
+                                     src="{{!empty($home) ? (!empty($data->vid_img2) ? asset('front/images/cms/'.$data->vid_img2) : asset('front/images/video2.jpg')) : asset('front/images/video2.jpg')}}"
+                                     alt="img">
                                 <a data-fancybox=""
-                                   href="https://www.youtube.com/watch?v=cKjdTA91xPQ&amp;feature=youtu.be">
+                                   href="{{ !empty($home) ? (!empty($data->vid_url2) ? ($data->vid_url2) : '') : '' }}">
                                     <div><i class="fas fa-play"></i></div>
                                 </a>
                             </figure>
@@ -414,9 +417,11 @@
                     <div class="col-md-4">
                         <div class="vdeoImg">
                             <figure>
-                                <img class="img-fluid" src="{{asset('front/images/video3.jpg')}}" alt="img">
+                                <img class="img-fluid"
+                                     src="{{!empty($home) ? (!empty($data->vid_img3) ? asset('front/images/cms/'.$data->vid_img3) : asset('front/images/video3.jpg')) : asset('front/images/video3.jpg')}}"
+                                     alt="img">
                                 <a data-fancybox=""
-                                   href="https://www.youtube.com/watch?v=cKjdTA91xPQ&amp;feature=youtu.be">
+                                   href="{{ !empty($home) ? (!empty($data->vid_url3) ? ($data->vid_url3) : '') : '' }}">
                                     <div><i class="fas fa-play"></i></div>
                                 </a>
                             </figure>
@@ -425,9 +430,11 @@
                     <div class="col-md-4">
                         <div class="vdeoImg">
                             <figure>
-                                <img class="img-fluid" src="{{asset('front/images/video2.jpg')}}" alt="img">
+                                <img class="img-fluid"
+                                     src="{{!empty($home) ? (!empty($data->vid_img4) ? asset('front/images/cms/'.$data->vid_img4) : asset('front/images/video2.jpg')) : asset('front/images/video2.jpg')}}"
+                                     alt="img">
                                 <a data-fancybox=""
-                                   href="https://www.youtube.com/watch?v=cKjdTA91xPQ&amp;feature=youtu.be">
+                                   href="{{ !empty($home) ? (!empty($data->vid_url4) ? ($data->vid_url4) : '') : '' }}">
                                     <div><i class="fas fa-play"></i></div>
                                 </a>
                             </figure>

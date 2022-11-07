@@ -1475,3 +1475,17 @@ div.switcher label input:checked + span small {
     object-fit: contain;
     background: #ddd;
 }
+
+.modal-content {
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content th, .modal-content td {
+    color: #fff;
+}
+
+.modal-content .modal-header * {
+    color: #fff;
+}

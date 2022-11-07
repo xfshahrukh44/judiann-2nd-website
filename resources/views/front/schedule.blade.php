@@ -254,7 +254,7 @@
                         <thead>
                             <tr>
                                 <th class="text-center" colspan="2">
-                                    <img id="event_img" src="" alt="">
+                                    <img id="event_img" class="w-100" src="" alt="">
                                 </th>
                             </tr>
                             <tr>

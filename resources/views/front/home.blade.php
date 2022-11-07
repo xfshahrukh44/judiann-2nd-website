@@ -110,7 +110,7 @@
                     <div class="col-12">
                         <div class="lastSlider">
                             @foreach($batches as $batch)
-                                <div class="lastBox" style="height: 300px; overflow-y: scroll;">
+                                <div class="lastBox" style="height: 450px; overflow-y: scroll;">
                                     <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
                                     {!! get_readable_description($batch->course->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>

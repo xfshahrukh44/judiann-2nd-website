@@ -88,7 +88,7 @@
             <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     @foreach($physical_batches as $key => $batch)
-                        <div class="row">
+                        <div class="row fullBox">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">

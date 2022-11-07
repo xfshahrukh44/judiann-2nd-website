@@ -1001,14 +1001,16 @@ footer {
     /*overflow-y: scroll;*/
     padding: 1rem 0.5rem;
 }
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .lastBox::-webkit-scrollbar {
     display: none;
 }
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .lastBox {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
 .lastBox p strong {
@@ -1461,8 +1463,15 @@ div.switcher label input:checked + span small {
 }
 
 
-.scheduleBox p{
+.scheduleBox p {
     padding: 0;
     line-height: 1.6;
     margin: 0 0 1rem;
+}
+
+#event_img {
+    height: 250px;
+    width: 100%;
+    object-fit: contain;
+    background: #ddd;
 }

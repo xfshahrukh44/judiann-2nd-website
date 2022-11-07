@@ -46,7 +46,7 @@
             </div>
 
             @foreach($all_services as $service)
-                <div class="row align-items-center my-5">
+                <div class="row my-5">
                     <div class="col-md-6">
                         <figure><img src="{{$service->get_service_image()}}" class="w-100" alt=""></figure>
                     </div>

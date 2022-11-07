@@ -1491,3 +1491,7 @@ div.switcher label input:checked + span small {
 .lastBox.slick-slide {
     margin: 1rem;
 }
+
+.fullBox img{
+    height: auto;
+}

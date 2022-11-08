@@ -93,9 +93,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="name">Content</label>
-                                                <textarea class="form-control" name="terms"
+                                                <textarea class="form-control @error('terms') is-invalid @enderror" name="terms"
                                                           placeholder="Terms & Conditions"
                                                           rows="4">{{$setting->terms}}</textarea>
+
+                                                @error('terms')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
 
 

@@ -81,6 +81,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/schedule', 'CmsController@schedule')->name('admin.cms.schedule');
     Route::match(['get', 'post'], '/cms/services', 'CmsController@services')->name('admin.cms.services');
     Route::match(['get', 'post'], '/cms/terms', 'CmsController@terms')->name('admin.cms.terms');
+    Route::match(['get', 'post'], '/cms/policy', 'CmsController@policy')->name('admin.cms.policy');
 
     //cms - student's work
     Route::get('student', 'CmsController@student_index')->name('student');

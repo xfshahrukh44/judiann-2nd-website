@@ -677,4 +677,21 @@ CmsController extends Controller
         }
     }
 
+    public function policy(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $request->validate([
+                'policy' => 'required'
+            ]);
+
+            $setting = Settings::find(1);
+            $setting->policy = $request->get('policy');
+            $setting->save();
+
+            return back()->with('success', 'Page Updated Successfully');
+        } else {
+            return view('admin.cms.policy');
+        }
+    }
+
 }

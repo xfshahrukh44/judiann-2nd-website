@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Page;
 use App\Models\PortfolioImage;
 use App\Models\Services;
+use App\Models\Settings;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -656,6 +657,23 @@ CmsController extends Controller
                 return view('admin.cms.services', compact( 'all_services', 'data', 'services'));
             }
             return view('admin.cms.services', compact( 'all_services', 'services'));
+        }
+    }
+
+    public function terms(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $request->validate([
+                'terms' => 'required'
+            ]);
+
+            $setting = Settings::find(1);
+            $setting->terms = $request->get('terms');
+            $setting->save();
+
+            return back()->with('success', 'Page Updated Successfully');
+        } else {
+            return view('admin.cms.terms');
         }
     }
 

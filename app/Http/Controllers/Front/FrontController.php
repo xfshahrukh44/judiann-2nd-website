@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\CourseSession;
 use App\Models\LatestUpdate;
 use App\Models\Page;
+use App\Models\Portfolio;
 use App\Models\PortfolioImage;
 use App\Models\ProductImage;
 use App\Models\Services;
@@ -32,8 +33,14 @@ class FrontController extends Controller
 //        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
         $students = Student::all();
         $services = Services::all();
+        $sort_portfolio = Portfolio::all()->sortBy('image_order');
 
-        return view('front.home', compact('batches', 'students', 'services'));
+        $home = Page::where('name', 'Home')->first();
+        if ($home) {
+            $data = json_decode($home->content);
+            return view('front.home', compact('data', 'batches', 'students', 'services', 'home', 'sort_portfolio'));
+        }
+        return view('front.home', compact('batches', 'students', 'services', 'home', 'sort_portfolio'));
     }
 
     public function schedule(Request $request)

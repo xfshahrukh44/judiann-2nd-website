@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\SettingController;
 use App\Models\Page;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Admin\StreamController;
@@ -80,6 +81,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
     Route::match(['get', 'post'], '/cms/schedule', 'CmsController@schedule')->name('admin.cms.schedule');
     Route::match(['get', 'post'], '/cms/services', 'CmsController@services')->name('admin.cms.services');
+    Route::match(['get', 'post'], '/cms/terms', 'CmsController@terms')->name('admin.cms.terms');
+    Route::match(['get', 'post'], '/cms/policy', 'CmsController@policy')->name('admin.cms.policy');
     Route::match(['get', 'post'], '/cms/home', 'CmsController@home')->name('admin.cms.home');
 
     //cms - student's work
@@ -193,12 +196,10 @@ Route::get('/video-chatting', function () {
 Route::get('/testimonial', function () {
     return view('front.testimonial');
 })->name('front.testimonial');
-Auth::routes();
 
 Route::get('/policy', function () {
     return view('front.policy');
 })->name('front.policy');
-Auth::routes();
 
 Route::get('/terms', function () {
     return view('front.terms');

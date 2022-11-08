@@ -47,6 +47,8 @@
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s Work</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms & Conditions</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy Policy</a></li>
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
                                     </li>
                                 </ul>

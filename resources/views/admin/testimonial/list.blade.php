@@ -1,7 +1,6 @@
 @extends('admin.layouts.app')
 @section('title', 'Testimonial')
 @section('page_css')
-    
     <style>
         .addBtn{
             float: right;
@@ -11,69 +10,6 @@
             text-align: center;
         }
     </style>
-
-<style>
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked + .slider {
-        background-color: #2196F3;
-    }
-
-    input:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
-    }
-
-    input:checked + .slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-
-</style>
 
 @endsection
 @section('section')
@@ -101,9 +37,9 @@
                         <!-- /.card -->
 
                         <div class="card">
-                            <div class="card-header">
-                                <a class="btn btn-primary pull-right addBtn" href="{{route('testimonial.create')}}">Add Testimonial</a>
-                            </div>
+{{--                            <div class="card-header">--}}
+{{--                                <a class="btn btn-primary pull-right addBtn" href="">Add Testimonial</a>--}}
+{{--                            </div>--}}
                             <div class="col-md-12">
 
                             </div>
@@ -112,11 +48,14 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr style="text-align: center">
-                                        <th>S.No</th>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Rating</th>
+                                        <th>Review</th>
                                         <th>Name</th>
-                                        <th>Designation</th>
-                                        <th>Comment</th>
-                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Created At</th>
+
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -156,7 +95,7 @@
     </div>
 @endsection
 @section('script')
-   <script>
+    <script>
         $(document).ready(function () {
             var DataTable = $("#example1").DataTable({
                 dom: "Blfrtip",
@@ -181,17 +120,22 @@
                 serverSide: true,
                 pageLength: 10,
                 ajax: {
-                    url: `{{route('testimonial.index')}}`,
+                    url: `{{route(request()->segment(2))}}`,
                 },
                 columns: [
-
                     {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'rating', name: 'rating'},
+                    {data: 'review', name: 'review'},
                     {data: 'name', name: 'name'},
-                    {data: 'designation', name: 'designation'},
-                    {data: 'comment', name: 'comment'},
-                    {data: 'status', name: 'status'},
+                    {data: 'email', name: 'email'},
+
+                    {data: 'created_at', name: 'created_at'},
+
                     {data: 'action', name: 'action', orderable: false}
-                ]
+                ],
+
+                "order": [[ 6, "desc" ]]
 
             });
             var delete_id;
@@ -201,12 +145,8 @@
             });
             $(document).on('click','#ok_delete',function(){
                 $.ajax({
-                    url:"{{url('admin/testimonial/destroy')}}/"+delete_id,
-                    type:'post',
-                    data:{
-                        id:delete_id,
-                        "_method": 'DELETE',
-                    },
+                    type:"delete",
+                    url:`{{url('admin/'.request()->segment(2).'/destroy/')}}/${delete_id}`,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -219,46 +159,17 @@
                         $('#ok_delete').text('Delete');
                         $('#ok_delete').attr("disabled",false);
                         $('#confirmModal').modal('hide');
-                        //   js_success(data);
+                     //   js_success(data);
                         if(data==0) {
-                            toastr.error('Exception Here! Something went wrong');
+                            toastr.error('Exception Here ! Delete Firstly Child Testimonial');
                         }else{
                             toastr.success('Record Delete Successfully');
                         }
                     }
                 })
             });
-
-            $(document).on('click','#status-switch',function(){
-                let id = $(this).data('id');
-                let val = $(this).data('val');
-                $.ajax({
-                    type:"get",
-                    url:`{{url('admin/'.request()->segment(2).'/changeBlogStatus')}}/${id}`,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data:{
-                        val:val
-                    },
-                    success: function (data) {
-                        DataTable.ajax.reload();
-
-                        if(data==0) {
-                            toastr.error('Exception Here !');
-                        }else{
-                            toastr.success('Record Status Updated Successfully');
-                        }
-
-
-
-                    }
-                })
-            });
-
-
         })
     </script>
 
 
-@endsection
+    @endsection

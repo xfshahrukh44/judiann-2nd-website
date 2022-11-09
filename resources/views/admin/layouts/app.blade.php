@@ -320,6 +320,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('testimonial')}}"
+                           class="nav-link {{ request()->IS('admin/testimonial') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Testimonials</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{url('admin/changePassword')}}"
                            class="nav-link {{ request()->IS('admin/changePassword') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-comments"></i>

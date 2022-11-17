@@ -33,11 +33,19 @@
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <ul class="contactList">
-                        <li><a href="tel:{{$setting->phone_no_1}}">{{$setting->phone_no_1}}</a></li>
-                        <li>
-                            <a href="mailto:{{$setting->email}}">{{$setting->email}}</a>
-                        </li>
-                        <li><a href="#">{{$setting->address}}</a></li>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <li><a href="tel:{{$setting->phone_no_1}}">Phone: {{$setting->phone_no_1}}</a></li>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <li>
+                                    <a href="mailto:{{$setting->email}}">Email: {{$setting->email}}</a>
+                                </li>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <li><a href="#">Address: {{$setting->address}}</a></li>
+                            </div>
+                        </div>
                     </ul>
                 </div>
 

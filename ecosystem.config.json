@@ -1,0 +1,34 @@
+{
+    "apps": [
+        {
+            "name": "Websockets port 6002",
+            "script": "artisan",
+            "args": ["websockets:serve", "--port", "6002"],
+            "instances": "1",
+            "wait_ready": true,
+            "autorestart": true,
+            "max_restarts": 100,
+            "interpreter" : "php",
+            "watch": true,
+            "error_file": "log/websockets.err.log",
+            "out_file": "log/websockets.out.log",
+            "log_file": "log/websockets.combined.log",
+            "time": true
+        },
+        {
+            "name": "Queue Listen",
+            "script": "artisan",
+            "args": ["queue:listen"],
+            "instances": "1",
+            "wait_ready": true,
+            "autorestart": true,
+            "max_restarts": 100,
+            "interpreter" : "php",
+            "watch": true,
+            "error_file": "log/queue.err.log",
+            "out_file": "log/queue.out.log",
+            "log_file": "log/queue.combined.log",
+            "time": true
+        }
+    ]
+}

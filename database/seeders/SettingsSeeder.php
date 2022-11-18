@@ -17,7 +17,7 @@ class SettingsSeeder extends Seeder
         Settings::create([
             'site_title' => 'Judiann 2nd Website',
             'company_name' => 'Judiann',
-            'email' => 'admin@judiann.com',
+            'email' => 'info@judiannsfashiondesignstudios.com',
             'phone_no_1' => '(123) 456-7890',
             'address' => 'Lorem Street, Abc road',
             'paypal_env' => 'Testing',

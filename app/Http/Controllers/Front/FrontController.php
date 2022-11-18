@@ -330,7 +330,7 @@ class FrontController extends Controller
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
-            $this->customMail('admin@judiann.com', $email, 'Course Booked', $message);
+            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
 
             return 1;
         } catch (\Exception $exception) {
@@ -365,7 +365,7 @@ class FrontController extends Controller
 
 //            \mail($email,"Contact Request From Website",$message);
 
-            $this->customMail('admin@judiann.com', $email, 'Contact Request From Website', $message);
+            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Contact Request From Website', $message);
 
             return redirect()->route('front.home')->with('success', 'Email sent successfully!');
         } catch (\Exception $exception) {

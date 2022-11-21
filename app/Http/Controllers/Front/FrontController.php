@@ -15,6 +15,7 @@ use App\Models\ProductImage;
 use App\Models\Services;
 use App\Models\Settings;
 use App\Models\Student;
+use App\Models\Testimonial;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -329,7 +330,7 @@ class FrontController extends Controller
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
-            $this->customMail('admin@judiann.com', $email, 'Course Booked', $message);
+            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
 
             return 1;
         } catch (\Exception $exception) {
@@ -364,7 +365,7 @@ class FrontController extends Controller
 
 //            \mail($email,"Contact Request From Website",$message);
 
-            $this->customMail('admin@judiann.com', $email, 'Contact Request From Website', $message);
+            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Contact Request From Website', $message);
 
             return redirect()->route('front.home')->with('success', 'Email sent successfully!');
         } catch (\Exception $exception) {
@@ -388,5 +389,31 @@ class FrontController extends Controller
         $student = Student::find($student_id);
 
         return view('front.individual-students-work', compact('student'));
+    }
+
+    public function testimonial(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $request->validate([
+                'rating' => 'required',
+                'title' => 'required',
+                'review' => 'required',
+                'name' => 'required',
+                'email' => 'required',
+            ]);
+
+            $testimonial = Testimonial::create($request->except('is_genuine'));
+            if ($request->has('is_genuine')) {
+                $testimonial->is_genuine = true;
+                $testimonial->save();
+            }
+
+            return redirect()->route('front.testimonial')->with('success', 'Testimonial submitted for approval!');
+
+        } else {
+            $testimonials = Testimonial::where('is_approved', true)->orderBy('created_at', 'DESC')->get();
+
+            return view('front.testimonial', compact('testimonials'));
+        }
     }
 }

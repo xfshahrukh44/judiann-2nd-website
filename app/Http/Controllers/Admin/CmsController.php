@@ -7,14 +7,14 @@ use App\Models\Faq;
 use App\Models\Page;
 use App\Models\PortfolioImage;
 use App\Models\Services;
+use App\Models\Settings;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class
-CmsController extends Controller
+class CmsController extends Controller
 {
     public function home(Request $request)
     {
@@ -755,9 +755,43 @@ CmsController extends Controller
             $services = Page::where('name', 'Services')->first();
             if ($services) {
                 $data = json_decode($services->content);
-                return view('admin.cms.services', compact('all_services', 'data', 'services'));
+                return view('admin.cms.services', compact( 'all_services', 'data', 'services'));
             }
-            return view('admin.cms.services', compact('all_services', 'services'));
+            return view('admin.cms.services', compact( 'all_services', 'services'));
+        }
+    }
+
+    public function terms(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $request->validate([
+                'terms' => 'required'
+            ]);
+
+            $setting = Settings::find(1);
+            $setting->terms = $request->get('terms');
+            $setting->save();
+
+            return back()->with('success', 'Page Updated Successfully');
+        } else {
+            return view('admin.cms.terms');
+        }
+    }
+
+    public function policy(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $request->validate([
+                'policy' => 'required'
+            ]);
+
+            $setting = Settings::find(1);
+            $setting->policy = $request->get('policy');
+            $setting->save();
+
+            return back()->with('success', 'Page Updated Successfully');
+        } else {
+            return view('admin.cms.policy');
         }
     }
 

@@ -48,7 +48,7 @@
             <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
                     @foreach($online_batches as $key => $batch)
-                        <div class="row align-items-center">
+                        <div class="row">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
@@ -88,7 +88,7 @@
             <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     @foreach($physical_batches as $key => $batch)
-                        <div class="row align-items-center">
+                        <div class="row fullBox">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
@@ -240,7 +240,8 @@
     </section>
 
     {{--event detail modal--}}
-    <div class="modal fade" id="event_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="event_detail_modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -252,23 +253,23 @@
                 <div class="modal-body">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th class="text-center" colspan="2">
-                                    <img id="event_img" src="" alt="">
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>Course: </th>
-                                <td id="event_course"></td>
-                            </tr>
-                            <tr>
-                                <th>Time: </th>
-                                <td id="event_time"></td>
-                            </tr>
-                            <tr>
-                                <th>Description: </th>
-                                <td id="event_description"></td>
-                            </tr>
+                        <tr>
+                            <th class="text-center" colspan="2">
+                                <img id="event_img" class="w-100" src="" alt="">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Course:</th>
+                            <td id="event_course"></td>
+                        </tr>
+                        <tr>
+                            <th>Time:</th>
+                            <td id="event_time"></td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td id="event_description"></td>
+                        </tr>
 
                         </thead>
                     </table>
@@ -288,7 +289,7 @@
             init_calendars();
 
             //online section
-            $('.btn_online_batches').on('click', function() {
+            $('.btn_online_batches').on('click', function () {
                 $('.online_course_type').prop('hidden', false);
                 $('.online_course_type').prop('required', true);
                 $('.physical_course_type').prop('hidden', true);
@@ -303,7 +304,7 @@
             });
 
             //physical section
-            $('.btn_physical_batches').on('click', function() {
+            $('.btn_physical_batches').on('click', function () {
                 $('.online_course_type').prop('hidden', true);
                 $('.online_course_type').prop('required', false);
                 $('.physical_course_type').prop('hidden', false);
@@ -318,10 +319,10 @@
             });
 
             //on physical_class_type change
-            $('.physical_class_type').on('change', function() {
-                if($(this).val() == 'group') {
-                    $('.physical_option_batch').each(function() {
-                        if($(this).data('physical-class-type') == 'in_person') {
+            $('.physical_class_type').on('change', function () {
+                if ($(this).val() == 'group') {
+                    $('.physical_option_batch').each(function () {
+                        if ($(this).data('physical-class-type') == 'in_person') {
                             $(this).prop('hidden', true);
                             $(this).prop('selected', false);
                         } else {
@@ -329,9 +330,9 @@
                         }
                     });
                 }
-                if($(this).val() == 'in_person') {
-                    $('.physical_option_batch').each(function() {
-                        if($(this).data('physical-class-type') == 'group') {
+                if ($(this).val() == 'in_person') {
+                    $('.physical_option_batch').each(function () {
+                        if ($(this).data('physical-class-type') == 'group') {
                             $(this).prop('hidden', true);
                             $(this).prop('selected', false);
                         } else {
@@ -348,7 +349,7 @@
             var online_events = $('#online_events').data('events');
             var physical_events = $('#physical_events').data('events');
 
-            online_events.forEach(function(item) {
+            online_events.forEach(function (item) {
                 online_calendar_events.push({
                     title: item.title,
                     start: new Date(item.date),
@@ -360,7 +361,7 @@
                     img_src: item.img_src,
                 });
             });
-            physical_events.forEach(function(item) {
+            physical_events.forEach(function (item) {
                 physical_calendar_events.push({
                     title: item.title,
                     start: new Date(item.date),
@@ -379,7 +380,7 @@
             var online_calendar = new FullCalendar.Calendar(online_calendarEl, {
                 initialView: 'dayGridMonth',
                 events: online_calendar_events,
-                eventClick: function(info) {
+                eventClick: function (info) {
                     $('#event_course').html(info.event.title);
                     $('#event_time').html(info.event.extendedProps.time);
                     $('#event_description').html(info.event.extendedProps.description);
@@ -390,7 +391,7 @@
             var physical_calendar = new FullCalendar.Calendar(physical_calendarEl, {
                 initialView: 'dayGridMonth',
                 events: physical_calendar_events,
-                eventClick: function(info) {
+                eventClick: function (info) {
                     $('#event_course').html(info.event.title);
                     $('#event_time').html(info.event.extendedProps.time);
                     $('#event_description').html(info.event.extendedProps.description);

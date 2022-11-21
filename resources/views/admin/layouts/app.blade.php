@@ -181,7 +181,7 @@
                         </a>
                     </li>
                         {{--CMS--}}
-                    <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-judiann') || request()->IS('admin/cms/contact') || request()->IS('admin/cms/portfolio') || request()->IS('admin/cms/faq') || request()->IS('admin/student') ? 'menu-is-opening menu-open' : '' }}">
+                    <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-judiann') || request()->IS('admin/cms/contact') || request()->IS('admin/cms/portfolio') || request()->IS('admin/cms/faq') || request()->IS('admin/student') || request()->IS('admin/cms/terms') || request()->IS('admin/cms/policy') ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link ">
                             <i class="nav-icon fas fa-tags fw"></i>
                             <p>
@@ -275,6 +275,26 @@
                                     </p>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.terms')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/terms') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Terms & Conditions
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.cms.policy')}}"
+                                   class="nav-link {{ request()->IS('admin/cms/policy') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-angle-double-right"></i>
+                                    <p>
+                                        Privacy Policy
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -297,6 +317,13 @@
                            class="nav-link {{ request()->IS('admin/order') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-angle-double-right"></i>
                             <p>Orders</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('testimonial')}}"
+                           class="nav-link {{ request()->IS('admin/testimonial') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Testimonials</p>
                         </a>
                     </li>
                     <li class="nav-item">

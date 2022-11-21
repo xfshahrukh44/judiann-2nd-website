@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
     <link rel="stylesheet" href="{{asset('front/css/custom.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}"/>
+    <link rel="stylesheet" href="{{URL::asset('admin/plugins/toastr/toastr.min.css')}}">
     <title>@yield('title') | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
@@ -47,6 +48,8 @@
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s Work</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms & Conditions</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy Policy</a></li>
                                     <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
                                     </li>
                                 </ul>
@@ -145,6 +148,7 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js"></script>
 <script src="{{asset('front/js/custom.min.js')}}"></script>
+<script src="{{URL:: asset('admin/plugins/toastr/toastr.min.js')}}"></script>
 @if(session()->has('success'))
     <script type="text/javascript">  toastr.success('{{ session('success')}}');</script>
 @endif

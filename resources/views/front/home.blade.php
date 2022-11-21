@@ -110,7 +110,7 @@
                     <div class="col-12">
                         <div class="lastSlider">
                             @foreach($batches as $batch)
-                                <div class="lastBox" style="height: 300px; overflow-y: scroll;">
+                                <div class="lastBox">
                                     <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
                                     {!! get_readable_description($batch->course->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>
@@ -174,7 +174,7 @@
 
                 @foreach($students as $student)
                     <div class="col-md-4">
-                        <a href="{{route('front.individual-students-work', $student->id)}}">
+                        <a target="_blank" href="{{route('front.individual-students-work', $student->id)}}">
                             <img class="img-fluid" src="{{$student->get_student_image()}}" alt="img">
                         </a>
                         <h6>{{$student->name}}</h6>

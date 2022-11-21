@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\SettingController;
 use App\Models\Page;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Admin\StreamController;
@@ -45,6 +46,15 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::get('order', 'BatchSessionController@index')->name('order');
     Route::get('/order-view/{id}', 'BatchSessionController@show')->name('order-view');
 
+    //testimonial
+    Route::get('testimonial', 'TestimonialController@index')->name('testimonial');
+    //Route::match(['get', 'post'], '/add-testimonial', 'TestimonialController@addCategory')->name('admin.add-testimonial');
+    //Route::match(['get', 'post'], '/testimonial-edit/{id}', 'TestimonialController@edit')->name('admin.edit-testimonial');
+    //Route::get('/testimonial-view/{id}', 'TestimonialController@show')->name('testimonial-view');
+    Route::delete('testimonial/destroy/{id}', 'TestimonialController@destroy');
+    Route::get('/testimonial-approve/{id}', 'TestimonialController@approve')->name('testimonial-approve');
+    Route::get('/testimonial-reject/{id}', 'TestimonialController@reject')->name('testimonial-reject');
+
     //customer
     Route::get('customer', 'CustomerController@index')->name('customer');
     Route::match(['get', 'post'], '/customer-edit/{id}', 'CustomerController@edit')->name('admin.edit-customer');
@@ -80,6 +90,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/cms/portfolio', 'CmsController@portfolio')->name('admin.cms.portfolio');
     Route::match(['get', 'post'], '/cms/schedule', 'CmsController@schedule')->name('admin.cms.schedule');
     Route::match(['get', 'post'], '/cms/services', 'CmsController@services')->name('admin.cms.services');
+    Route::match(['get', 'post'], '/cms/terms', 'CmsController@terms')->name('admin.cms.terms');
+    Route::match(['get', 'post'], '/cms/policy', 'CmsController@policy')->name('admin.cms.policy');
     Route::match(['get', 'post'], '/cms/home', 'CmsController@home')->name('admin.cms.home');
 
     //cms - student's work
@@ -165,6 +177,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     Route::post('/contact', 'FrontController@send_front_mail')->name('front.send_front_mail');
     Route::get('/contact', 'IndexController@contact')->name('front.contact');
 
+    //testimonial
+    Route::match(['get', 'post'], '/testimonial', 'FrontController@testimonial')->name('front.testimonial');
+
 //    return view('front.contact');
 });
 
@@ -190,15 +205,9 @@ Route::get('/video-chatting', function () {
     return view('front.videoChatting');
 })->name('front.videoChatting');
 
-Route::get('/testimonial', function () {
-    return view('front.testimonial');
-})->name('front.testimonial');
-Auth::routes();
-
 Route::get('/policy', function () {
     return view('front.policy');
 })->name('front.policy');
-Auth::routes();
 
 Route::get('/terms', function () {
     return view('front.terms');

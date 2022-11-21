@@ -6,7 +6,10 @@
     <div class="row justify-content-center">
         <div class="login-box">
             <div class="login-logo">
-                <a href="#"><b> {{ config('app.name') }} </b> </a>
+                <a href="#"><b> Judiann's Fashion Design Studios</b> </a>
+            </div>
+            <div class="login-logo">
+                <a href="#"><b><small>Admin Portal</small></b> </a>
             </div>
             <!-- /.login-logo -->
             <div class="card">

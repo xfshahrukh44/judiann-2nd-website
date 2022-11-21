@@ -174,7 +174,7 @@
 
                 @foreach($students as $student)
                     <div class="col-md-4">
-                        <a href="{{route('front.individual-students-work', $student->id)}}">
+                        <a target="_blank" href="{{route('front.individual-students-work', $student->id)}}">
                             <img class="img-fluid" src="{{$student->get_student_image()}}" alt="img">
                         </a>
                         <h6>{{$student->name}}</h6>

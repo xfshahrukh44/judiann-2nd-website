@@ -14,8 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class
-CmsController extends Controller
+class CmsController extends Controller
 {
     public function home(Request $request)
     {

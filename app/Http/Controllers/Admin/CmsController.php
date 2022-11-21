@@ -16,6 +16,108 @@ use Illuminate\Support\Facades\Validator;
 class
 CmsController extends Controller
 {
+    public function home(Request $request)
+    {
+        if ($request->method() == 'POST') {
+            $rules = [
+                'banner_title' => 'required',
+            ];
+            $customs = [
+                'banner_title.required' => 'Banner Title Field is Required',
+            ];
+            $validator = Validator::make($request->all(), $rules, $customs);
+
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->getMessageBag()->first());
+            }
+
+            $home = Page::where('name', 'Home')->first();
+
+            try {
+                if ($home) {
+                    $decodedContent = json_decode($home->content);
+                }
+
+                //bannerImage
+                if ($request->hasFile('banner_image')) {
+                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
+                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
+                }
+
+                if ($request->hasFile('vid_img1')) {
+                    $vid_img1 = time() . '_' . $request['vid_img1']->getClientOriginalName();
+                    $request['vid_img1']->move(public_path() . '/front/images/cms/', $vid_img1);
+                }
+
+                if ($request->hasFile('vid_img2')) {
+                    $vid_img2 = time() . '_' . $request['vid_img2']->getClientOriginalName();
+                    $request['vid_img2']->move(public_path() . '/front/images/cms/', $vid_img2);
+                }
+
+                if ($request->hasFile('vid_img3')) {
+                    $vid_img3 = time() . '_' . $request['vid_img3']->getClientOriginalName();
+                    $request['vid_img3']->move(public_path() . '/front/images/cms/', $vid_img3);
+                }
+
+                if ($request->hasFile('vid_img4')) {
+                    $vid_img4 = time() . '_' . $request['vid_img4']->getClientOriginalName();
+                    $request['vid_img4']->move(public_path() . '/front/images/cms/', $vid_img4);
+                }
+
+                $content = [
+                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
+                    'vid_img1' => $request->hasFile('vid_img1') ? $vid_img1 : ($decodedContent->vid_img1 ?? ''),
+                    'vid_img2' => $request->hasFile('vid_img2') ? $vid_img2 : ($decodedContent->vid_img2 ?? ''),
+                    'vid_img3' => $request->hasFile('vid_img3') ? $vid_img3 : ($decodedContent->vid_img3 ?? ''),
+                    'vid_img4' => $request->hasFile('vid_img4') ? $vid_img4 : ($decodedContent->vid_img4 ?? ''),
+                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
+                    'banner_content' => !empty($request['banner_content']) ? $request['banner_content'] : '',
+                    'abt_title' => !empty($request['abt_title']) ? $request['abt_title'] : '',
+                    'abt_content' => !empty($request['abt_content']) ? $request['abt_content'] : '',
+                    'portfolio_title' => !empty($request['portfolio_title']) ? $request['portfolio_title'] : '',
+                    'stdnt_title' => !empty($request['stdnt_title']) ? $request['stdnt_title'] : '',
+                    'vogue_content' => !empty($request['vogue_content']) ? $request['vogue_content'] : '',
+                    'vogue_url' => !empty($request['vogue_url']) ? $request['vogue_url'] : '',
+                    'master_title' => !empty($request['master_title']) ? $request['master_title'] : '',
+                    'master_content' => !empty($request['master_content']) ? $request['master_content'] : '',
+                    'service_title' => !empty($request['service_title']) ? $request['service_title'] : '',
+                    'service_content' => !empty($request['service_content']) ? $request['service_content'] : '',
+                    'offer_title' => !empty($request['offer_title']) ? $request['offer_title'] : '',
+                    'offer_content1' => !empty($request['offer_content1']) ? $request['offer_content1'] : '',
+                    'offer_content2' => !empty($request['offer_content2']) ? $request['offer_content2'] : '',
+                    'vid_url1' => !empty($request['vid_url1']) ? $request['vid_url1'] : '',
+                    'vid_url2' => !empty($request['vid_url2']) ? $request['vid_url2'] : '',
+                    'vid_url3' => !empty($request['vid_url3']) ? $request['vid_url3'] : '',
+                    'vid_url4' => !empty($request['vid_url4']) ? $request['vid_url4'] : '',
+                ];
+
+                $page = Page::updateOrCreate(
+                    [
+                        'name' => 'Home',
+                    ],
+                    [
+                        'slug' => $home->slug ?? 'home',
+                        'content' => json_encode($content) ?? '',
+                        'meta_title' => $request['meta_title'] ?? '',
+                        'meta_description' => $request['meta_description'] ?? ''
+                    ],
+                );
+
+                return back()->with('success', 'Page Updated Successfully');
+
+            } catch (\Exception $exception) {
+                return back()->with('error', $exception->getMessage());
+            }
+        } else {
+            $home = Page::where('name', 'Home')->first();
+            if ($home) {
+                $data = json_decode($home->content);
+                return view('admin.cms.home', compact('data', 'home'));
+            }
+            return view('admin.cms.home', compact('home'));
+        }
+    }
+
     public function aboutUs(Request $request)
     {
         if ($request->method() == 'POST') {
@@ -653,111 +755,9 @@ CmsController extends Controller
             $services = Page::where('name', 'Services')->first();
             if ($services) {
                 $data = json_decode($services->content);
-                return view('admin.cms.services', compact( 'all_services', 'data', 'services'));
+                return view('admin.cms.services', compact('all_services', 'data', 'services'));
             }
-            return view('admin.cms.services', compact( 'all_services', 'services'));
-        }
-    }
-
-    public function home(Request $request)
-    {
-        if ($request->method() == 'POST') {
-            $rules = [
-                'banner_title' => 'required',
-            ];
-            $customs = [
-                'banner_title.required' => 'Banner Title Field is Required',
-            ];
-            $validator = Validator::make($request->all(), $rules, $customs);
-
-            if ($validator->fails()) {
-                return redirect()->back()->with('error', $validator->getMessageBag()->first());
-            }
-
-            $home = Page::where('name', 'Home')->first();
-
-            try {
-                if ($home) {
-                    $decodedContent = json_decode($home->content);
-                }
-
-                //bannerImage
-                if ($request->hasFile('banner_image')) {
-                    $banner_image = time() . '_' . $request['banner_image']->getClientOriginalName();
-                    $request['banner_image']->move(public_path() . '/front/images/cms/', $banner_image);
-                }
-
-                if ($request->hasFile('vid_img1')) {
-                    $vid_img1 = time() . '_' . $request['vid_img1']->getClientOriginalName();
-                    $request['vid_img1']->move(public_path() . '/front/images/cms/', $vid_img1);
-                }
-
-                if ($request->hasFile('vid_img2')) {
-                    $vid_img2 = time() . '_' . $request['vid_img2']->getClientOriginalName();
-                    $request['vid_img2']->move(public_path() . '/front/images/cms/', $vid_img2);
-                }
-
-                if ($request->hasFile('vid_img3')) {
-                    $vid_img3 = time() . '_' . $request['vid_img3']->getClientOriginalName();
-                    $request['vid_img3']->move(public_path() . '/front/images/cms/', $vid_img3);
-                }
-
-                if ($request->hasFile('vid_img4')) {
-                    $vid_img4 = time() . '_' . $request['vid_img4']->getClientOriginalName();
-                    $request['vid_img4']->move(public_path() . '/front/images/cms/', $vid_img4);
-                }
-
-                $content = [
-                    'banner_image' => $request->hasFile('banner_image') ? $banner_image : ($decodedContent->banner_image ?? ''),
-                    'vid_img1' => $request->hasFile('vid_img1') ? $vid_img1 : ($decodedContent->vid_img1 ?? ''),
-                    'vid_img2' => $request->hasFile('vid_img2') ? $vid_img2 : ($decodedContent->vid_img2 ?? ''),
-                    'vid_img3' => $request->hasFile('vid_img3') ? $vid_img3 : ($decodedContent->vid_img3 ?? ''),
-                    'vid_img4' => $request->hasFile('vid_img4') ? $vid_img4 : ($decodedContent->vid_img4 ?? ''),
-                    'banner_title' => !empty($request['banner_title']) ? $request['banner_title'] : '',
-                    'banner_content' => !empty($request['banner_content']) ? $request['banner_content'] : '',
-                    'abt_title' => !empty($request['abt_title']) ? $request['abt_title'] : '',
-                    'abt_content' => !empty($request['abt_content']) ? $request['abt_content'] : '',
-                    'portfolio_title' => !empty($request['portfolio_title']) ? $request['portfolio_title'] : '',
-                    'stdnt_title' => !empty($request['stdnt_title']) ? $request['stdnt_title'] : '',
-                    'vogue_content' => !empty($request['vogue_content']) ? $request['vogue_content'] : '',
-                    'vogue_url' => !empty($request['vogue_url']) ? $request['vogue_url'] : '',
-                    'master_title' => !empty($request['master_title']) ? $request['master_title'] : '',
-                    'master_content' => !empty($request['master_content']) ? $request['master_content'] : '',
-                    'service_title' => !empty($request['service_title']) ? $request['service_title'] : '',
-                    'service_content' => !empty($request['service_content']) ? $request['service_content'] : '',
-                    'offer_title' => !empty($request['offer_title']) ? $request['offer_title'] : '',
-                    'offer_content1' => !empty($request['offer_content1']) ? $request['offer_content1'] : '',
-                    'offer_content2' => !empty($request['offer_content2']) ? $request['offer_content2'] : '',
-                    'vid_url1' => !empty($request['vid_url1']) ? $request['vid_url1'] : '',
-                    'vid_url2' => !empty($request['vid_url2']) ? $request['vid_url2'] : '',
-                    'vid_url3' => !empty($request['vid_url3']) ? $request['vid_url3'] : '',
-                    'vid_url4' => !empty($request['vid_url4']) ? $request['vid_url4'] : '',
-                ];
-
-                $page = Page::updateOrCreate(
-                    [
-                        'name' => 'Home',
-                    ],
-                    [
-                        'slug' => $home->slug ?? 'home',
-                        'content' => json_encode($content) ?? '',
-                        'meta_title' => $request['meta_title'] ?? '',
-                        'meta_description' => $request['meta_description'] ?? ''
-                    ],
-                );
-
-                return back()->with('success', 'Page Updated Successfully');
-
-            } catch (\Exception $exception) {
-                return back()->with('error', $exception->getMessage());
-            }
-        } else {
-            $home = Page::where('name', 'Home')->first();
-            if ($home) {
-                $data = json_decode($home->content);
-                return view('admin.cms.home', compact('data', 'home'));
-            }
-            return view('admin.cms.home', compact ('home'));
+            return view('admin.cms.services', compact('all_services', 'services'));
         }
     }
 

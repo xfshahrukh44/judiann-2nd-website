@@ -201,6 +201,7 @@
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Title</th>
                                                 <th scope="col">Service</th>
+                                                <th scope="col">Description</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                             </thead>
@@ -217,6 +218,7 @@
                                                     </td>
                                                     <td>{{$service->title}}</td>
                                                     <td>{!! $service->service !!}</td>
+                                                    <td>{!! $service->description !!}</td>
                                                     <td>
                                                         <a class="btn btn-primary"
                                                            href="{{route('admin.service.edit',$service->id)}}"><i

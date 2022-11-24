@@ -100,6 +100,11 @@
                                                 <textarea class="form-control" name="service" id="description"
                                                           placeholder="Service"></textarea>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="name">Description</label>
+                                                <textarea class="form-control" name="description"
+                                                          placeholder="Description"></textarea>
+                                            </div>
 
                                             <div class="form-group">
                                                 <label for="name">Image</label>

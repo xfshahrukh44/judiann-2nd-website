@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Course Description</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Course Description" required>{{$content->description?? old('description')}}</textarea>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Course Description">{{$content->description?? old('description')}}</textarea>
                                         @error('description')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

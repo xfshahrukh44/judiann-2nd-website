@@ -102,6 +102,12 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="name">Description</label>
+                                                <textarea class="form-control" name="description"
+                                                          placeholder="Description">{{$service->description}}</textarea>
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label for="name">Image</label>
                                                 <div class="img-upload">
                                                     <div id="image-preview" class="img-preview"

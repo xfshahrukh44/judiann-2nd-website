@@ -375,13 +375,14 @@ class FrontController extends Controller
 
     public function studentsWork(Request $request)
     {
-        $portfolio_images = PortfolioImage::all();
+//        $portfolio_images = PortfolioImage::all();
         $student_work = Page::where('name', 'Students Work')->first();
+        $students = Student::all();
         if ($student_work) {
             $data = json_decode($student_work->content);
-            return view('front.students-work', compact('data', 'student_work', 'portfolio_images'));
+            return view('front.students-work', compact('data', 'student_work', 'students'));
         }
-        return view('front.students-work', compact('portfolio_images', 'student_work'));
+        return view('front.students-work', compact('students', 'student_work'));
     }
 
     public function individualStudentsWork(Request $request, $student_id)

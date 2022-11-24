@@ -43,7 +43,7 @@ class CourseController extends Controller
         if ($request->method() == 'POST') {
             $this->validate($request, array(
                 'name' => 'required|string',
-                'description' => 'required|string',
+                'description' => 'nullable|string',
                 'fees' => 'required'
             ));
 

@@ -46,7 +46,7 @@
             </div>
 
             @foreach($all_services as $service)
-                <div class="row my-5">
+                <div class="row mt-5">
                     <div class="col-md-6">
                         <figure><img src="{{$service->get_service_image()}}" class="w-100" alt=""></figure>
                     </div>
@@ -55,6 +55,15 @@
                         {!! $service->service !!}
                     </div>
                 </div>
+                @if(!is_null($service->description))
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h4 class="text-white">
+                                {{$service->description}}
+                            </h4>
+                        </div>
+                    </div>
+                @endif
             @endforeach
 {{--            <div class="row align-items-center">--}}
 {{--                <div class="col-md-6">--}}

@@ -33,7 +33,8 @@ class ServiceController extends Controller
             $page = Services::create(
                 [
                     'title' => $request['title'],
-                    'service' => $request['service']
+                    'service' => $request['service'],
+                    'description' => $request['description'],
                 ]
             );
 
@@ -65,6 +66,7 @@ class ServiceController extends Controller
 
         $service->title = $inputs['title'];
         $service->service = $inputs['service'];
+        $service->description = $inputs['description'];
 
         if($request->has('image')) {
             $service->clearMediaCollection('service_images');

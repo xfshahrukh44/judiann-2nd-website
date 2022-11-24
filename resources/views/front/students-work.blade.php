@@ -175,12 +175,13 @@
 {{--                </div>--}}
 {{--            </div>--}}
             <div class="row">
-                @foreach($portfolio_images as $portfolio_image)
+
+                @foreach($students as $student)
                     <div class="col-md-4">
-                        <a data-fancybox="" href="{{$portfolio_image->get_portfolio_image()}}">
-                            <img class="img-fluid" src="{{$portfolio_image->get_portfolio_image()}}" alt="img">
+                        <a target="_blank" href="{{route('front.individual-students-work', $student->id)}}">
+                            <img class="img-fluid" src="{{$student->get_student_image()}}" alt="img">
                         </a>
-                        <h6 style="">{{$portfolio_image->student->name}}</h6>
+                        <h6>{{$student->name}}</h6>
                     </div>
                 @endforeach
             </div>

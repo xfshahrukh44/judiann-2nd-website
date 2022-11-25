@@ -6,10 +6,10 @@
 
 @section('content')
 
-    {{--<div class="anloader">
+    <div class="anloader">
         <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">
         </video>
-    </div>--}}
+    </div>
     <!-- Begin: Main Slider -->
 
     <div class="main-slider">

@@ -17,11 +17,9 @@ class ServiceController extends Controller
     public function store(Request $request){
         $rules = [
             'title' => 'required',
-            'service' => 'required'
         ];
         $customs = [
             'title.required' => 'Title Field is Required',
-            'service.required' => 'Service Field is Required'
         ];
         $validator = Validator::make($request->all(), $rules, $customs);
 

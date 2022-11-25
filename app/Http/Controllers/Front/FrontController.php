@@ -33,9 +33,8 @@ class FrontController extends Controller
         $batches = Batch::all();
 //        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
         $students = Student::all();
-        $services = Services::all();
-        $sort_portfolio = Portfolio::all()->sortBy('image_order');
-
+        $services = Services::paginate(10);
+        $sort_portfolio = Portfolio::orderBy('image_order', 'asc')->paginate(6);
         $home = Page::where('name', 'Home')->first();
         if ($home) {
             $data = json_decode($home->content);

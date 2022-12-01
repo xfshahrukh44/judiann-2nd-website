@@ -32,31 +32,38 @@
                         </a>
                     </div>
                     <div class="col-md-6 text-right">
-                        <div id="myNav" class="overlay">
-                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <div class="d-flex align-items-center justify-content-end">
+                            <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link text-white h5">Login</a>
+                                </li>
+                            </ul>
+                            <div id="myNav" class="overlay">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-                            <div class="overlay-content">
-                                <ul class="">
-                                    <li class="active  nav-item"><a class="nav-link" href="{{route('front.home')}}">Home</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}">About Judiann</a>
-                                    </li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}">About Us</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.judiann-portfolio')}}">Judiann’s
-                                            Portfolio</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}">Services</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}">Faq’s</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s Work</a>
-                                    </li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms & Conditions</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy Policy</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
-                                    </li>
-                                </ul>
+                                <div class="overlay-content">
+                                    <ul class="">
+                                        <li class="active  nav-item"><a class="nav-link" href="{{route('front.home')}}">Home</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}">About Judiann</a>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}">About Us</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.judiann-portfolio')}}">Judiann’s
+                                                Portfolio</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}">Services</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}">Faq’s</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s Work</a>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms & Conditions</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy Policy</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
-
+                            <span style="font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
                         </div>
-                        <span style="font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
                     </div>
                 </div>
             </div>

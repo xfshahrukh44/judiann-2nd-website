@@ -75,4 +75,12 @@ class IndexController extends Controller
         }
         return view('front.services', compact( 'all_services', 'services'));
     }
+
+    public function signup(){
+        return view('front.signup');
+    }
+
+    public function forget(){
+        return view('front.forget');
+    }
 }

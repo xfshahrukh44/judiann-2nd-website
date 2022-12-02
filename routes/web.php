@@ -193,6 +193,10 @@ Route::get('/judiann-portfolio', 'App\Http\Controllers\Front\IndexController@jud
 
 Route::get('/services', 'App\Http\Controllers\Front\IndexController@services')->name('front.services');
 
+Route::get('/signup', 'App\Http\Controllers\Front\IndexController@signup')->name('front.signup');
+
+Route::get('/forget', 'App\Http\Controllers\Front\IndexController@forget')->name('front.forget');
+
 //Route::get('/schedule', function () {
 //    return view('front.schedule');
 //})->name('front.schedule');

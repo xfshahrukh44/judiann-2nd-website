@@ -1492,6 +1492,70 @@ div.switcher label input:checked + span small {
     margin: 1rem;
 }
 
-.fullBox img{
+.fullBox img {
     height: auto;
+}
+
+.courseTable * {
+    color: #fff;
+}
+
+.courseTable .btnCont {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.courseTable .btnCont span {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.courseTable .btnCont span input {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.courseTable .btnCont span i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--danger);
+}
+
+.signupSec {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signupSec .row {
+    gap: 2rem 0;
+}
+
+.signupSec .form-group label {
+    display: block;
+    width: 100%;
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.signupSec a {
+    text-transform: capitalize;
+    font-size: 1.25rem;
+    font-family: 'Roboto';
+}
+
+.signupSec .form-group input.form-control {
+    background: none;
+    color: #fff;
 }

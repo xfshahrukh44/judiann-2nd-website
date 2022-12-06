@@ -82,161 +82,323 @@
                             @endif
                         </div>
                     @endforeach
-                </div>
-            </div>
-            {{--physical--}}
-            <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="container">
-                    @foreach($physical_batches as $key => $batch)
-                        <div class="row fullBox">
-                            @if($key % 2 == 0)
-                                <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
-                                        <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        @if($batch->physical_class_type == 'group')
-                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
-                                        @endif
-                                        @if(batch_is_full($batch))
-                                            <h4 class="text-danger">SEATS FULL</h4>
-                                        @endif
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
-                                    </figure>
-                                </div>
-                            @else
-                                <div class="col-md-6">
-                                    <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
-                                    </figure>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
-                                        <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        @if($batch->physical_class_type == 'group')
-                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
-                                        @endif
-                                        @if(batch_is_full($batch))
-                                            <h4 class="text-danger">SEATS FULL</h4>
-                                        @endif
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
-                                    </div>
-                                </div>
-                            @endif
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-12">
+                            <h2 class="headOne text-center mt-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
+                            <h3 class="text-white text-center mt-3 mb-5">
+                                Students may continually add multiple courses of both the online and onsite course types.
+                            </h3>
                         </div>
-                    @endforeach
+                        <div class="col-md-6">
+                            <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
+                                  data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
+                                  data-message-success="Thank you! We will be in touch soon."
+                                  data-message-invalid-email="Sorry, that email address looks invalid."
+                                  data-message-required-field-missing="Please fill in the required fields."
+                                  data-message-error="Oops. An error occurred.">
+                                @csrf
+                                <div class="hf-fields-wrap">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder=" First  Name"
+                                                           name="first_name" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Last Name"
+                                                           name="last_name" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control" placeholder="Email"
+                                                           name="email"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Contact"
+                                                           name="phone"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label>Select Course Type:</label>
+                                                    <select class="form-control course_type online_course_type"
+                                                            placeholder="Select Course Type"
+                                                            name="batch_id" required>
+                                                        <option disabled selected value="">Select Course Type:</option>
+                                                        @foreach($online_batches as $batch)
+                                                            <option class="option_batch_type"
+                                                                    data-online="{{$batch->is_online}}"
+                                                                    data-physical="{{$batch->is_physical}}"
+                                                                    value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <select class="form-control course_type physical_course_type"
+                                                            placeholder="Select Course Type"
+                                                            name="batch_id" hidden>
+                                                        <option disabled selected value="">Select Course Type:</option>
+                                                        @foreach($physical_batches as $batch)
+                                                            <option class="option_batch_type physical_option_batch"
+                                                                    {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
+                                                                    data-online="{{$batch->is_online}}"
+                                                                    data-physical="{{$batch->is_physical}}"
+                                                                    data-physical-class-type="{{$batch->physical_class_type}}"
+                                                                    value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="table-responsive courseTable">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Select Courses</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @for($i = 0; $i<= 5 ; $i++)
+                                                            <tr>
+                                                                <td>
+                                                                    How to make a Notched Collar Jacket with Lining (Batch: Batch 1)
+                                                                </td>
+                                                                <td>
+                                                                    <div class="btnCont">
+                                                                    <span>
+                                                                        <i class="fas fa-times"></i>
+                                                                        <input type="radio" name="" id="">
+                                                                    </span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="class_type" class="class_type" value="online">
+
+                                            <div class="col-12 physical_class_type_wrapper" hidden>
+                                                <div class="form-group">
+                                                    <label>Select Physical Class Type:</label>
+                                                    <select class="form-control physical_class_type"
+                                                            placeholder="Select Class Type" name="physical_class_type">
+                                                        <option disabled selected>Select Physical Class Type:</option>
+                                                        <option value="group">Group classes</option>
+                                                        <option value="in_person">In-person</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mt-5">
+                                                <button type="submit">Send Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <noscript>Please enable JavaScript for this form to work.</noscript>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="headTwo">On-line</h2>
+                            <div id="online_calendar"></div>
+                            <div id="physical_calendar"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-12">
-                    <h2 class="headOne text-center my-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
-                </div>
-                <div class="col-md-6">
-                    <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
-                          data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
-                          data-message-success="Thank you! We will be in touch soon."
-                          data-message-invalid-email="Sorry, that email address looks invalid."
-                          data-message-required-field-missing="Please fill in the required fields."
-                          data-message-error="Oops. An error occurred.">
-                        @csrf
-                        <div class="hf-fields-wrap">
-                            <div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder=" First  Name"
-                                                   name="first_name" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Last Name"
-                                                   name="last_name" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email"
-                                                   name="email"
-                                                   required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Contact"
-                                                   name="phone"
-                                                   required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>Select Course Type:</label>
-                                            <select class="form-control course_type online_course_type"
-                                                    placeholder="Select Course Type"
-                                                    name="batch_id" required>
-                                                <option disabled selected value="">Select Course Type:</option>
-                                                @foreach($online_batches as $batch)
-                                                    <option class="option_batch_type"
-                                                            data-online="{{$batch->is_online}}"
-                                                            data-physical="{{$batch->is_physical}}"
-                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
-                                                @endforeach
-                                            </select>
-                                            <select class="form-control course_type physical_course_type"
-                                                    placeholder="Select Course Type"
-                                                    name="batch_id" hidden>
-                                                <option disabled selected value="">Select Course Type:</option>
-                                                @foreach($physical_batches as $batch)
-                                                    <option class="option_batch_type physical_option_batch"
-                                                            {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
-                                                            data-online="{{$batch->is_online}}"
-                                                            data-physical="{{$batch->is_physical}}"
-                                                            data-physical-class-type="{{$batch->physical_class_type}}"
-                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <input type="hidden" name="class_type" class="class_type" value="online">
-
-                                    <div class="col-12 physical_class_type_wrapper" hidden>
-                                        <div class="form-group">
-                                            <label>Select Physical Class Type:</label>
-                                            <select class="form-control physical_class_type"
-                                                    placeholder="Select Class Type" name="physical_class_type">
-                                                <option disabled selected>Select Physical Class Type:</option>
-                                                <option value="group">Group classes</option>
-                                                <option value="in_person">In-person</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mt-5">
-                                        <button type="submit">Send Now</button>
-                                    </div>
+        {{--physical--}}
+        <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="container">
+                @foreach($physical_batches as $key => $batch)
+                    <div class="row fullBox">
+                        @if($key % 2 == 0)
+                            <div class="col-md-6">
+                                <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
+                                    <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                    <p>{!! get_readable_description($batch->course->description) !!}</p>
+                                    <h4 class="text-white">TIMINGS</h4>
+                                    {!! get_batch_timings($batch) !!}
+                                    @if($batch->physical_class_type == 'group')
+                                        <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
+                                    @endif
+                                    @if(batch_is_full($batch))
+                                        <h4 class="text-danger">SEATS FULL</h4>
+                                    @endif
+                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
                                 </div>
                             </div>
-                            <noscript>Please enable JavaScript for this form to work.</noscript>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <div id="online_calendar"></div>
-                    <div id="physical_calendar"></div>
+                            <div class="col-md-6">
+                                <figure>
+                                    <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                </figure>
+                            </div>
+                        @else
+                            <div class="col-md-6">
+                                <figure>
+                                    <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                </figure>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
+                                    <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                    <p>{!! get_readable_description($batch->course->description) !!}</p>
+                                    <h4 class="text-white">TIMINGS</h4>
+                                    {!! get_batch_timings($batch) !!}
+                                    @if($batch->physical_class_type == 'group')
+                                        <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
+                                    @endif
+                                    @if(batch_is_full($batch))
+                                        <h4 class="text-danger">SEATS FULL</h4>
+                                    @endif
+                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-12">
+                        <h2 class="headOne text-center my-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
+                              data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
+                              data-message-success="Thank you! We will be in touch soon."
+                              data-message-invalid-email="Sorry, that email address looks invalid."
+                              data-message-required-field-missing="Please fill in the required fields."
+                              data-message-error="Oops. An error occurred.">
+                            @csrf
+                            <div class="hf-fields-wrap">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder=" First  Name"
+                                                       name="first_name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Last Name"
+                                                       name="last_name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Email"
+                                                       name="email"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Contact"
+                                                       name="phone"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Select Course Type:</label>
+                                                <select class="form-control course_type online_course_type"
+                                                        placeholder="Select Course Type"
+                                                        name="batch_id" required>
+                                                    <option disabled selected value="">Select Course Type:</option>
+                                                    @foreach($online_batches as $batch)
+                                                        <option class="option_batch_type"
+                                                                data-online="{{$batch->is_online}}"
+                                                                data-physical="{{$batch->is_physical}}"
+                                                                value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                    @endforeach
+                                                </select>
+                                                <select class="form-control course_type physical_course_type"
+                                                        placeholder="Select Course Type"
+                                                        name="batch_id" hidden>
+                                                    <option disabled selected value="">Select Course Type:</option>
+                                                    @foreach($physical_batches as $batch)
+                                                        <option class="option_batch_type physical_option_batch"
+                                                                {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
+                                                                data-online="{{$batch->is_online}}"
+                                                                data-physical="{{$batch->is_physical}}"
+                                                                data-physical-class-type="{{$batch->physical_class_type}}"
+                                                                value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="table-responsive courseTable">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Select Courses</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @for($i = 0; $i<= 5 ; $i++)
+                                                        <tr>
+                                                            <td>
+                                                                How to make a Notched Collar Jacket with Lining (Batch: Batch 1)
+                                                            </td>
+                                                            <td>
+                                                                <div class="btnCont">
+                                                                    <span>
+                                                                        <i class="fas fa-times"></i>
+                                                                        <input type="radio" name="" id="">
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endfor
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="class_type" class="class_type" value="online">
+
+                                        <div class="col-12 physical_class_type_wrapper" hidden>
+                                            <div class="form-group">
+                                                <label>Select Physical Class Type:</label>
+                                                <select class="form-control physical_class_type"
+                                                        placeholder="Select Class Type" name="physical_class_type">
+                                                    <option disabled selected>Select Physical Class Type:</option>
+                                                    <option value="group">Group classes</option>
+                                                    <option value="in_person">In-person</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-5">
+                                            <button type="submit">Send Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <noscript>Please enable JavaScript for this form to work.</noscript>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="headTwo">On-line</h2>
+                        <div id="online_calendar"></div>
+                        <div id="physical_calendar"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        </div>
+        </div>
+        <div class="container">
     </section>
 
     {{--event detail modal--}}
@@ -275,7 +437,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Submit</button>
                 </div>
             </div>
         </div>

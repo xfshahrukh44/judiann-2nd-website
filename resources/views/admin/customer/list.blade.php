@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', 'Customers')
+{{--@section('title', 'Customers')--}}
+@section('title', 'Registered Students')
 @section('page_css')
     <style>
         .addBtn{

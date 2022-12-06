@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use App\Models\User;
+use App\Traits\PHPCustomMail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+    use PHPCustomMail;
+
     public function index()
     {
         try {
@@ -68,6 +72,10 @@ class CustomerController extends Controller
     final public function destroy(int $id)
     {
         $content=User::find($id);
+
+        //send account termination email
+        $this->accountTerminationMail($content->email, $content->name);
+
         $content->delete();
         echo 1;
     }
@@ -78,5 +86,16 @@ class CustomerController extends Controller
         $content->is_blocked = $content->is_blocked == 0 ? 1 : 0;
         $content->save();
         echo 1;
+    }
+
+    public function accountTerminationMail($email_to, $name)
+    {
+        try {
+            $message = 'Dear '.$name.', your Judiann student account has been terminated.';
+
+            return $this->customMail('info@judiannsfashiondesignstudios.com', $email_to, 'Judiann Fashion Design Studios | Account Termination', $message);
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errors', $exception->getMessage());
+        }
     }
 }

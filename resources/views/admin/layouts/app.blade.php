@@ -302,7 +302,7 @@
                         <a href="{{route('customer')}}"
                            class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-angle-double-right"></i>
-                            <p>Customer</p>
+                            <p>Registered Students</p>
                         </a>
                     </li>
                     <li class="nav-item">

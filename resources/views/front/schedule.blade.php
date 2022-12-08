@@ -161,6 +161,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Select Courses</th>
+                                                            <th>Price</th>
                                                             <th>Action</th>
                                                         </tr>
                                                         </thead>
@@ -169,6 +170,9 @@
                                                             <tr>
                                                                 <td>
                                                                     How to make a Notched Collar Jacket with Lining (Batch: Batch 1)
+                                                                </td>
+                                                                <td>
+                                                                    $100.00
                                                                 </td>
                                                                 <td>
                                                                     <div class="btnCont">
@@ -181,6 +185,13 @@
                                                             </tr>
                                                         @endfor
                                                         </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td><b>Total Price</b></td>
+{{--                                                            <td></td>--}}
+                                                            <td><b>$500.00</b></td>
+                                                        </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                             </div>
@@ -342,6 +353,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Select Courses</th>
+                                                        <th>Price</th>
                                                         <th>Action</th>
                                                     </tr>
                                                     </thead>
@@ -351,6 +363,7 @@
                                                             <td>
                                                                 How to make a Notched Collar Jacket with Lining (Batch: Batch 1)
                                                             </td>
+                                                            <td>$100.00</td>
                                                             <td>
                                                                 <div class="btnCont">
                                                                     <span>
@@ -362,6 +375,13 @@
                                                         </tr>
                                                     @endfor
                                                     </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td><b>Total Price</b></td>
+                                                        {{--                                                            <td></td>--}}
+                                                        <td><b>$500.00</b></td>
+                                                    </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>

@@ -1,8 +1,15 @@
-@media only screen and (max-width: 1600px) {}
+@media only screen and (max-width: 1600px) {
+	.portfolioSec .col-md-5 .portfolioBox a img{
+		height: 570px;
+	}
+}
 
 @media only screen and (max-width: 1445px) {
-	.container {
-		max-width: 1380px;
+	.portfolioSec .col-md-5 .portfolioBox a img {
+		height: 506px;
+	}
+	.logo{
+		height: 120px !important;
 	}
 }
 
@@ -10,22 +17,259 @@
 	.container {
 		max-width: 1140px;
 	}
+	html {
+		font-size: 15px;
+	}
+	.portfolioSec .col-md-5 .portfolioBox a img {
+		height: 476px;
+	}
 }
 
 @media (max-width: 1199.98px) {
 	.container {
 		    max-width: 960px;
 	}
+	.headOne {
+		font-size: 3.25rem;
+	}
+	html {
+		font-size: 14px;
+	}
+	.overlay-content {
+		position: relative;
+		top: 15%;
+	}
+	
 } 
 @media (max-width: 991.98px) {
 	.container {
 		max-width: 720px;
 	}
+	.slideContent br{
+		display: none;
+	}
+	header{
+		top: 1rem;
+	}
+	.logo{
+		height: 80px !important;
+	}
+	.slideContent p,
+	.slideContent .headOne {
+		margin: 0;
+	}
+	.abtSec,
+	.videoSec,
+	.vogueSec{
+		padding: 2rem 0;
+	}
+	.abtContent br{
+		display: none;
+	}
+	.slideContent {
+		margin-top: 4rem;
+	}
+	.portfolioSec,
+	.wrkSec {
+		padding: 3rem 0;
+	}
+	.portfolioSec .col-md-5 .portfolioBox a img {
+		height: 370px;
+	}
+	.main-slider img {
+		height: 502px;
+		object-fit: cover;
+	}
+	html {
+		font-size: 13px;
+	}
+	
+	.aboutInnr .row.align-items-center {
+		align-items: flex-start !important;
+	}
+	.aboutInnr{
+		padding: 2rem 0;
+	}
+
+	.aboutInnr .col-md-5.mt-5.pt-5 {
+		padding-top: 0 !important;
+		margin-top: 0 !important;
+	}
+	.aboutInnr .headOne {
+		margin-top: 1.5rem;
+	}
+	.sewngContent .overlaySewng {
+		bottom: 12rem;
+	}
+	
+	
 } 
+
+
 @media (max-width: 767.98px) {
 	.container {
 		max-width: 540px;
 	}
+	.headOne {
+		font-size: 2.25rem;
+	}
+	.slideContent p {
+		font-size: 1.3625rem;
+		margin-bottom: 1rem;
+	}
+	.main-slider .carousel-control-prev,
+	.main-slider .carousel-control-next991{
+		font-size: 4rem;
+	}
+	.main-slider a.bounce-element{
+		display: none;
+	}
+
+	.srvcSec ul li {
+		font-size: 2rem;
+	}
+	.ftrLogo img {
+		width: 50%;
+	}
+	.copyRght {
+		text-align: center;
+	}
+	.copyRght .ftrSocial {
+		justify-content: center;
+
+	}
+	footer {
+		padding: 2rem 0 0;
+	}
+	.videoSlider .slick-dots {
+		bottom: -3rem;
+	}
+	.portfolioSec .headOne {
+		margin: 0 0 1.5rem;
+
+	}
+
+	.themeBtn{
+		padding: 0.38em 1.1em;
+	}
+	.main-slider .carousel-control-prev {
+		font-size: 2.5rem;
+		left: -28px;
+	}
+	.main-slider .carousel-control-next{
+		right: -28px;
+		font-size: 2.5rem;
+	}
+	.portfolioSec .col-md-5 .portfolioBox a img {
+		height: auto;
+	}
+	.portfolioBox a {
+		margin-bottom: 1rem;
+	}
+	.portfolioSec .headOne,
+	.wrkSec .headOne,
+	.videoSec .headOne {
+		margin: 0 0 1.5rem;
+
+	}
+	.srvcSec p{
+		margin-bottom: 1rem;
+	}
+	.srvcSec .headTwo {
+		margin: 0 0 1.67rem;
+	}
+
+	.sewngContent:hover .overlaySewng {
+		transform: translateY(100px);
+	}
+	html {
+		font-size: 12px;
+	}
+
+	.headOne {
+		font-size: 3rem;
+	}
+	.main-slider.inner img {
+		height: 300px;
+	}
+	
+	.main-slider.inner .slideContent{
+		margin-top: 0;
+	}
+	.aboutInnr,
+	.srvcSec.serviceInner,
+	.contactInnr,
+	.portfolioSec, .wrkSec,
+	.contactInnr {
+		padding: 1rem 0;
+	}
+	.contactInnr .contactList li a {
+		font-size: 2rem;
+	}
+	.contactInnr h2.headOne.text-center.mb-5 {
+		margin-bottom: 1rem !important;
+	}
+	
+	.contactInnr .nav-tabs {
+		margin-bottom: 0;
+	}
+	.contactInnr h2.headOne.text-center.my-5 {
+		margin: 1.5rem 0 !important;
+	}
+	div#online_calendar {
+		margin-top: 1.5rem;
+	}
+	.anloader > video {
+		object-fit: contain;
+	}
+	.telrng .sewngContent .overlaySewng .headTwo {
+		font-size: 1.875rem;
+	}
+	.copyRght {
+		margin-top: 1rem;
+
+	}
+	 
 } 
-@media (max-width: 575.98px) {} 
-@media (max-width: 320.98px) {} 
+@media (max-width: 575.98px) {
+	
+	.an-navbar .col-lg-6.col-sm-6 {
+		width: 50%;
+	}
+
+	.abtSec, .videoSec, .vogueSec,.portfolioSec, .wrkSec {
+		padding: 1.5rem 0;
+	}
+	.slideContent {
+		margin-top: 8rem;
+	}
+	.logo {
+		height: 80px !important;
+		width: 140px !important;
+	}
+	.main-slider img {
+		height: 362px;
+		object-fit: cover;
+	}
+	p{
+		line-height: 1.2;
+	}
+	.contactInnr .contactList li a {
+		font-size: 1.5rem;
+		color: var(--white);
+	}
+} 
+@media (max-width: 480.98px) {
+	.main-slider .carousel-control-prev {
+		font-size: 2.5rem;
+		left: -18px;
+	}
+	.main-slider .carousel-control-next{
+		right: -18px;
+	}
+	
+	.slideContent {
+		margin-top: 8rem;
+	}
+	
+} 

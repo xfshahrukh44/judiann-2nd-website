@@ -9,7 +9,7 @@
 
     <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
     <div hidden id="physical_events" data-events="{{json_encode($physical_events)}}"></div>
-    <div class="main-slider">
+    <div class="main-slider inner">
         <img class="img-fluid w-100"
              src="{{!empty($schedule) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">

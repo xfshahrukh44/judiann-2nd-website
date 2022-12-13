@@ -6,10 +6,10 @@
 
 @section('content')
 
-{{--    <div class="anloader">--}}
-{{--        <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">--}}
-{{--        </video>--}}
-{{--    </div>--}}
+    {{--    <div class="anloader">--}}
+    {{--        <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">--}}
+    {{--        </video>--}}
+    {{--    </div>--}}
     <!-- Begin: Main Slider -->
 
     <div class="main-slider">
@@ -22,7 +22,7 @@
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <div class="col-md-8">
+                                <div class="col-lg-8 col-md-12">
                                     <div class="slideContent">
                                         <h2 class="headOne">{{!empty($home) ? (!empty($data->banner_title) ? $data->banner_title : '') : ''}}</h2>
                                         <p>{!! nl2br(e(!empty($home) ? (!empty($data->banner_content) ? ($data->banner_content) : '') : '')) !!}</p>

@@ -26,10 +26,10 @@
         <div class="an-navbar">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-md-6">
+                    <div class="col-lg-6 col-sm-6">
                         <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
-                                           style="width: 300px; height: 150px;" loop autoplay></lottie-player>
+                                           style="width: 300px; height: 150px;"  class="logo"  loop autoplay></lottie-player>
                         </a>
                     </div>
                     <div class="col-md-6 text-right">

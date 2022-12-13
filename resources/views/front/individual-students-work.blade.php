@@ -8,7 +8,7 @@
     <!-- Begin: Main Slider -->
 
 
-    <div class="main-slider">
+    <div class="main-slider inner">
         <img class="img-fluid w-100"
              src="{{asset('front/images/BannerImg.jpg')}}"
              alt="First slide">

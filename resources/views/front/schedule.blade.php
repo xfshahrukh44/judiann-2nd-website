@@ -209,7 +209,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mt-5">
-                                                <button type="submit">Send Now</button>
+                                                @if(\Illuminate\Support\Facades\Auth::check())
+                                                    <button type="submit">Send Now</button>
+                                                @else
+                                                    <button type="button" data-toggle="modal" data-target="#loginModal">Send Now</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -400,7 +404,11 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 mt-5">
-                                            <button type="submit">Send Now</button>
+                                            @if(\Illuminate\Support\Facades\Auth::check())
+                                                <button type="submit">Send Now</button>
+                                            @else
+                                                <button type="button" data-toggle="modal" data-target="#loginModal">Send Now</button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

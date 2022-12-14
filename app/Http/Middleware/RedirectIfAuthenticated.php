@@ -27,6 +27,7 @@ class RedirectIfAuthenticated
                 }
                 if(Auth::user()->role_id == 2) {
                     return redirect()->route('customer.dashboard');
+//                    return redirect()->route('front.schedule_class');
                 }
                 return redirect(RouteServiceProvider::HOME);
             }

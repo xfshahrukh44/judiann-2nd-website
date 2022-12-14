@@ -19,6 +19,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -160,19 +161,20 @@ class FrontController extends Controller
             'physical_class_type' => 'sometimes',
         ));
 
-        //check if user already exists on basis of email
-        $user_check = User::where('email', $request->email)->where('role_id', '=', 2)->get();
+//        //check if user already exists on basis of email
+//        $user_check = User::where('email', $request->email)->where('role_id', '=', 2)->get();
         $password = $this->generateRandomString(8);
-        if (count($user_check) == 0) {
-            $user = User::create([
-                'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'password' => hash::make($password),
-                'role_id' => 2
-            ]);
-        } else {
-            $user = $user_check[0];
+//        if (count($user_check) == 0) {
+//            $user = User::create([
+//                'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
+//                'email' => $request->email,
+//                'phone' => $request->phone,
+//                'password' => hash::make($password),
+//                'role_id' => 2
+//            ]);
+//        } else {
+//            $user = $user_check[0];
+            $user = Auth::user();
 
             //check if user already registered on course
             $course = Course::find($request->input('course_id'));
@@ -181,12 +183,12 @@ class FrontController extends Controller
                 return back()->withErrors(['You have already registered in the batch.']);
             }
 
-            //if user has already not yet registered a course (should generate password only then)
-            if (count($user->batch_sessions) == 0) {
-                $user->password = hash::make($password);
-                $user->save();
-            }
-        }
+//            //if user has already not yet registered a course (should generate password only then)
+//            if (count($user->batch_sessions) == 0) {
+//                $user->password = hash::make($password);
+//                $user->save();
+//            }
+//        }
 
         $batch = Batch::find($request->input('batch_id'));
         $batch_session_array = [

@@ -32,7 +32,6 @@ class FrontController extends Controller
     public function home(Request $request)
     {
         $batches = Batch::all();
-//        $latest_updates = LatestUpdate::with('course')->whereHas('course')->orderBy('created_at', 'DESC')->get();
         $students = Student::all();
         $services = Services::paginate(10);
         $sort_portfolio = Portfolio::orderBy('image_order', 'asc')->paginate(6);
@@ -176,7 +175,6 @@ class FrontController extends Controller
 
     public function schedule_class(Request $request)
     {
-//        dd($request->all());
         $this->validate($request, array(
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -201,19 +199,8 @@ class FrontController extends Controller
             }
         }
 
-//        $batch = Batch::find($request->input('batch_id'));
-//        $batch_session_array = [
-//            'user_id' => $user->id,
-//            'batch_id' => $batch->id,
-//            'class_type' => $request->input('class_type'),
-//            'physical_class_type' => $request->input('physical_class_type'),
-//        ];
-
         session()->put('user', $user);
-//        session()->put('batch_session_array', $batch_session_array);
         session()->put('batch_session_arrays', $batch_session_arrays);
-//        session()->put('password', (count($user->batch_sessions) == 0) ? $password : null);
-//        session()->put('course_fees', $batch->course->fees);
 
         return view('front.payment');
     }
@@ -237,17 +224,10 @@ class FrontController extends Controller
             ];
         }
 
-//        $stripe = [
-//            "secret_key" => env("SECRET_KEY", "sk_test_lUp78O7PgN08WC9UgNRhOCnr"),
-//            "publishable_key" => env("PUBLISHABLE_KEY", "pk_test_0rY5rGJ7GN1xEhCB40mAcWjg"),
-//        ];
-
         $stripe = get_payment_keys();
 
         $user = session()->get('user');
-//        $batch_session_array = session()->get('batch_session_array');
         $batch_session_arrays = session()->get('batch_session_arrays');
-//        $password = session()->get('password');
 
         try {
 
@@ -292,24 +272,16 @@ class FrontController extends Controller
                         $data['name'] = $user->name;
                         $data['course_name'] = $batch_session->batch->course->name;
                         $data['email'] = $user->email;
-//                        $data['password'] = $password;
                         $data['customer_portal_link'] = route('customer.dashboard');
                         $this->send_mail($data);
 
                     }
 
-//                    return [
-//                        "status" => false,
-//                        "errors" => [],
-//                        "message" => "Payment failed. Try again."
-//                    ];
                 }
 
                 //delete session variables
                 session()->remove('user');
                 session()->remove('batch_session_arrays');
-//                session()->remove('password');
-//                session()->remove('course_fees');
 
                 return [
                     "status" => true,
@@ -391,7 +363,6 @@ class FrontController extends Controller
 
     public function studentsWork(Request $request)
     {
-//        $portfolio_images = PortfolioImage::all();
         $student_work = Page::where('name', 'Students Work')->first();
         $students = Student::all();
         if ($student_work) {

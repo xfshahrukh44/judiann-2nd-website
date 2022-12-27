@@ -4,6 +4,7 @@ use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\Settings;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use OpenTok\OpenTok;
 use OpenTok\Session;
 
@@ -123,4 +124,10 @@ function batch_is_full($batch) {
     $batch_sessions_count = BatchSession::where('batch_id', $batch->id)->where('class_type', 'physical')->where('physical_class_type', 'group')->count();
 
     return $batch_sessions_count >= $batch->number_of_seats;
+}
+
+function is_in_batch ($batch_id) {
+    $batch_check = BatchSession::where('user_id', Auth::id())->where('batch_id', $batch_id)->first();
+
+    return (bool)$batch_check;
 }

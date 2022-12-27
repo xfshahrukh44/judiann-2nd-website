@@ -46,8 +46,8 @@ class FrontController extends Controller
 
     public function schedule(Request $request)
     {
-        $online_batches = Batch::where('is_online', 1)->get();
-        $physical_batches = Batch::where('is_physical', 1)->get();
+        $online_batches = Batch::where('is_online', 1)->where('has_ended', 0)->get();
+        $physical_batches = Batch::where('is_physical', 1)->where('has_ended', 0)->get();
 
         $online_events = [];
         $physical_events = $online_events;
@@ -88,7 +88,13 @@ class FrontController extends Controller
                         'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                         'color' => $online_colors[$random_index],
                         'description' => $batch->course->description,
-                        'img_src' => $batch->course->get_course_image()
+                        'img_src' => $batch->course->get_course_image(),
+                        'batch_id' => $batch->id,
+                        'class_type' => 'online',
+                        'physical_class_type' => $batch->physical_class_type,
+                        'batch_is_full' => batch_is_full($batch),
+                        'already_bought' => is_in_batch($batch->id),
+                        'fees' => $batch->course->fees ?? 0.0
                     ];
                 }
             } else {
@@ -100,7 +106,13 @@ class FrontController extends Controller
                         'time' => $batch->time_from . ' to ' . $batch->time_to,
                         'color' => $online_colors[$random_index],
                         'description' => $batch->course->description,
-                        'img_src' => $batch->course->get_course_image()
+                        'img_src' => $batch->course->get_course_image(),
+                        'batch_id' => $batch->id,
+                        'class_type' => 'online',
+                        'physical_class_type' => $batch->physical_class_type,
+                        'batch_is_full' => batch_is_full($batch),
+                        'already_bought' => is_in_batch($batch->id),
+                        'fees' => $batch->course->fees ?? 0.0
                     ];
                     $current_date = Carbon::parse($current_date)->addDay();
                 }
@@ -119,7 +131,13 @@ class FrontController extends Controller
                         'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                         'color' => $physical_colors[$random_index],
                         'description' => $batch->course->description,
-                        'img_src' => $batch->course->get_course_image()
+                        'img_src' => $batch->course->get_course_image(),
+                        'batch_id' => $batch->id,
+                        'class_type' => 'physical',
+                        'physical_class_type' => $batch->physical_class_type,
+                        'batch_is_full' => batch_is_full($batch),
+                        'already_bought' => is_in_batch($batch->id),
+                        'fees' => $batch->course->fees ?? 0.0
                     ];
                 }
             } else {
@@ -131,7 +149,13 @@ class FrontController extends Controller
                         'time' => $batch->time_from . ' to ' . $batch->time_to,
                         'color' => $physical_colors[$random_index],
                         'description' => $batch->course->description,
-                        'img_src' => $batch->course->get_course_image()
+                        'img_src' => $batch->course->get_course_image(),
+                        'batch_id' => $batch->id,
+                        'class_type' => 'physical',
+                        'physical_class_type' => $batch->physical_class_type,
+                        'batch_is_full' => batch_is_full($batch),
+                        'already_bought' => is_in_batch($batch->id),
+                        'fees' => $batch->course->fees ?? 0.0
                     ];
                     $current_date = Carbon::parse($current_date)->addDay();
                 }
@@ -152,56 +176,44 @@ class FrontController extends Controller
 
     public function schedule_class(Request $request)
     {
+//        dd($request->all());
         $this->validate($request, array(
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'email' => 'required|email',
             'phone' => 'required',
-            'class_type' => 'required',
+            'class_type' => 'sometimes',
             'physical_class_type' => 'sometimes',
+            'batch_ids' => 'required',
         ));
 
-//        //check if user already exists on basis of email
-//        $user_check = User::where('email', $request->email)->where('role_id', '=', 2)->get();
-        $password = $this->generateRandomString(8);
-//        if (count($user_check) == 0) {
-//            $user = User::create([
-//                'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
-//                'email' => $request->email,
-//                'phone' => $request->phone,
-//                'password' => hash::make($password),
-//                'role_id' => 2
-//            ]);
-//        } else {
-//            $user = $user_check[0];
-            $user = Auth::user();
-
-            //check if user already registered on course
-            $course = Course::find($request->input('course_id'));
-            $batch_check = BatchSession::where('user_id', $user->id)->where('batch_id', $request->input('batch_id'))->first();
-            if ($batch_check) {
-                return back()->withErrors(['You have already registered in the batch.']);
+        $user = Auth::user();
+        $batch_session_arrays = [];
+        foreach ($request->batch_ids as $key => $batch_id) {
+            if(!is_in_batch($batch_id)) {
+                $batch_session_arrays []= [
+                    'user_id' => $user->id,
+                    'batch_id' => $batch_id,
+                    'class_type' => $request->class_types[$key],
+                    'physical_class_type' => $request->physical_class_types[$key] == 'null' ? null : $request->physical_class_types[$key],
+                    'fees' => floatval($request->fees[$key]),
+                ];
             }
+        }
 
-//            //if user has already not yet registered a course (should generate password only then)
-//            if (count($user->batch_sessions) == 0) {
-//                $user->password = hash::make($password);
-//                $user->save();
-//            }
-//        }
-
-        $batch = Batch::find($request->input('batch_id'));
-        $batch_session_array = [
-            'user_id' => $user->id,
-            'batch_id' => $batch->id,
-            'class_type' => $request->input('class_type'),
-            'physical_class_type' => $request->input('physical_class_type'),
-        ];
+//        $batch = Batch::find($request->input('batch_id'));
+//        $batch_session_array = [
+//            'user_id' => $user->id,
+//            'batch_id' => $batch->id,
+//            'class_type' => $request->input('class_type'),
+//            'physical_class_type' => $request->input('physical_class_type'),
+//        ];
 
         session()->put('user', $user);
-        session()->put('batch_session_array', $batch_session_array);
-        session()->put('password', (count($user->batch_sessions) == 0) ? $password : null);
-        session()->put('course_fees', $batch->course->fees);
+//        session()->put('batch_session_array', $batch_session_array);
+        session()->put('batch_session_arrays', $batch_session_arrays);
+//        session()->put('password', (count($user->batch_sessions) == 0) ? $password : null);
+//        session()->put('course_fees', $batch->course->fees);
 
         return view('front.payment');
     }
@@ -233,8 +245,9 @@ class FrontController extends Controller
         $stripe = get_payment_keys();
 
         $user = session()->get('user');
-        $batch_session_array = session()->get('batch_session_array');
-        $password = session()->get('password');
+//        $batch_session_array = session()->get('batch_session_array');
+        $batch_session_arrays = session()->get('batch_session_arrays');
+//        $password = session()->get('password');
 
         try {
 
@@ -262,44 +275,46 @@ class FrontController extends Controller
 
                 $charge = \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
-                $charge = \Stripe\Charge::create([
-                    'amount' => intval(session()->get('course_fees') * 100),
-                    'currency' => 'usd',
-                    'customer' => $abc
-                ]);
+                foreach ($batch_session_arrays as $batch_session_array) {
+                    $charge = \Stripe\Charge::create([
+                        'amount' => intval(floatval($batch_session_array['fees']) * 100),
+                        'currency' => 'usd',
+                        'customer' => $abc
+                    ]);
 
-                if ($charge['status'] === 'succeeded') {
+                    if ($charge['status'] === 'succeeded') {
 
-                    //create course session
-                    $batch_session = BatchSession::create($batch_session_array);
+                        //create course session
+                        $batch_session = BatchSession::create($batch_session_array);
 
-                    //send mail to customer
-                    $data = [];
-                    $data['name'] = $user->name;
-                    $data['course_name'] = $batch_session->batch->course->name;
-                    $data['email'] = $user->email;
-                    $data['password'] = $password;
-                    $data['customer_portal_link'] = route('customer.dashboard');
-                    $this->send_mail($data);
+                        //send mail to customer
+                        $data = [];
+                        $data['name'] = $user->name;
+                        $data['course_name'] = $batch_session->batch->course->name;
+                        $data['email'] = $user->email;
+//                        $data['password'] = $password;
+                        $data['customer_portal_link'] = route('customer.dashboard');
+                        $this->send_mail($data);
 
-                    //delete session variables
-                    session()->remove('user');
-                    session()->remove('batch_session_array');
-                    session()->remove('password');
-                    session()->remove('course_fees');
+                    }
 
-                    return [
-                        "status" => true,
-                        "errors" => [],
-                        "message" => "Successfully added"
-                    ];
-
+//                    return [
+//                        "status" => false,
+//                        "errors" => [],
+//                        "message" => "Payment failed. Try again."
+//                    ];
                 }
 
+                //delete session variables
+                session()->remove('user');
+                session()->remove('batch_session_arrays');
+//                session()->remove('password');
+//                session()->remove('course_fees');
+
                 return [
-                    "status" => false,
+                    "status" => true,
                     "errors" => [],
-                    "message" => "Payment failed. Try again."
+                    "message" => "Successfully added"
                 ];
 
             }

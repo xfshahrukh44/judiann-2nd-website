@@ -262,8 +262,6 @@
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('admin/datatables/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 
-<!-- jQuery -->
-<script src="{{URL::asset('admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- fullcalendar -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 

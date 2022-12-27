@@ -36,6 +36,8 @@
 <!-- Datatables -->
     <link href="{{ asset('admin/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    {{--fullcalendar--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <style>
@@ -150,6 +152,15 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('front.schedule')}}"
+                           class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Schedule a Class
+                            </p>
+                        </a>
+                    </li>
 
 {{--                    <li class="nav-item">--}}
 {{--                        <a href="{{url('customer/changePassword')}}"--}}
@@ -250,6 +261,11 @@
 <script src="{{asset('admin/datatables/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{asset('admin/datatables/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+
+<!-- jQuery -->
+<script src="{{URL::asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+<!-- fullcalendar -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
 @yield('script')
 </body>

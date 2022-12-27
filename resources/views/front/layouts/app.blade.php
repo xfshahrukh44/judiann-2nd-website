@@ -43,6 +43,11 @@
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
                                     <li class="nav-item">
+                                        <a type="button" class="nav-link text-white h5 btn" href="{{route('customer.dashboard')}}">
+                                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
                                            onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();"

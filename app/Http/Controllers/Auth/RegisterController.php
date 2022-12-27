@@ -93,11 +93,8 @@ class RegisterController extends Controller
             $message .= 'Your account has been successfully created on Judiann Fashion Design Studios' . "<br />";
 
             $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Registration Successful', $message);
-
-//            return redirect()->route('front.home')->with('success', 'Email sent successfully!');
             return 1;
         } catch (\Exception $exception) {
-//            return redirect()->back()->with('errors', $exception->getMessage());
             return 0;
         }
     }

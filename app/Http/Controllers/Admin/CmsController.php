@@ -526,7 +526,6 @@ class CmsController extends Controller
             return view('admin.cms.student-work', compact('student_work', 'data', 'student_work'));
         }
         return view('admin.cms.student-work', compact('student_work', 'student_work'));
-//        return view('admin.cms.student-work');
     }
 
     public function student_add(Request $request)

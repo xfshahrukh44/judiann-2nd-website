@@ -76,7 +76,7 @@ class FrontController extends Controller
         ];
         $physical_colors = $online_colors;
 
-        foreach ($online_batches as $batch) {
+        foreach ($online_batches as $batchKey => $batch) {
             $random_index = array_rand($online_colors);
 
             if(is_null($batch->date_range)) {

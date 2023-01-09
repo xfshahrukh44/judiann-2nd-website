@@ -499,6 +499,7 @@
             var physical_calendarEl = document.getElementById('physical_calendar');
 
             var online_calendar = new FullCalendar.Calendar(online_calendarEl, {
+                timeZone: 'EST',
                 initialView: 'dayGridMonth',
                 events: online_calendar_events,
                 eventClick: function (info) {
@@ -517,6 +518,7 @@
                 }
             });
             var physical_calendar = new FullCalendar.Calendar(physical_calendarEl, {
+                timeZone: 'EST',
                 initialView: 'dayGridMonth',
                 events: physical_calendar_events,
                 eventClick: function (info) {

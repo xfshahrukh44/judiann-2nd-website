@@ -187,20 +187,24 @@ class FrontController extends Controller
 
         $user = Auth::user();
         $batch_session_arrays = [];
+        $total = 0.0;
         foreach ($request->batch_ids as $key => $batch_id) {
             if(!is_in_batch($batch_id)) {
+                $fees = floatval($request->fees[$key]);
+                $total += $fees;
                 $batch_session_arrays []= [
                     'user_id' => $user->id,
                     'batch_id' => $batch_id,
                     'class_type' => $request->class_types[$key],
                     'physical_class_type' => $request->physical_class_types[$key] == 'null' ? null : $request->physical_class_types[$key],
-                    'fees' => floatval($request->fees[$key]),
+                    'fees' => $fees,
                 ];
             }
         }
 
         session()->put('user', $user);
         session()->put('batch_session_arrays', $batch_session_arrays);
+        session()->put('course_fees', $total);
 
         return view('front.payment');
     }

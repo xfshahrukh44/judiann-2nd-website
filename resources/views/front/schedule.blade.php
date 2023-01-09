@@ -357,6 +357,7 @@
                     // $('.physical_class_type').prop('required', false);
                     // $('.physical_class_type').val('');
                     // $('.physical_class_type_wrapper').prop('hidden', true);
+                    $('.headTwo').html('On-line');
 
                     $('#online_calendar').prop('hidden', false);
                     $('#physical_calendar').prop('hidden', true);
@@ -369,6 +370,7 @@
                     // $('.physical_class_type').prop('required', true);
                     // $('.physical_class_type').val('');
                     // $('.physical_class_type_wrapper').prop('hidden', false);
+                    $('.headTwo').html('On-site');
 
                     $('#online_calendar').prop('hidden', true);
                     $('#physical_calendar').prop('hidden', false);

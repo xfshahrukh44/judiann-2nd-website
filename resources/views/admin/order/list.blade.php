@@ -129,8 +129,8 @@
                     {data: 'user.name', name: 'user.name'},
                     {data: 'batch.course.name', name: 'batch.course.name'},
                     {data: 'batch.name', name: 'batch.name'},
-                    {data: 'batch.class_type', name: 'batch.class_type'},
-                    {data: 'batch.physical_class_type', name: 'batch.physical_class_type'},
+                    {data: 'class_type', name: 'class_type'},
+                    {data: 'physical_class_type', name: 'physical_class_type'},
                     {data: 'created_at', name: 'created_at'},
 
                     {data: 'action', name: 'action', orderable: false}

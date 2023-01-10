@@ -163,27 +163,27 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder=" First  Name"
-                                               name="first_name" required>
+                                               name="first_name" readonly value="{{explode(' ', Auth::user()->name)[0] ?? ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Last Name"
-                                               name="last_name" required>
+                                               name="last_name" readonly value="{{explode(' ', Auth::user()->name)[1] ?? ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="email" class="form-control" placeholder="Email"
                                                name="email"
-                                               required>
+                                               readonly value="{{Auth::user()->email ?? ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Contact"
                                                name="phone"
-                                               required>
+                                               readonly {{Auth::user()->phone ?? ''}}>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -412,6 +412,12 @@
             $('#btn_register_course').on('click', function () {
                 let event = $(this).data('event');
                 console.log('EVENT', event.extendedProps);
+
+                //prevent redundant items selection
+                if ($('#tr_batch_' + event.extendedProps.batch_id).length > 0) {
+                    $('#event_detail_modal').modal('hide');
+                    return alert('Item already selected.');
+                }
 
                 let login_check = '{{\Illuminate\Support\Facades\Auth::check()}}';
                 if (!login_check) {

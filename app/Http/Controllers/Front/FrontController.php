@@ -176,10 +176,10 @@ class FrontController extends Controller
     public function schedule_class(Request $request)
     {
         $this->validate($request, array(
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            'email' => 'required|email',
-            'phone' => 'required',
+            'first_name' => 'nullable|string|max:50',
+            'last_name' => 'nullable|string|max:50',
+            'email' => 'nullable|email',
+            'phone' => 'nullable',
             'class_type' => 'sometimes',
             'physical_class_type' => 'sometimes',
             'batch_ids' => 'required',

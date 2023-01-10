@@ -34,11 +34,32 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="d-flex align-items-center justify-content-end">
-                            <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
-                                <li class="nav-item">
-                                    <button type="button" data-toggle="modal" data-target="#loginModal" class="nav-link text-white h5 btn">Login</button>
-                                </li>
-                            </ul>
+                            @if(!\Illuminate\Support\Facades\Auth::check())
+                                <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
+                                    <li class="nav-item">
+                                        <button type="button" data-toggle="modal" data-target="#loginModal" class="nav-link text-white h5 btn">Login</button>
+                                    </li>
+                                </ul>
+                            @else
+                                <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
+                                    <li class="nav-item">
+                                        <a type="button" class="nav-link text-white h5 btn" href="{{route('customer.dashboard')}}">
+                                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a type="button" class="nav-link text-white h5 btn"
+                                           onclick="event.preventDefault();
+                                           document.getElementById('logout-form').submit();"
+                                        >
+                                            Logout
+                                        </a>
+                                    </li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </ul>
+                            @endif
                             <div id="myNav" class="overlay">
                                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -186,29 +207,40 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" class="container-fluid">
+                <form action="{{ route('login') }}" method="POST" class="container-fluid">
+                    @csrf
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="text-white" for="">Email</label>
-                                <input type="text" class="form-control">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email">
                             </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="text-white" for=""></label>
-                                <input type="password" name="" id="" class="form-control">
+                                <input type="password" id="" class="form-control @error('password') is-invalid @enderror" name="password">
                             </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-end">
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
-                                <button class="themeBtn py-1">
+                                <button type="submit" class="themeBtn py-1">
                                     Login
                                 </button>
                                 <div class="d-flex flex-column justify-content-end text-right">
-                                    <a href="{{route('front.forget')}}" class="text-white">Forget Password</a>
+{{--                                    <a href="{{route('front.forget')}}" class="text-white">Forget Password</a>--}}
                                     <a href="{{route('front.signup')}}" class="text-white">Not a member? Signup</a>
                                 </div>
                             </div>

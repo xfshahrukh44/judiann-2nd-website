@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Traits\PHPCustomMail;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,14 +25,15 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, PHPCustomMail;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+//    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/customer/dashboard';
 
     /**
      * Create a new controller instance.
@@ -50,7 +54,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +69,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        //create user
+        $user = User::create([
+            'name' => $data['first_name'] . ' ' . $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role_id' => $data['role_id'] ?? null,
         ]);
+
+        //send mail to customer
+        $this->send_registration_mail($data);
+
+        return $user;
+    }
+
+    public function send_registration_mail($data)
+    {
+        try {
+            $name = $data['first_name'] . ' ' . $data['last_name'];
+            $email = $data['email'];
+
+            $message = 'Hello: ' . $name . ',' . "<br />";
+            $message .= 'Your account has been successfully created on Judiann Fashion Design Studios' . "<br />";
+
+            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Registration Successful', $message);
+            return 1;
+        } catch (\Exception $exception) {
+            return 0;
+        }
     }
 }

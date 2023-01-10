@@ -13,6 +13,8 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Dashboard</li>
+
+                        <div hidden id="events" data-events="{{json_encode($events)}}"></div>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,6 +27,10 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h2 class="headTwo">Calendar</h2>
+                    <div id="calendar"></div>
+                </div>
 {{--                <div class="col-lg-3 col-6">--}}
 {{--                    <!-- small box -->--}}
 {{--                    <div class="small-box bg-info">--}}
@@ -88,4 +94,60 @@
     </section>
     <!-- /.content -->
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            init_calendars();
+
+            function init_calendars() {
+                var calendar_events = [];
+                var events = $('#events').data('events');
+
+                events.forEach(function (item) {
+                    calendar_events.push({
+                        title: item.title,
+                        start: new Date(item.date),
+                        time: item.time,
+                        backgroundColor: item.color,
+                        borderColor: item.color,
+                        allDay: true,
+                        description: item.description,
+                        img_src: item.img_src,
+                        batch_id: item.batch_id,
+                        class_type: item.class_type,
+                        physical_class_type: item.physical_class_type,
+                        batch_is_full: item.batch_is_full,
+                        already_bought: item.already_bought,
+                        fees: item.fees,
+                    });
+                });
+
+                var calendarEl = document.getElementById('calendar');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    timeZone: 'EST',
+                    initialView: 'dayGridMonth',
+                    events: calendar_events,
+                    eventClick: function (info) {
+                        console.log('info', info);
+                        // $('#event_course').html(info.event.title);
+                        // $('#event_time').html(info.event.extendedProps.time);
+                        // $('#event_description').html(info.event.extendedProps.description);
+                        // $('#event_img').prop('src', info.event.extendedProps.img_src);
+                        // $('#event_class_type').html(info.event.extendedProps.class_type);
+                        // $('.event_physical_class_type').prop('hidden', true);
+                        // $('#btn_register_course').prop('hidden', info.event.extendedProps.already_bought);
+                        // $('#btn_register_course').data('event', info.event);
+                        // $('#btn_seats_full').prop('hidden', true);
+                        // $('#btn_already_bought').prop('hidden', !info.event.extendedProps.already_bought);
+                        // $('#event_detail_modal').modal('show');
+                    }
+                });
+
+                calendar.render();
+            }
+        });
+    </script>
 @endsection

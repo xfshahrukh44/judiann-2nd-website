@@ -4,6 +4,7 @@ use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\Settings;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use OpenTok\OpenTok;
 use OpenTok\Session;
 
@@ -50,16 +51,12 @@ function get_fresh_opentok_token($session_id) {
 function get_fresh_publisher_opentok_token($session_id) {
     $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
     $token = $opentok->generateToken($session_id, ['role' => \OpenTok\Role::MODERATOR]);
-//    return str_replace(' ', '', $token);
-//    return strval($token);
     return $token;
 }
 
 function get_fresh_subscriber_opentok_token($session_id) {
     $opentok = new OpenTok('47561291', '1c83ba134bb9cafeaf23c40133c4a7bd4e737174');
     $token = $opentok->generateToken($session_id, ['role' => \OpenTok\Role::MODERATOR]);
-//    return str_replace(' ', '', $token);
-//    return strval($token);
     return $token;
 }
 
@@ -115,6 +112,13 @@ function get_batch_timings($batch) {
     return $string;
 }
 
+function get_batch_title($batch) {
+    $course_name = ('Course: '.$batch->course->name.', ') ?? '';
+    $batch_name = ('Batch: '.$batch->name) ?? '';
+
+    return ($course_name . $batch_name) ?? '';
+}
+
 function batch_is_full($batch) {
     if(!$batch->is_physical || $batch->physical_class_type == 'in_person') {
         return false;
@@ -123,4 +127,10 @@ function batch_is_full($batch) {
     $batch_sessions_count = BatchSession::where('batch_id', $batch->id)->where('class_type', 'physical')->where('physical_class_type', 'group')->count();
 
     return $batch_sessions_count >= $batch->number_of_seats;
+}
+
+function is_in_batch ($batch_id) {
+    $batch_check = BatchSession::where('user_id', Auth::id())->where('batch_id', $batch_id)->first();
+
+    return (bool)$batch_check;
 }

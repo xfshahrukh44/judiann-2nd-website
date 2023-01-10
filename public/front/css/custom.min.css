@@ -277,7 +277,7 @@ figure {
 .overlay a {
     padding: 8px;
     text-decoration: none;
-    font-size: 2.25rem;
+    font-size: 36px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -292,16 +292,16 @@ figure {
     position: absolute;
     top: 20px;
     right: 45px;
-    font-size: 3.75rem;
+    font-size: 60px;
 }
 
 @media screen and (max-height: 450px) {
     .overlay a {
-        font-size: 1.25rem;
+        font-size: 20px;
     }
 
     .overlay .closebtn {
-        font-size: 2.5rem;
+        font-size: 40px;
         top: 15px;
         right: 35px;
     }
@@ -352,7 +352,7 @@ header {
 .themeBtn {
     background-color: rgb(235, 88, 40);
     border: 2px solid rgb(235, 88, 40);
-    font-size: 1.563rem;
+    font-size: 25px;
     color: var(--white);
     font-weight: 100;
     display: inline-block;
@@ -449,7 +449,7 @@ header {
 }
 
 .portfolioSec .col-md-5 .portfolioBox a img {
-    height: 695px;
+    height: 564px;
     object-fit: cover;
     object-position: top;
 }
@@ -574,7 +574,7 @@ header {
 }
 
 .telrng .sewngContent .overlaySewng .headTwo {
-    font-size: 1.25rem;
+    font-size: 20px;
 }
 
 .telrng .sewngContent .overlaySewng .themeBtn {
@@ -667,7 +667,7 @@ footer {
 }
 
 .ftrContent ul li a {
-    font-size: 1rem;
+    font-size: 15px;
     padding: 0;
     color: var(--white);
 }
@@ -677,7 +677,7 @@ footer {
 }
 
 .ftrLst a {
-    font-size:0.938rem;
+    font-size: 15px;
     color: var(--white);
     display: table;
 }
@@ -710,7 +710,7 @@ footer {
 }
 
 .copyRght .policy li a {
-    font-size: 0.938rem;
+    font-size: 15px;
     color: var(--white);
 }
 
@@ -1492,6 +1492,74 @@ div.switcher label input:checked + span small {
     margin: 1rem;
 }
 
-.fullBox img{
+.fullBox img {
     height: auto;
+}
+
+.courseTable * {
+    color: #fff;
+}
+
+.courseTable .btnCont {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.courseTable .btnCont span {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.courseTable .btnCont span input {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.courseTable .btnCont span i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--danger);
+}
+
+.signupSec {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signupSec .row {
+    gap: 2rem 0;
+}
+
+.signupSec .form-group label {
+    display: block;
+    width: 100%;
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.signupSec a {
+    text-transform: capitalize;
+    font-size: 1.25rem;
+    font-family: 'Roboto';
+}
+
+.signupSec .form-group input.form-control {
+    background: none;
+    color: #fff;
+}
+
+.fc-event{
+    cursor: pointer;
 }

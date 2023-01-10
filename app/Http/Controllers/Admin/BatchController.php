@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Batch;
 use App\Models\BatchDate;
 use App\Models\Course;
+use App\Traits\PHPCustomMail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
 {
+    use PHPCustomMail;
+
     public function index()
     {
         try {
@@ -166,5 +169,21 @@ class BatchController extends Controller
         $content=Batch::find($id);
         $content->delete();
         echo 1;
+    }
+
+    public function notifyStudents (Request $request)
+    {
+        $batch = Batch::find($request->batch_id);
+
+        foreach ($batch->batch_sessions as $batch_session) {
+            $email = $batch_session->user->email ?? null;
+
+            if ($email) {
+                $batch_title = get_batch_title($batch);
+                $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Class Notification | '.$batch_title, $request->content);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Students have been notified');
     }
 }

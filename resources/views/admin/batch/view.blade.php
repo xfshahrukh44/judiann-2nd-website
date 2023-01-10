@@ -110,6 +110,45 @@
                                             </tr>
                                         @endforeach
                                     @endif
+
+                                    @if(count($content->batch_sessions))
+                                        <tr>
+                                            <th>Registered Students</th>
+                                            <td colspan="3">
+                                                <table class="table table-sm">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
+                                                    </tr>
+                                                    @foreach($content->batch_sessions as $batch_session)
+                                                        <tr>
+                                                            <td>{{$batch_session->user->name ?? ''}}</td>
+                                                            <td>{{$batch_session->user->email ?? ''}}</td>
+                                                            <td>{{$batch_session->user->phone ?? ''}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Notify students(email)</th>
+                                            <td colspan="3">
+                                                <form action="{{route('admin.batch.notifyStudents')}}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" value="{{$content->id}}" name="batch_id">
+                                                    <div class="col-md-12 for-group">
+                                                        <label for="asdas">Content</label>
+                                                        <input type="text" placeholder="Content" class="form-control" name="content">
+                                                    </div>
+                                                    <div class="col-md-12 for-group">
+                                                        <button class="btn btn-primary" type="submit">Send Email</button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+
+                                    @endif
                                 </thead>
                                 <tbody>
 

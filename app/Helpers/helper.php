@@ -112,6 +112,13 @@ function get_batch_timings($batch) {
     return $string;
 }
 
+function get_batch_title($batch) {
+    $course_name = ('Course: '.$batch->course->name.', ') ?? '';
+    $batch_name = ('Batch: '.$batch->name) ?? '';
+
+    return ($course_name . $batch_name) ?? '';
+}
+
 function batch_is_full($batch) {
     if(!$batch->is_physical || $batch->physical_class_type == 'in_person') {
         return false;

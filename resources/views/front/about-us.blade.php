@@ -47,11 +47,7 @@
                         college.'}}</p>
                 </div>
                 <div class="col-md-6">
-                    <figure>
-                        <img class="img-fluid"
-                             src="{{!empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : asset('front/images/aboutImg.jpg')) : asset('front/images/aboutImg.jpg')}}"
-                             alt="">
-                    </figure>
+                    <figure><img src="{{!empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : asset('front/images/aboutImg.jpg')) : asset('front/images/aboutImg.jpg')}}" alt="" class="img-fluid"></figure>
                 </div>
 
             </div>

@@ -20,7 +20,8 @@ class BatchSessionController extends Controller
                     ->get())
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
-                        return '<a title="View" href="batch-session-view/' . $data->id . '" class="btn btn-dark btn-sm"><i class="fas fa-eye"></i></a>';
+                        return '<a title="View" href="batch-session-view/' . $data->id . '" class="btn btn-dark btn-sm"><i class="fas fa-eye"></i></a>'
+                            . ($data->class_type == 'online' && $data->batch->is_streaming ? '<a title="View" href="'.route('customer.stream', [$data->batch_id]).'" class="btn btn-success btn-sm">Join</a>' : '');
                     })->make(true);
             }
         } catch (\Exception $ex) {

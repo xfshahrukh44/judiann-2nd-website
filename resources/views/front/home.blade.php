@@ -6,10 +6,10 @@
 
 @section('content')
 
-    <div class="anloader">
-        <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">
-        </video>
-    </div>
+    {{--    <div class="anloader">--}}
+    {{--        <video muted autoplay loop preload src="{{asset('front/images/loader.mp4')}}">--}}
+    {{--        </video>--}}
+    {{--    </div>--}}
     <!-- Begin: Main Slider -->
 
     <div class="main-slider">
@@ -22,7 +22,7 @@
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
-                                <div class="col-md-8">
+                                <div class="col-lg-8 col-md-12">
                                     <div class="slideContent">
                                         <h2 class="headOne">{{!empty($home) ? (!empty($data->banner_title) ? $data->banner_title : '') : ''}}</h2>
                                         <p>{!! nl2br(e(!empty($home) ? (!empty($data->banner_content) ? ($data->banner_content) : '') : '')) !!}</p>
@@ -128,34 +128,46 @@
         <div class="container-fluid">
             <h2 class="headOne">{{ !empty($home) ? (!empty($data->portfolio_title) ? ($data->portfolio_title) : '') : '' }}</h2>
             <div class="row">
-                <div class="col">
+                <div class="col-md-4">
                     <div class="portfolioBox">
-                        <a data-fancybox="" href="{{asset('front/images/portfolio1.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio1.jpg')}}" alt="img">
-                        </a>
-                        <a data-fancybox="" href="{{asset('front/images/portfolio2.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio2.jpg')}}" alt="img">
-                        </a>
+                        @if($sort_portfolio[0])
+                            <a data-fancybox="" href="{{$sort_portfolio[0]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[0]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
+                        @if($sort_portfolio[1])
+                            <a data-fancybox="" href="{{$sort_portfolio[1]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[1]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="portfolioBox">
-                        <a data-fancybox="" href="{{asset('front/images/portfolio3.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio3.jpg')}}" alt="img">
-                        </a>
-                        <a data-fancybox="" href="{{asset('front/images/portfolio4.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio4.jpg')}}" alt="img">
-                        </a>
+                        @if($sort_portfolio[2])
+                            <a data-fancybox="" href="{{$sort_portfolio[2]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[2]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
+                        @if($sort_portfolio[3])
+                            <a data-fancybox="" href="{{$sort_portfolio[3]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[3]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-4">
                     <div class="portfolioBox">
-                        <a data-fancybox="" href="{{asset('front/images/portfolio5.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio5.jpg')}}" alt="img">
-                        </a>
-                        <a data-fancybox="" href="{{asset('front/images/portfolio6.jpg')}}">
-                            <img class="img-fluid" src="{{asset('front/images/portfolio6.jpg')}}" alt="img">
-                        </a>
+                        @if($sort_portfolio[4])
+                            <a data-fancybox="" href="{{$sort_portfolio[4]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[4]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
+                        @if($sort_portfolio[5])
+                            <a data-fancybox="" href="{{$sort_portfolio[5]->get_portfolio_image()}}">
+                                <img class="img-fluid" src="{{$sort_portfolio[5]->get_portfolio_image()}}" alt="img">
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -239,146 +251,166 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="sewngContent">
-                        <figure>
-                            <img class="img-fluid"
-                                 src="{{asset("front/images/srv1.jpg")}}"
-                                 alt="img">
-                        </figure>
-                        <div class="overlaySewng">
-                            <h3 class="headTwo">Sewing Classes Offered</h3>
-                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                @if($services[0])
+                    <div class="col-md-6">
+                        <div class="sewngContent">
+                            <figure>
+                                <img class="img-fluid"
+                                     src="{{$services[0]->get_service_image()}}"
+                                     alt="img">
+                            </figure>
+                            <div class="overlaySewng">
+                                <h3 class="headTwo">{{$services[0]->title}}</h3>
+                                <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="col-md-6">
                     <div class="row telrng">
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv2.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Tailoring: “Masterclass</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @if($services[1])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[1]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[1]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv3.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Pattern making courses</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[2])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[2]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[2]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv4.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Draping Making Courses</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[3])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[3]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[3]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv5.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Intro To Draping</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[4])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[4]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[4]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="row telrng">
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv6.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">How to sew a circle skirt</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @if($services[5])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[5]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[5]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv7.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Gathered skirt with ruffles</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[6])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[6]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[6]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv8.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Master class jacket</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[7])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[7]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[7]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="sewngContent">
-                                <figure>
-                                    <img class="img-fluid"
-                                         src="{{asset("front/images/srv9.jpg")}}"
-                                         alt="img">
-                                </figure>
-                                <div class="overlaySewng">
-                                    <h3 class="headTwo">Online courses</h3>
-                                    <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                        @endif
+                        @if($services[8])
+                            <div class="col-md-6">
+                                <div class="sewngContent">
+                                    <figure>
+                                        <img class="img-fluid"
+                                             src="{{$services[8]->get_service_image()}}"
+                                             alt="img">
+                                    </figure>
+                                    <div class="overlaySewng">
+                                        <h3 class="headTwo">{{$services[8]->title}}</h3>
+                                        <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
+                                    </div>
                                 </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                @if($services[9])
+                    <div class="col-md-6">
+                        <div class="sewngContent">
+                            <figure>
+                                <img class="img-fluid"
+                                     src="{{$services[9]->get_service_image()}}"
+                                     alt="img">
+                            </figure>
+                            <div class="overlaySewng">
+                                <h3 class="headTwo">{{$services[9]->title}}</h3>
+                                <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="sewngContent">
-                        <figure>
-                            <img class="img-fluid"
-                                 src="{{asset("front/images/srv10.jpg")}}"
-                                 alt="img">
-                        </figure>
-                        <div class="overlaySewng">
-                            <h3 class="headTwo">Tailored knotch jacket</h3>
-                            <a href="{{route('front.services')}}" class="themeBtn">View Details</a>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
     </section>

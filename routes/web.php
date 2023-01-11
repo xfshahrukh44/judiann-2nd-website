@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::match(['get', 'post'], '/batch-edit/{id}', 'BatchController@edit')->name('admin.edit-batch');
     Route::get('/batch-view/{id}', 'BatchController@show')->name('batch-view');
     Route::delete('batch/destroy/{id}', 'BatchController@destroy');
+    Route::post('/batch/notify-students', [BatchController::class, 'notifyStudents'])->name('admin.batch.notifyStudents');
 
     //order
     Route::get('order', 'BatchSessionController@index')->name('order');
@@ -192,6 +194,10 @@ Route::get('/faqs', 'App\Http\Controllers\Front\IndexController@faqs')->name('fr
 Route::get('/judiann-portfolio', 'App\Http\Controllers\Front\IndexController@judiannPortfolio')->name('front.judiann-portfolio');
 
 Route::get('/services', 'App\Http\Controllers\Front\IndexController@services')->name('front.services');
+
+Route::get('/signup', 'App\Http\Controllers\Front\IndexController@signup')->name('front.signup')->middleware('guest');
+
+Route::get('/forget', 'App\Http\Controllers\Front\IndexController@forget')->name('front.forget');
 
 //Route::get('/schedule', function () {
 //    return view('front.schedule');

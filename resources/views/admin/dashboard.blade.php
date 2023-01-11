@@ -115,6 +115,7 @@
 
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                timeZone: 'EST',
                 initialView: 'dayGridMonth',
                 events: calendar_events,
             });

@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Pleasse check your email for Login Credentials
+                    You Have Successfully registered the course. Click <a href="{{route('customer.dashboard')}}">here</a> to go to Customer Portal
                 </div>
             </div>
         </div>

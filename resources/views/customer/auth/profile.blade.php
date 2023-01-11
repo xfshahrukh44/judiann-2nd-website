@@ -35,12 +35,16 @@
                 @if(Session::has('success'))
                     <div class="alert alert-success text-center"><span class="glyphicon glyphicon-ok"></span><em> {!! session('success') !!}</em></div>
                 @endif
-                <form action="{{route('customer.updateProfile')}}" method="POST">
+                <form action="{{route('customer.updateProfile')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card shadow ">
                                 <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Profile Picture</label>
+                                        <input type="file" name="profile_picture" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         <label>Customer Name</label>
                                         <input type="text" name="name" class="form-control" placeholder="Customer Name"

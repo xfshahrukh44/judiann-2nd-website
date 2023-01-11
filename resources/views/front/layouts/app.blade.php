@@ -45,10 +45,16 @@
                                 </ul>
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a type="button" class="nav-link text-white h5 btn"--}}
+{{--                                           href="{{route('customer.dashboard')}}">--}}
+{{--                                            Customer Portal--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
                                            href="{{route('customer.dashboard')}}">
-                                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                                            <img width="50" src="{{\Illuminate\Support\Facades\Auth::user()->get_profile_picture()}}" alt="">
                                         </a>
                                     </li>
                                     <li class="nav-item">

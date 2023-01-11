@@ -163,27 +163,27 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder=" First  Name"
-                                               name="first_name" readonly value="{{explode(' ', Auth::user()->name)[0] ?? ''}}">
+                                               name="first_name" readonly value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Last Name"
-                                               name="last_name" readonly value="{{explode(' ', Auth::user()->name)[1] ?? ''}}">
+                                               name="last_name" readonly value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="email" class="form-control" placeholder="Email"
                                                name="email"
-                                               readonly value="{{Auth::user()->email ?? ''}}">
+                                               readonly value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Contact"
                                                name="phone"
-                                               readonly {{Auth::user()->phone ?? ''}}>
+                                               readonly {{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}>
                                     </div>
                                 </div>
                                 <div class="col-12">

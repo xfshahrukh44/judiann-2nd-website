@@ -125,6 +125,13 @@ class CustomerController extends Controller
             }
         }
 
+        //profile picure
+        if($request->has('profile_picture')) {
+            $user = Auth::user();
+            $user->clearMediaCollection('user_profile_pictures');
+            $user->addMediaFromRequest('profile_picture')->toMediaCollection('user_profile_pictures');
+        }
+
         $content->name = $request->name;
         $content->email = $request->email;
         $content->phone = $request->phone;

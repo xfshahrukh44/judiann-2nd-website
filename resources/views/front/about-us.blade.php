@@ -5,7 +5,7 @@
 @section('keywords', '')
 
 @section('content')
-    <div class="main-slider">
+    <div class="main-slider inner">
         <img class="img-fluid w-100"
              src="{{!empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">
@@ -47,7 +47,11 @@
                         college.'}}</p>
                 </div>
                 <div class="col-md-6">
-                    <figure><img src="{{!empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : asset('front/images/aboutImg.jpg')) : asset('front/images/aboutImg.jpg')}}" alt=""></figure>
+                    <figure>
+                        <img class="img-fluid"
+                             src="{{!empty($about) ? (!empty($data->abt_image) ? asset('front/images/cms/'.$data->abt_image) : asset('front/images/aboutImg.jpg')) : asset('front/images/aboutImg.jpg')}}"
+                             alt="">
+                    </figure>
                 </div>
 
             </div>

@@ -8,7 +8,7 @@
     <!-- Begin: Main Slider -->
 
 
-    <div class="main-slider">
+    <div class="main-slider inner">
         <img class="img-fluid w-100"
              src="{{!empty($contact) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">

@@ -9,7 +9,7 @@
 
     <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
     <div hidden id="physical_events" data-events="{{json_encode($physical_events)}}"></div>
-    <div class="main-slider">
+    <div class="main-slider inner">
         <img class="img-fluid w-100"
              src="{{!empty($schedule) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
              alt="First slide">
@@ -88,7 +88,7 @@
             <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
                     @foreach($physical_batches as $key => $batch)
-                        <div class="row fullBox">
+                        <div class="row">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">

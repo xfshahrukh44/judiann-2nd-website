@@ -438,8 +438,9 @@ header {
 
 .portfolioBox a img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 650;
+    object-fit: contain;
+    background: #ddd;
 }
 
 .portfolioBox a {
@@ -448,11 +449,11 @@ header {
     height: 100%;
 }
 
-.portfolioSec .col-md-5 .portfolioBox a img {
-    height: 564px;
-    object-fit: cover;
-    object-position: top;
-}
+/*.portfolioSec .col-md-5 .portfolioBox a img {*/
+/*    height: 564px;*/
+/*    object-fit: cover;*/
+/*    object-position: top;*/
+/*}*/
 
 .wrkSec {
     padding: 4rem 4rem;
@@ -1560,6 +1561,36 @@ div.switcher label input:checked + span small {
     color: #fff;
 }
 
-.fc-event{
+.fc-event {
     cursor: pointer;
+}
+
+.logoutCont {
+    flex-direction: revert;
+    gap: 1rem;
+}
+
+.logoutCont li + li {
+    border-left: 2px solid #fff;
+    padding-left: 1rem;
+}
+
+.logoutCont li a {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.logoutCont li:last-of-type a {
+    border: 1px solid;
+    border-radius: 0;
+    padding: 0.125rem 1rem !important;
+}
+
+.logoutCont li {
+    display: flex;
+    align-items: center;
+}
+
+.logoutCont li:last-of-type a:hover {
+    background: rgb(235, 88, 40);
 }

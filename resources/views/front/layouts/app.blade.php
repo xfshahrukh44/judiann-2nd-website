@@ -29,7 +29,8 @@
                     <div class="col-lg-6 col-sm-6">
                         <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
-                                           style="width: 300px; height: 150px;"  class="logo"  loop autoplay></lottie-player>
+                                           style="width: 300px; height: 150px;" class="logo" loop
+                                           autoplay></lottie-player>
                         </a>
                     </div>
                     <div class="col-md-6 text-right">
@@ -37,21 +38,22 @@
                             @if(!\Illuminate\Support\Facades\Auth::check())
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
                                     <li class="nav-item">
-                                        <button type="button" data-toggle="modal" data-target="#loginModal" class="nav-link text-white h5 btn">Login</button>
+                                        <button type="button" data-toggle="modal" data-target="#loginModal"
+                                                class="nav-link text-white h5 btn">Login
+                                        </button>
                                     </li>
                                 </ul>
                             @else
-                                <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
+                                <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
                                     <li class="nav-item">
-                                        <a type="button" class="nav-link text-white h5 btn" href="{{route('customer.dashboard')}}">
+                                        <a type="button" class="nav-link text-white h5 btn"
+                                           href="{{route('customer.dashboard')}}">
                                             {{\Illuminate\Support\Facades\Auth::user()->name}}
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
-                                           onclick="event.preventDefault();
-                                           document.getElementById('logout-form').submit();"
-                                        >
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
                                     </li>
@@ -213,10 +215,11 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="text-white" for="">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                       name="email">
                             </div>
                             @error('email')
-                                <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -224,10 +227,11 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="text-white" for=""></label>
-                                <input type="password" id="" class="form-control @error('password') is-invalid @enderror" name="password">
+                                <input type="password" id=""
+                                       class="form-control @error('password') is-invalid @enderror" name="password">
                             </div>
                             @error('password')
-                                <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
@@ -240,7 +244,7 @@
                                     Login
                                 </button>
                                 <div class="d-flex flex-column justify-content-end text-right">
-{{--                                    <a href="{{route('front.forget')}}" class="text-white">Forget Password</a>--}}
+                                    {{--                                    <a href="{{route('front.forget')}}" class="text-white">Forget Password</a>--}}
                                     <a href="{{route('front.signup')}}" class="text-white">Not a member? Signup</a>
                                 </div>
                             </div>

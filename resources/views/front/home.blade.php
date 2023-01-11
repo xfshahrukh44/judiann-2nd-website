@@ -128,7 +128,7 @@
         <div class="container-fluid">
             <h2 class="headOne">{{ !empty($home) ? (!empty($data->portfolio_title) ? ($data->portfolio_title) : '') : '' }}</h2>
             <div class="row">
-                <div class="col">
+                <div class="col-md-4">
                     <div class="portfolioBox">
                         @if($sort_portfolio[0])
                             <a data-fancybox="" href="{{$sort_portfolio[0]->get_portfolio_image()}}">
@@ -142,7 +142,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="portfolioBox">
                         @if($sort_portfolio[2])
                             <a data-fancybox="" href="{{$sort_portfolio[2]->get_portfolio_image()}}">
@@ -156,7 +156,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-md-4">
                     <div class="portfolioBox">
                         @if($sort_portfolio[4])
                             <a data-fancybox="" href="{{$sort_portfolio[4]->get_portfolio_image()}}">

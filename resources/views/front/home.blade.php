@@ -144,7 +144,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="portfolioBox">
-                        @if($sort_portfolio[2])h
+                        @if($sort_portfolio[2])
                             <a data-fancybox="" href="{{$sort_portfolio[2]->get_portfolio_image()}}">
                                 <img class="img-fluid" src="{{$sort_portfolio[2]->get_portfolio_image()}}" alt="img">
                             </a>

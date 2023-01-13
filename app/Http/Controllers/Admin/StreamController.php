@@ -9,6 +9,7 @@ use App\Events\ViewerToggleBack;
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StreamController extends Controller
@@ -39,5 +40,11 @@ class StreamController extends Controller
         $batch->save();
         event(new StopStreaming($batch->id));
         return view('blank');
+    }
+
+    public function getUserProfilePicture (Request $request)
+    {
+        $user = User::find($request->user_id);
+        return $user->get_profile_picture();
     }
 }

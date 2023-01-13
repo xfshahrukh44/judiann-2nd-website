@@ -3,6 +3,7 @@
 use App\Models\BatchSession;
 use App\Models\Course;
 use App\Models\Settings;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use OpenTok\OpenTok;

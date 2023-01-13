@@ -83,6 +83,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     route::get('/revert-stream/{batch_id}/{customer_id}', [StreamController::class, 'revertStream'])->name('admin.revertStream');
     route::get('/viewer-toggle-back/{batch_id}/{customer_id}', [StreamController::class, 'viewerToggleBack'])->name('admin.viewerToggleBack');
     route::post('/stream/stop/{batch}', [StreamController::class, 'stop'])->name('admin.stopStream');
+    route::post('/stream/get-user-profile-picture', [StreamController::class, 'getUserProfilePicture'])->name('admin.getUserProfilePicture');
 
     //cms
     Route::match(['get', 'post'], '/cms/about-us', 'CmsController@aboutUs')->name('admin.cms.aboutUs');
@@ -155,6 +156,7 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
         session()->put('subscriber_token', get_fresh_subscriber_opentok_token($session_id));
 //        return get_fresh_subscriber_opentok_token($session_id);
     })->name('customer.getSubscriberToken');
+    route::post('/stream/get-user-profile-picture', [SC::class, 'getUserProfilePicture'])->name('customer.getUserProfilePicture');
 });
 
 

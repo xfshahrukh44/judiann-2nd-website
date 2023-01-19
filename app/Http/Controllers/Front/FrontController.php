@@ -37,11 +37,12 @@ class FrontController extends Controller
         $services = Services::paginate(10);
         $sort_portfolio = Portfolio::orderBy('image_order', 'asc')->paginate(6);
         $home = Page::where('name', 'Home')->first();
+        $latest_updates = LatestUpdate::orderBy('created_at', 'DESC')->get();
         if ($home) {
             $data = json_decode($home->content);
-            return view('front.home', compact('data', 'batches', 'students', 'services', 'home', 'sort_portfolio'));
+            return view('front.home', compact('data', 'batches', 'students', 'services', 'home', 'sort_portfolio', 'latest_updates'));
         }
-        return view('front.home', compact('batches', 'students', 'services', 'home', 'sort_portfolio'));
+        return view('front.home', compact('batches', 'students', 'services', 'home', 'sort_portfolio', 'latest_updates'));
     }
 
     public function schedule(Request $request)

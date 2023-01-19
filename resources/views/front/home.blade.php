@@ -94,13 +94,13 @@
                     </div>
                     <div class="col-12">
                         <div class="lastSlider">
-                            @foreach($batches as $batch)
+                            @foreach($latest_updates as $latest_update)
                                 <div class="lastBox">
-                                    <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                    {!! get_readable_description($batch->course->description) !!}
-                                    <h4 class="text-white">TIMINGS</h4>
-                                    {!! get_batch_timings($batch) !!}
-                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
+                                    <h3>{{$latest_update->title}}</h3>
+                                    {!! get_readable_description($latest_update->description) !!}
+{{--                                    <h4 class="text-white">TIMINGS</h4>--}}
+{{--                                    {!! get_batch_timings($batch) !!}--}}
+{{--                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>--}}
                                 </div>
                             @endforeach
                         </div>

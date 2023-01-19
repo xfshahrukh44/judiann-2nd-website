@@ -363,6 +363,16 @@ header {
     padding: 0.58em 2.1em;
 }
 
+.themeBtnSm {
+    background-color: rgb(235, 88, 40);
+    border: 2px solid rgb(235, 88, 40);
+    font-size: 20px;
+    color: var(--white);
+    font-weight: 100;
+    display: inline-block;
+    padding: 0em 2.1em;
+}
+
 .main-slider .carousel-control-prev {
     height: 0;
     opacity: 1;

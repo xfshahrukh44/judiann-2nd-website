@@ -52,6 +52,7 @@ class CourseController extends Controller
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'fees' => $request->input('fees'),
+                'is_free' => key_exists('is_free', $request->all()) ? 1 : 0,
             ]);
 
             //course image
@@ -91,6 +92,7 @@ class CourseController extends Controller
             $course->name = $request->input('name');
             $course->description = $request->input('description');
             $course->fees = $request->input('fees');
+            $course->is_free = key_exists('is_free', $request->all()) ? 1 : 0;
 
             if ($course->save()) {
                 return redirect()->route('course')->with(['success' => 'Course Edit Successfully']);

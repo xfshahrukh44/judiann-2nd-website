@@ -44,6 +44,17 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     Route::delete('batch/destroy/{id}', 'BatchController@destroy');
     Route::post('/batch/notify-students', [BatchController::class, 'notifyStudents'])->name('admin.batch.notifyStudents');
 
+    //voucher
+    Route::get('voucher', 'VoucherController@index')->name('voucher');
+    Route::match(['get', 'post'], '/add-voucher', 'VoucherController@addVoucher')->name('admin.add-voucher');
+    Route::delete('voucher/destroy/{id}', 'VoucherController@destroy');
+
+    //enrolled students list
+    Route::get('/enrolled-students', 'AdminController@enrolledStudents')->name('admin.enrolledStudents');
+
+    //registered students list
+    Route::get('/registered-students', 'AdminController@registeredStudents')->name('admin.registeredStudents');
+
     //order
     Route::get('order', 'BatchSessionController@index')->name('order');
     Route::get('/order-view/{id}', 'BatchSessionController@show')->name('order-view');
@@ -172,6 +183,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
+
+    //apply voucher
+    Route::post('/apply-voucher', 'FrontController@applyVoucher')->name('front.applyVoucher');
 
     //student work
     Route::get('/students-work', 'FrontController@studentsWork')->name('front.students-work');

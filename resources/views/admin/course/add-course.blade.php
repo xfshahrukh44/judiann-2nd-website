@@ -65,11 +65,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="fees">Course Fees</label>
-                                        <input type="number" step="0.01" class="form-control @error('fees') is-invalid @enderror" name="fees" id="fees" value="{{$content->fees?? old('fees')}}" placeholder="0.00" required>
+                                        <input type="number" step="0.01" class="form-control @error('fees') is-invalid @enderror" name="fees" id="fees" value="{{$content->fees?? old('fees')}}" placeholder="0.00" {!! isset($content) && $content->is_free == 1 ? 'readonly   ' : '' !!} required>
                                         @error('fees')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="is_free">Is Free?</label>
+                                        <input type="checkbox" class="@error('is_free') is-invalid @enderror" name="is_free" id="is_free" {!! isset($content) && $content->is_free == 1 ? 'checked' : '' !!}>
+                                        @error('is_free')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -92,7 +101,14 @@
 @section('script')
     <script>
         $(document).ready(function(){
-
+            $('#is_free').on('click', function () {
+                if ($(this).prop('checked')) {
+                    $('#fees').prop('readonly', true);
+                    $('#fees').val(0.00);
+                } else {
+                    $('#fees').prop('readonly', false);
+                }
+            });
         });
     </script>
 @endsection

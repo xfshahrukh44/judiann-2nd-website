@@ -192,7 +192,7 @@
                                         <select class="form-control select_course_type"
                                                 name="batch_id" required>
                                             <option disabled selected value="">Select Course Type:</option>
-                                            <option value="Online">Online</option>
+                                            <option value="Online" selected >Online</option>
                                             <option value="On-site">On-site</option>
                                         </select>
                                     </div>

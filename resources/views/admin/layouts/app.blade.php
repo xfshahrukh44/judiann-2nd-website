@@ -180,6 +180,30 @@
                             <p>Batch</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('voucher')}}"
+                           class="nav-link {{ request()->IS('admin/voucher') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Voucher</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.enrolledStudents')}}"
+                           class="nav-link {{ request()->IS('admin/enrolled-students') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Enrolled Students</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.registeredStudents')}}"
+                           class="nav-link {{ request()->IS('admin/registered-students') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Registered Students</p>
+                        </a>
+                    </li>
                         {{--CMS--}}
                     <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-judiann') || request()->IS('admin/cms/contact') || request()->IS('admin/cms/portfolio') || request()->IS('admin/cms/faq') || request()->IS('admin/student') || request()->IS('admin/cms/terms') || request()->IS('admin/cms/policy') ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link ">

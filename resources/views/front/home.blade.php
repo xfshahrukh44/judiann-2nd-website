@@ -85,6 +85,30 @@
 
     <!-- END: Main Slider -->
 
+    @if(count($batches) > 0)
+        <section class="lastestSec pt-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <h2 class="headOne">Latest Updates</h2>
+                    </div>
+                    <div class="col-12">
+                        <div class="lastSlider">
+                            @foreach($latest_updates as $latest_update)
+                                <div class="lastBox">
+                                    <h3>{{$latest_update->title}}</h3>
+                                    {!! get_readable_description($latest_update->description) !!}
+{{--                                    <h4 class="text-white">TIMINGS</h4>--}}
+{{--                                    {!! get_batch_timings($batch) !!}--}}
+{{--                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>--}}
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 
     <section class="abtSec">
         <div class="container">
@@ -105,13 +129,18 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-12">
-                        <h2 class="headOne">Latest Updates</h2>
+                        <h2 class="headOne">Latest Courses</h2>
                     </div>
                     <div class="col-12">
                         <div class="lastSlider">
                             @foreach($batches as $batch)
                                 <div class="lastBox">
-                                    <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
+                                    <h3>
+                                        {{$batch->course->name . ' (Batch: '.$batch->name.')'}}
+                                        @if($batch->course->is_free)
+                                            <span style="color: green;">[Free Course]</span>
+                                        @endif
+                                    </h3>
                                     {!! get_readable_description($batch->course->description) !!}
                                     <h4 class="text-white">TIMINGS</h4>
                                     {!! get_batch_timings($batch) !!}

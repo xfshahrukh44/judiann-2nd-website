@@ -17,6 +17,7 @@ use App\Models\Settings;
 use App\Models\Student;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,11 +37,12 @@ class FrontController extends Controller
         $services = Services::paginate(10);
         $sort_portfolio = Portfolio::orderBy('image_order', 'asc')->paginate(6);
         $home = Page::where('name', 'Home')->first();
+        $latest_updates = LatestUpdate::orderBy('created_at', 'DESC')->get();
         if ($home) {
             $data = json_decode($home->content);
-            return view('front.home', compact('data', 'batches', 'students', 'services', 'home', 'sort_portfolio'));
+            return view('front.home', compact('data', 'batches', 'students', 'services', 'home', 'sort_portfolio', 'latest_updates'));
         }
-        return view('front.home', compact('batches', 'students', 'services', 'home', 'sort_portfolio'));
+        return view('front.home', compact('batches', 'students', 'services', 'home', 'sort_portfolio', 'latest_updates'));
     }
 
     public function schedule(Request $request)
@@ -260,11 +262,19 @@ class FrontController extends Controller
                 $charge = \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
                 foreach ($batch_session_arrays as $batch_session_array) {
-                    $charge = \Stripe\Charge::create([
-                        'amount' => intval(floatval($batch_session_array['fees']) * 100),
-                        'currency' => 'usd',
-                        'customer' => $abc
-                    ]);
+                    $stripe_charge_amount = floatval($batch_session_array['fees']) * 100;
+
+                    if($stripe_charge_amount == 0) {
+                        $charge = [
+                            'status' => 'succeeded'
+                        ];
+                    } else {
+                        $charge = \Stripe\Charge::create([
+                            'amount' => intval($stripe_charge_amount),
+                            'currency' => 'usd',
+                            'customer' => $abc
+                        ]);
+                    }
 
                     if ($charge['status'] === 'succeeded') {
 
@@ -407,5 +417,44 @@ class FrontController extends Controller
 
             return view('front.testimonial', compact('testimonials'));
         }
+    }
+
+    public function applyVoucher(Request $request)
+    {
+        $code = $request->code;
+
+        $voucher_check = Voucher::where('code', $code)->whereDate('valid_until', '>=', Carbon::today())->first();
+
+        if (!$voucher_check) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The voucher code provided is either wrong or expired.'
+            ]);
+        }
+
+        //amend batch_session_arrays
+        $voucher = $voucher_check;
+        $batch_session_arrays = session()->get('batch_session_arrays');
+        $new_batch_session_arrays = [];
+        $new_total = 0.00;
+        foreach ($batch_session_arrays as $batch_session_array) {
+            $fees_after_discount = $batch_session_array['fees'] * ($voucher->discount_rate / 100);
+            $new_batch_session_array = [
+                'user_id' => $batch_session_array['user_id'],
+                'batch_id' => $batch_session_array['batch_id'],
+                'class_type' => $batch_session_array['class_type'],
+                'physical_class_type' => $batch_session_array['physical_class_type'],
+                'fees' => $fees_after_discount,
+            ];
+            $new_batch_session_arrays []= $new_batch_session_array;
+            $new_total += $fees_after_discount;
+        }
+        session()->put('batch_session_arrays', $new_batch_session_arrays);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Voucher Applied Successfully!',
+            'new_total' => $new_total
+        ]);
     }
 }

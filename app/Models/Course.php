@@ -23,7 +23,8 @@ class Course extends Model implements HasMedia
         'time_from',
         'time_to',
         'opentok_session_id',
-        'is_streaming'
+        'is_streaming',
+        'is_free'
     ];
 
     public static function boot() {

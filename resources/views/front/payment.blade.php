@@ -17,6 +17,12 @@
                         <div class="codeBox p-4">
                             <form id="paidTournamentForm" class="row" action="" method="post">
                                 @csrf
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" name="card_no" id="voucher_code" class="form-control" placeholder="Enter voucher code">
+                                        <button type="button" id="btn_apply_voucher" class="themeBtnSm">Apply Voucher</button>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Card Number</label>
@@ -107,6 +113,40 @@
                     error: function (err) {
                     }
                 });
+            });
+
+            //voucher_code
+            //btn_apply_voucher
+            $('#btn_apply_voucher').on('click', function () {
+                let voucher_code = $('#voucher_code');
+
+                if(!voucher_code.val()) {
+                    voucher_code.focus();
+                    return alert('Please Enter Voucher Code First');
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: "{{route('front.applyVoucher')}}",
+                    data: {
+                        '_token': '{{csrf_token()}}',
+                        'code': voucher_code.val()
+                    },
+                    success: function (response) {
+                        if(!response.success) {
+                            voucher_code.val('');
+                            voucher_code.focus();
+                            return alert(response.message);
+                        }
+
+                        alert(response.message);
+                        $('.headTwo').html('Amount: $' + response.new_total);
+                    },
+                    error: function (err) {
+                    }
+                });
+
+                // $('#voucher_code')
             });
         });
     </script>

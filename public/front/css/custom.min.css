@@ -311,6 +311,9 @@ figure {
     width: 50px;
     height: 50px;
     margin: 0;
+    border-radius: 100%;
+    object-fit: contain;
+    background: #ddd;
 }
 
 header {
@@ -358,6 +361,16 @@ header {
     font-weight: 100;
     display: inline-block;
     padding: 0.58em 2.1em;
+}
+
+.themeBtnSm {
+    background-color: rgb(235, 88, 40);
+    border: 2px solid rgb(235, 88, 40);
+    font-size: 20px;
+    color: var(--white);
+    font-weight: 100;
+    display: inline-block;
+    padding: 0em 2.1em;
 }
 
 .main-slider .carousel-control-prev {

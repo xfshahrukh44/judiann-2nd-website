@@ -69,4 +69,9 @@ class Course extends Model implements HasMedia
         $image_check =  $this->getMedia('course_images')->first();
         return $image_check ? $image_check->getUrl() : asset("front/images/class1.jpg");
     }
+
+    public function vouchers ()
+    {
+        return $this->hasMany(Voucher::class);
+    }
 }

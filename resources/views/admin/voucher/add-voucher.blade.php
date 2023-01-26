@@ -37,6 +37,20 @@
                                         <div class="alert alert-success">{{Session::get('msg')}}</div>
                                     @endif
                                     <div class="form-group">
+                                        <label for="name">Course</label>
+                                        <select name="course_id" id="course_id" class="form-control @error('course_id') is-invalid @enderror" required>
+                                            <option value="">Select Course</option>
+                                            @foreach($courses as $course)
+                                                <option value="{{$course->id}}" {!! isset($content) && $content->course_id == $course->id ? 'selected' : '' !!}>{{$course->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('course_id')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
                                         <label for="code">Voucher Code</label>
                                         <input type="text" class="form-control @error('code') is-invalid @enderror" name="code" id="name" value="{{$content->code?? old('code')}}" placeholder="Voucher Code" required>
                                         @error('code')

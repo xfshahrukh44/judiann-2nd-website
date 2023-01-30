@@ -47,7 +47,9 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     //voucher
     Route::get('voucher', 'VoucherController@index')->name('voucher');
     Route::match(['get', 'post'], '/add-voucher', 'VoucherController@addVoucher')->name('admin.add-voucher');
+    Route::get('/voucher-view/{id}', 'VoucherController@show')->name('voucher-view');
     Route::delete('voucher/destroy/{id}', 'VoucherController@destroy');
+    Route::post('voucher/send-by-email', 'VoucherController@sendByEmail')->name('admin.voucher.sendByEmail');
 
     //enrolled students list
     Route::get('/enrolled-students', 'AdminController@enrolledStudents')->name('admin.enrolledStudents');

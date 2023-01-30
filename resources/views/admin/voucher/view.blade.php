@@ -1,55 +1,49 @@
 @extends('admin.layouts.app')
-@section('title', (isset($content->name) ? $content->name : ''). ' Course')
-@section('page_css')
-<!-- Datatables -->
-<link href="{{ asset('admin/datatables/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('admin/datatables/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('admin/datatables/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}"
-    rel="stylesheet">
-<link href="{{ asset('admin/datatables/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}"
-    rel="stylesheet">
-<link href="{{ asset('admin/datatables/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
-<style>
-    th {
-        background-color: #f7f7f7;
-    }
-</style>
+@section('title', (isset($content->name) ? $content->name : ''). ' Voucher')
+
+@section('css')
+    <style>
+        span.select2-selection--single {
+            height: 40px !important;
+        }
+    </style>
 @endsection
+
 @section('section')
-<div class="content-wrapper">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
 
-                <div class="col-sm-6 offset-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Course Detail</li>
-                    </ol>
+                    <div class="col-sm-6 offset-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Voucher Detail</li>
+                        </ol>
+                    </div>
                 </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
+            </div><!-- /.container-fluid -->
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
 
-                    <!-- /.card -->
+                        <!-- /.card -->
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Course Detail</h3>
-{{--                            @if(course_is_joinable($content->id))--}}
-{{--                                <button class="btn btn-success" style="float: right;">Start streaming</button>--}}
-{{--                            @endif--}}
-{{--                            <a target="_blank" href="{{route('admin.stream', $content->id)}}" class="btn btn-success" style="float: right;">Start streaming</a>--}}
-                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Voucher Detail</h3>
+                                {{--                            @if(course_is_joinable($content->id))--}}
+                                {{--                                <button class="btn btn-success" style="float: right;">Start streaming</button>--}}
+                                {{--                            @endif--}}
+                                {{--                            <a target="_blank" href="{{route('admin.stream', $content->id)}}" class="btn btn-success" style="float: right;">Start streaming</a>--}}
+                            </div>
 
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
                                     <tr>
                                         <th>ID</th>
 
@@ -57,35 +51,80 @@
                                     </tr>
 
                                     <tr>
-                                        <th>Course Name</th>
-                                        <td>{{$content->name??''}}</td>
+                                        <th>Course</th>
+                                        <td>{{$content->course->name??''}}</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Course Description</th>
-                                        <td>{{$content->description??''}}</td>
+                                        <th>Voucher Code</th>
+                                        <td>{{$content->code??''}}</td>
                                     </tr>
 
                                     <tr>
-                                        <th>Course Fees</th>
-                                        <td>{{$content->fees??''}}</td>
+                                        <th>Discount Rate</th>
+                                        <td>{{($content->discount_rate . '% Off')??''}}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
 
-                                </tbody>
-                            </table>
+                                    <tr>
+                                        <th>Valid Until</th>
+                                        <td>{{$content->valid_until??''}}</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-body">
+                                <form action="{{route('admin.voucher.sendByEmail')}}" method="POST">
+                                    @csrf
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th colspan="2">
+                                                Send Coupon by Email
+                                                <i class="fa-solid fa-circle-info text-blue"
+                                                   title="Select from list or write any valid email"></i>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <input type="hidden" name="voucher_id" value="{{$content->id}}">
+                                                <select class="form-control" id="btn_emails" name="emails[]" placeholder="Emails" multiple>
+                                                    @foreach($customers as $customer)
+                                                        <option value="{{$customer->email}}">{{$customer->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <button class="btn btn-block btn-primary">Send Email</button>
+                                            </td>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card-body -->
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
+                    <!-- /.col -->
                 </div>
-                <!-- /.col -->
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+            <!-- /.container-fluid -->
+        </section>
 
-</div>
+    </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#btn_emails').select2({
+                tags: true
+            });
+        });
+    </script>
 @endsection

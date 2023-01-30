@@ -122,10 +122,10 @@ class VoucherController extends Controller
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $message = 'Dear User,' . "<br />";
                 $message .= "You've been sent a voucher by administration."  . "<br /><br />";
-                $message .= 'Voucher Course ' . $voucher->course->name . "<br />";
-                $message .= 'Voucher Code ' . $voucher->code . "<br />";
-                $message .= 'Voucher Valid Until ' . Carbon::parse($voucher->valid_until)->format('m-d-Y') . ",<br />";
-                $this->customMail('noreply@mortgage.com', $email, 'Course Voucher', $message);
+                $message .= 'Voucher Course: ' . $voucher->course->name . "<br />";
+                $message .= 'Voucher Code: ' . $voucher->code . "<br />";
+                $message .= 'Voucher Valid Until: ' . Carbon::parse($voucher->valid_until)->format('m-d-Y') . ",<br />";
+                $this->customMail('noreply@jefds.com', $email, 'Course Voucher', $message);
             }
         }
 

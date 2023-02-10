@@ -47,8 +47,8 @@ class FrontController extends Controller
 
     public function schedule(Request $request)
     {
-        $online_batches = Batch::where('is_online', 1)->where('has_ended', 0)->get();
-        $physical_batches = Batch::where('is_physical', 1)->where('has_ended', 0)->get();
+        $online_batches = Batch::whereHas('course')->where('is_online', 1)->where('has_ended', 0)->get();
+        $physical_batches = Batch::whereHas('course')->where('is_physical', 1)->where('has_ended', 0)->get();
 
         $online_events = [];
         $physical_events = $online_events;

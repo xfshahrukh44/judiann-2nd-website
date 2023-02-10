@@ -126,20 +126,22 @@ class FrontController extends Controller
 
             if(is_null($batch->date_range)) {
                 foreach ($batch->batch_dates as $batch_date) {
-                    $physical_events[] = [
-                        'title' => $batch->course->name . ' ('.$batch->name.')',
-                        'date' => $batch_date->date,
-                        'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
-                        'color' => $physical_colors[$random_index],
-                        'description' => $batch->course->description,
-                        'img_src' => $batch->course->get_course_image(),
-                        'batch_id' => $batch->id,
-                        'class_type' => 'physical',
-                        'physical_class_type' => $batch->physical_class_type,
-                        'batch_is_full' => batch_is_full($batch),
-                        'already_bought' => is_in_batch($batch->id),
-                        'fees' => $batch->course->fees ?? 0.0
-                    ];
+                    if ($batch->course) {
+                        $physical_events[] = [
+                            'title' => $batch->course->name . ' ('.$batch->name.')',
+                            'date' => $batch_date->date,
+                            'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
+                            'color' => $physical_colors[$random_index],
+                            'description' => $batch->course->description,
+                            'img_src' => $batch->course->get_course_image(),
+                            'batch_id' => $batch->id,
+                            'class_type' => 'physical',
+                            'physical_class_type' => $batch->physical_class_type,
+                            'batch_is_full' => batch_is_full($batch),
+                            'already_bought' => is_in_batch($batch->id),
+                            'fees' => $batch->course->fees ?? 0.0
+                        ];
+                    }
                 }
             } else {
                 $current_date = Carbon::parse($batch->date_range_from);

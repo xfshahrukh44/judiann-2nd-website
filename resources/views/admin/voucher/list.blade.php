@@ -49,6 +49,7 @@
                                     <thead>
                                     <tr style="text-align: center">
                                         <th>#</th>
+                                        <th>Course</th>
                                         <th>Code</th>
                                         <th>Discount Rate</th>
                                         <th>Description</th>
@@ -125,6 +126,7 @@
 
 
                     {data: 'id', name: 'id'},
+                    {data: 'course', name: 'course'},
                     {data: 'code', name: 'code'},
                     {data: 'discount_rate', name: 'discount_rate'},
                     {data: 'description', name: 'description'},

@@ -1608,3 +1608,7 @@ div.switcher label input:checked + span small {
 .logoutCont li:last-of-type a:hover {
     background: rgb(235, 88, 40);
 }
+
+.select2-container--default .select2-selection--single {
+    height: 40px;
+}

@@ -296,6 +296,9 @@ class FrontController extends Controller
                 //delete session variables
                 session()->remove('user');
                 session()->remove('batch_session_arrays');
+                if (session()->has('used_voucher')) {
+                    session()->remove('used_voucher');
+                }
 
                 return [
                     "status" => true,
@@ -432,13 +435,33 @@ class FrontController extends Controller
             ]);
         }
 
-        //amend batch_session_arrays
         $voucher = $voucher_check;
+
+        //prevent redundant voucher usage
+        if (session()->has('used_voucher') && session()->get('used_voucher') == $voucher->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Voucher Already Applied.'
+            ]);
+        }
+
+        //amend batch_session_arrays
         $batch_session_arrays = session()->get('batch_session_arrays');
         $new_batch_session_arrays = [];
         $new_total = 0.00;
         foreach ($batch_session_arrays as $batch_session_array) {
-            $fees_after_discount = $batch_session_array['fees'] * ($voucher->discount_rate / 100);
+            $batch = Batch::find($batch_session_array['batch_id']);
+
+            //check if voucher is valid for batch
+            if ($batch->course_id == $voucher->course_id) {
+                $fees_after_discount = $batch_session_array['fees'] - ($batch_session_array['fees'] * ($voucher->discount_rate / 100));
+
+                //prevent redundant voucher usage
+                session()->put('used_voucher', $voucher->id);
+            } else {
+                $fees_after_discount = $batch_session_array['fees'];
+            }
+
             $new_batch_session_array = [
                 'user_id' => $batch_session_array['user_id'],
                 'batch_id' => $batch_session_array['batch_id'],
@@ -454,7 +477,7 @@ class FrontController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Voucher Applied Successfully!',
-            'new_total' => $new_total
+            'new_total' => (int)$new_total
         ]);
     }
 }

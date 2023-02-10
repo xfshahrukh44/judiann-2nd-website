@@ -18,7 +18,7 @@ class BatchController extends Controller
     {
         try {
             if (request()->ajax()) {
-                return datatables()->of(Batch::get())
+                return datatables()->of(Batch::whereHas('course')->get())
                     ->addIndexColumn()
                     ->addColumn('course', function ($data) {
                         return $data->course->name ?? '';

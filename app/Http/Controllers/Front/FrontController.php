@@ -32,7 +32,7 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
-        $batches = Batch::whereHas('course')->all();
+        $batches = Batch::whereHas('course')->get();
         $students = Student::all();
         $services = Services::paginate(10);
         $sort_portfolio = Portfolio::orderBy('image_order', 'asc')->paginate(6);

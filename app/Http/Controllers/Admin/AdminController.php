@@ -16,7 +16,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $batches = Batch::whereHas('course')->all();
+        $batches = Batch::whereHas('course')->get();
 
         $events = [];
         $colors = [

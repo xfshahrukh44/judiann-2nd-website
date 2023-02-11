@@ -22,6 +22,9 @@ class BatchSessionController extends Controller
                     ->addColumn('course', function ($data) {
                         return $data->batch->course->name ?? '';
                     })
+                    ->addColumn('batch', function ($data) {
+                        return $data->batch->name ?? '';
+                    })
                     ->addColumn('action', function ($data) {
                         return '<a title="View" href="order-view/' . $data->id . '" class="btn btn-dark btn-sm"><i class="fas fa-eye"></i></a>';
                     })->make(true);

@@ -134,18 +134,20 @@
                     <div class="col-12">
                         <div class="lastSlider">
                             @foreach($batches as $batch)
-                                <div class="lastBox">
-                                    <h3>
-                                        {{$batch->course->name . ' (Batch: '.$batch->name.')'}}
-                                        @if($batch->course->is_free)
-                                            <span style="color: green;">[Free Course]</span>
-                                        @endif
-                                    </h3>
-                                    {!! get_readable_description($batch->course->description) !!}
-                                    <h4 class="text-white">TIMINGS</h4>
-                                    {!! get_batch_timings($batch) !!}
-                                    <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
-                                </div>
+                                @if($batch->course)
+                                    <div class="lastBox">
+                                        <h3>
+                                            {{$batch->course->name . ' (Batch: '.$batch->name.')'}}
+                                            @if($batch->course->is_free)
+                                                <span style="color: green;">[Free Course]</span>
+                                            @endif
+                                        </h3>
+                                        {!! get_readable_description($batch->course->description) !!}
+                                        <h4 class="text-white">TIMINGS</h4>
+                                        {!! get_batch_timings($batch) !!}
+                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

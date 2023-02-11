@@ -127,7 +127,7 @@
 
                     {data: 'id', name: 'id'},
                     {data: 'user.name', name: 'user.name'},
-                    {data: 'batch.course.name', name: 'batch.course.name'},
+                    {data: 'course', name: 'course'},
                     {data: 'batch.name', name: 'batch.name'},
                     {data: 'class_type', name: 'class_type'},
                     {data: 'physical_class_type', name: 'physical_class_type'},

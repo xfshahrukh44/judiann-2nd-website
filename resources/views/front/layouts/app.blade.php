@@ -26,31 +26,59 @@
         <div class="an-navbar">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-lg-6 col-sm-6">
+                    <div class="col-lg-6 col-sm-6 ">
                         <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
                                            style="width: 300px; height: 150px;" class="logo" loop
                                            autoplay></lottie-player>
                         </a>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <div class="d-flex align-items-center justify-content-end">
-                            @if(!\Illuminate\Support\Facades\Auth::check())
-                                <ul class="navbar-nav d-inline-flex justify-content-end mr-3">
-                                    <li class="nav-item">
-                                        <button type="button" data-toggle="modal" data-target="#loginModal"
-                                                class="nav-link text-white h5 btn">Login
-                                        </button>
+                    <div class="col-lg-6 col-sm-6">
+                        <div id="myNav" class="overlay">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <div class="overlay-content">
+                                <ul class="">
+                                    <li class="active  nav-item"><a class="nav-link"
+                                                                    href="{{route('front.home')}}">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}">About
+                                            Judiann</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}">About
+                                            Us</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                                            href="{{route('front.judiann-portfolio')}}">Judiann’s
+                                            Portfolio</a></li>
+                                    <li class="nav-item"><a class="nav-link"
+                                                            href="{{route('front.services')}}">Services</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}">Faq’s</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.students-work')}}">Student’s
+                                            Work</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact
+                                            Us</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms &
+                                            Conditions</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy
+                                            Policy</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule
+                                            A Class</a>
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="loginArea">
+                            @if(!\Illuminate\Support\Facades\Auth::check())
+                                <a href="#" id="btn_sign_in" type="button" class="loginBtn"><i class="fas fa-globe"></i> Sign In</a>
+                                <a href="{{route('front.signup')}}" class="signupBtn"> Sign Up</a>
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
-{{--                                    <li class="nav-item">--}}
-{{--                                        <a type="button" class="nav-link text-white h5 btn"--}}
-{{--                                           href="{{route('customer.dashboard')}}">--}}
-{{--                                            Customer Portal--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
+                                    {{--                                    <li class="nav-item">--}}
+                                    {{--                                        <a type="button" class="nav-link text-white h5 btn"--}}
+                                    {{--                                           href="{{route('customer.dashboard')}}">--}}
+                                    {{--                                            Customer Portal--}}
+                                    {{--                                        </a>--}}
+                                    {{--                                    </li>--}}
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
                                            href="{{route('customer.dashboard')}}">
@@ -68,43 +96,6 @@
                                     </form>
                                 </ul>
                             @endif
-                            <div id="myNav" class="overlay">
-                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-                                <div class="overlay-content">
-                                    <ul class="">
-                                        <li class="active  nav-item"><a class="nav-link" href="{{route('front.home')}}">Home</a>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="{{route('front.about-judiann')}}">About
-                                                Judiann</a>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}">About
-                                                Us</a></li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="{{route('front.judiann-portfolio')}}">Judiann’s
-                                                Portfolio</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}">Services</a>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="{{route('front.faqs')}}">Faq’s</a></li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="{{route('front.students-work')}}">Student’s
-                                                Work</a>
-                                        </li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact
-                                                Us</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms &
-                                                Conditions</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy
-                                                Policy</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule
-                                                A Class</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
                             <span style="font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
                         </div>
                     </div>
@@ -262,6 +253,7 @@
     </div>
 </div>
 
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{{asset('front/js/all.min.js')}}"></script>
@@ -277,6 +269,13 @@
 @endif
 
 @yield('script')
+<script>
+    $(document).ready(function () {
+        $('#btn_sign_in').on('click', function () {
+            $('#loginModal').modal('show');
+        });
+    });
+</script>
 
 
 </body>

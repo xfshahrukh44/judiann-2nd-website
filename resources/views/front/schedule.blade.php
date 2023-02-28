@@ -141,150 +141,159 @@
 
     {{--Calendar & Form--}}
     <section class="contactInnr">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12">
-                <h2 class="headOne text-center mt-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
-                <h3 class="text-white text-center mt-3 mb-5">
-                    Students may continually add multiple courses of both the online and onsite course
-                    types.
-                </h3>
-            </div>
-            <div class="col-md-6">
-                <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
-                      data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
-                      data-message-success="Thank you! We will be in touch soon."
-                      data-message-invalid-email="Sorry, that email address looks invalid."
-                      data-message-required-field-missing="Please fill in the required fields."
-                      data-message-error="Oops. An error occurred.">
-                    @csrf
-                    <div class="hf-fields-wrap">
-                        <div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder=" First  Name"
-                                               name="first_name" readonly value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12">
+                    <h2 class="headOne text-center mt-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
+                    <h3 class="text-white text-center mt-3 mb-5">
+                        Students may continually add multiple courses of both the online and onsite course
+                        types.
+                    </h3>
+                    @if(!\Illuminate\Support\Facades\Auth::check())
+                        <p class="blink">Please Sign-up and make an account first to register a course</p>
+                        <a href="{{route('front.signup')}}" class="themeBtn">sign up</a>
+                    @endif
+                </div>
+                <div class="col-md-6">
+                    <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
+                          data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
+                          data-message-success="Thank you! We will be in touch soon."
+                          data-message-invalid-email="Sorry, that email address looks invalid."
+                          data-message-required-field-missing="Please fill in the required fields."
+                          data-message-error="Oops. An error occurred.">
+                        @csrf
+                        <div class="hf-fields-wrap">
+                            <div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder=" First  Name"
+                                                   name="first_name" readonly
+                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Last Name"
-                                               name="last_name" readonly value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name"
+                                                   name="last_name" readonly
+                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Email"
-                                               name="email"
-                                               readonly value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Email"
+                                                   name="email"
+                                                   readonly
+                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Contact"
-                                               name="phone"
-                                               readonly {{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Contact"
+                                                   name="phone"
+                                                   readonly {{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Select Course Type:</label>
-                                        <select class="form-control select_course_type"
-                                                name="batch_id" required>
-                                            <option disabled selected value="">Select Course Type:</option>
-                                            <option value="Online" selected >Online</option>
-                                            <option value="On-site">On-site</option>
-                                        </select>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Select Course Type:</label>
+                                            <select class="form-control select_course_type"
+                                                    name="batch_id" required>
+                                                <option disabled selected value="">Select Course Type:</option>
+                                                <option value="Online" selected>Online</option>
+                                                <option value="On-site">On-site</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
 
-{{--                                <div class="col-12">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label>Select Course:</label>--}}
-{{--                                        <select class="form-control course_type online_course_type"--}}
-{{--                                                name="batch_id" required hidden>--}}
-{{--                                            <option disabled selected value="">Select Course:</option>--}}
-{{--                                            @foreach($online_batches as $batch)--}}
-{{--                                                <option class="option_batch_type"--}}
-{{--                                                        data-online="{{$batch->is_online}}"--}}
-{{--                                                        data-physical="{{$batch->is_physical}}"--}}
-{{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                        <select class="form-control course_type physical_course_type"--}}
-{{--                                                name="batch_id" hidden>--}}
-{{--                                            <option disabled selected value="">Select Course:</option>--}}
-{{--                                            @foreach($physical_batches as $batch)--}}
-{{--                                                <option class="option_batch_type physical_option_batch"--}}
-{{--                                                        {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}--}}
-{{--                                                        data-online="{{$batch->is_online}}"--}}
-{{--                                                        data-physical="{{$batch->is_physical}}"--}}
-{{--                                                        data-physical-class-type="{{$batch->physical_class_type}}"--}}
-{{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                    {{--                                <div class="col-12">--}}
+                                    {{--                                    <div class="form-group">--}}
+                                    {{--                                        <label>Select Course:</label>--}}
+                                    {{--                                        <select class="form-control course_type online_course_type"--}}
+                                    {{--                                                name="batch_id" required hidden>--}}
+                                    {{--                                            <option disabled selected value="">Select Course:</option>--}}
+                                    {{--                                            @foreach($online_batches as $batch)--}}
+                                    {{--                                                <option class="option_batch_type"--}}
+                                    {{--                                                        data-online="{{$batch->is_online}}"--}}
+                                    {{--                                                        data-physical="{{$batch->is_physical}}"--}}
+                                    {{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>--}}
+                                    {{--                                            @endforeach--}}
+                                    {{--                                        </select>--}}
+                                    {{--                                        <select class="form-control course_type physical_course_type"--}}
+                                    {{--                                                name="batch_id" hidden>--}}
+                                    {{--                                            <option disabled selected value="">Select Course:</option>--}}
+                                    {{--                                            @foreach($physical_batches as $batch)--}}
+                                    {{--                                                <option class="option_batch_type physical_option_batch"--}}
+                                    {{--                                                        {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}--}}
+                                    {{--                                                        data-online="{{$batch->is_online}}"--}}
+                                    {{--                                                        data-physical="{{$batch->is_physical}}"--}}
+                                    {{--                                                        data-physical-class-type="{{$batch->physical_class_type}}"--}}
+                                    {{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>--}}
+                                    {{--                                            @endforeach--}}
+                                    {{--                                        </select>--}}
+                                    {{--                                    </div>--}}
+                                    {{--                                </div>--}}
 
-                                <input type="hidden" name="class_type" class="class_type" value="online">
-                                <input type="hidden" id="form_batch_id">
-                                <input type="hidden" id="form_class_type">
-                                <input type="hidden" id="form_physical_class_type">
+                                    <input type="hidden" name="class_type" class="class_type" value="online">
+                                    <input type="hidden" id="form_batch_id">
+                                    <input type="hidden" id="form_class_type">
+                                    <input type="hidden" id="form_physical_class_type">
 
-{{--                                <div class="col-12 physical_class_type_wrapper" hidden>--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label>Select Physical Class Type:</label>--}}
-{{--                                        <select class="form-control physical_class_type"--}}
-{{--                                                placeholder="Select Class Type" name="physical_class_type">--}}
-{{--                                            <option disabled selected>Select Physical Class Type:</option>--}}
-{{--                                            <option value="group">Group classes</option>--}}
-{{--                                            <option value="in_person">In-person</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                    {{--                                <div class="col-12 physical_class_type_wrapper" hidden>--}}
+                                    {{--                                    <div class="form-group">--}}
+                                    {{--                                        <label>Select Physical Class Type:</label>--}}
+                                    {{--                                        <select class="form-control physical_class_type"--}}
+                                    {{--                                                placeholder="Select Class Type" name="physical_class_type">--}}
+                                    {{--                                            <option disabled selected>Select Physical Class Type:</option>--}}
+                                    {{--                                            <option value="group">Group classes</option>--}}
+                                    {{--                                            <option value="in_person">In-person</option>--}}
+                                    {{--                                        </select>--}}
+                                    {{--                                    </div>--}}
+                                    {{--                                </div>--}}
 
-                                <div class="col-12">
-                                    <div class="table-responsive courseTable">
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>Select Courses</th>
-                                                <th>Price</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="courses_wrapper">
+                                    <div class="col-12">
+                                        <div class="table-responsive courseTable">
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Select Courses</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="courses_wrapper">
 
-                                            </tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <td><b>Total Price</b></td>
-                                                {{--                                                            <td></td>--}}
-                                                <td id="td_total_price"><b>$0.00</b></td>
-                                            </tr>
-                                            </tfoot>
-                                        </table>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td><b>Total Price</b></td>
+                                                    {{--                                                            <td></td>--}}
+                                                    <td id="td_total_price"><b>$0.00</b></td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12 mt-5">
-                                    @if(\Illuminate\Support\Facades\Auth::check())
-                                        <button type="submit" id="btn_submit" hidden>Send Now</button>
-                                    @else
-                                        <button type="submit" data-toggle="modal" data-target="#loginModal">
-                                            Send Now
-                                        </button>
-                                    @endif
+                                    <div class="col-md-12 mt-5">
+                                        @if(\Illuminate\Support\Facades\Auth::check())
+                                            <button type="submit" id="btn_submit" hidden>Send Now</button>
+                                        @else
+                                            <button type="submit" data-toggle="modal" data-target="#loginModal">
+                                                Send Now
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
+                            <noscript>Please enable JavaScript for this form to work.</noscript>
                         </div>
-                        <noscript>Please enable JavaScript for this form to work.</noscript>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <h2 class="headTwo">On-line</h2>
-                <div id="online_calendar"></div>
-                <div id="physical_calendar"></div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h2 class="headTwo">On-line</h2>
+                    <div id="online_calendar"></div>
+                    <div id="physical_calendar"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -303,38 +312,43 @@
                 <div class="modal-body">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th class="text-center" colspan="2">
-                                    <img id="event_img" class="w-100" src="" alt="">
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>Course:</th>
-                                <td id="event_course"></td>
-                            </tr>
-                            <tr>
-                                <th>Time:</th>
-                                <td id="event_time"></td>
-                            </tr>
-                            <tr>
-                                <th>Description:</th>
-                                <td id="event_description"></td>
-                            </tr>
-                            <tr>
-                                <th>Class Type:</th>
-                                <td id="event_class_type"></td>
-                            </tr>
-                            <tr class="event_physical_class_type">
-                                <th>Physical Class Type:</th>
-                                <td id="event_physical_class_type"></td>
-                            </tr>
+                        <tr>
+                            <th class="text-center" colspan="2">
+                                <img id="event_img" class="w-100" src="" alt="">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Course:</th>
+                            <td id="event_course"></td>
+                        </tr>
+                        <tr>
+                            <th>Time:</th>
+                            <td id="event_time"></td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td id="event_description"></td>
+                        </tr>
+                        <tr>
+                            <th>Class Type:</th>
+                            <td id="event_class_type"></td>
+                        </tr>
+                        <tr class="event_physical_class_type">
+                            <th>Physical Class Type:</th>
+                            <td id="event_physical_class_type"></td>
+                        </tr>
                         </thead>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn_register_course" class="btn btn-primary" data-event="">Register Course</button>
-                    <button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL</button>
-                    <button type="button" id="btn_already_bought" class="btn btn-success" data-dismiss="modal">ALREADY BOUGHT</button>
+                    <button type="button" id="btn_register_course" class="btn btn-primary" data-event="">Register
+                        Course
+                    </button>
+                    <button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL
+                    </button>
+                    <button type="button" id="btn_already_bought" class="btn btn-success" data-dismiss="modal">ALREADY
+                        BOUGHT
+                    </button>
                 </div>
             </div>
         </div>
@@ -425,22 +439,22 @@
                     return $('#loginModal').modal('show');
                 } else {
                     //courses_wrapper
-                    $('#courses_wrapper').append(`<tr id="tr_batch_`+event.extendedProps.batch_id+`">
-                                                    <input type="hidden" name="batch_ids[]" value="`+event.extendedProps.batch_id+`">
-                                                    <input type="hidden" name="class_types[]" value="`+event.extendedProps.class_type+`">
-                                                    <input type="hidden" name="physical_class_types[]" value="`+event.extendedProps.physical_class_type+`">
-                                                    <input type="hidden" name="fees[]" class="input_fees" value="`+event.extendedProps.fees+`">
+                    $('#courses_wrapper').append(`<tr id="tr_batch_` + event.extendedProps.batch_id + `">
+                                                    <input type="hidden" name="batch_ids[]" value="` + event.extendedProps.batch_id + `">
+                                                    <input type="hidden" name="class_types[]" value="` + event.extendedProps.class_type + `">
+                                                    <input type="hidden" name="physical_class_types[]" value="` + event.extendedProps.physical_class_type + `">
+                                                    <input type="hidden" name="fees[]" class="input_fees" value="` + event.extendedProps.fees + `">
                                                     <td>
-                                                        `+event.title+`
+                                                        ` + event.title + `
                                                     </td>
                                                     <td>
-                                                        $`+event.extendedProps.fees+`
+                                                        $` + event.extendedProps.fees + `
                                                     </td>
                                                     <td>
                                                         <div class="btnCont">
                                                             <span>
                                                                 <i class="fas fa-times"></i>
-                                                                <input type="radio" class="btn_remove_course" name="" id="" data-batch="`+event.extendedProps.batch_id+`">
+                                                                <input type="radio" class="btn_remove_course" name="" id="" data-batch="` + event.extendedProps.batch_id + `">
                                                             </span>
                                                         </div>
                                                     </td>
@@ -551,13 +565,13 @@
             $('#physical_calendar').prop('hidden', true);
         }
 
-        function calculate_total () {
+        function calculate_total() {
             let total = 0.00;
             $('.input_fees').each(function () {
                 total += parseFloat($(this).val()) ?? 0.00;
             });
 
-            $('#td_total_price').html(`<b>$`+total+`</b>`);
+            $('#td_total_price').html(`<b>$` + total + `</b>`);
 
             $('#btn_submit').prop('hidden', (total == 0.00));
         }

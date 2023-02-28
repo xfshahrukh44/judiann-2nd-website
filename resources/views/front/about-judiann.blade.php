@@ -9,7 +9,7 @@
 
 
     <div class="main-slider inner">
-        <img class="img-fluid w-100" src="{{!empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}" alt="First slide">
+        <img class="img-fluid w-100 " src="{{!empty($about) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}" alt="First slide">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row justify-content-center">

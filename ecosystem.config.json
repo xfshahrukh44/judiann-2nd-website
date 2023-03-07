@@ -1,9 +1,9 @@
 {
     "apps": [
         {
-            "name": "Websockets port 6002",
+            "name": "Websockets port 6000",
             "script": "artisan",
-            "args": ["websockets:serve", "--port", "6002"],
+            "args": ["websockets:serve", "--port", "6000"],
             "instances": "1",
             "wait_ready": true,
             "autorestart": true,

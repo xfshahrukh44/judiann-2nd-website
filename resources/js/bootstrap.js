@@ -42,7 +42,7 @@ window.Echo = new Echo({
     encrypted: process.env.NODE_ENV === 'production',
     forceTLS: process.env.NODE_ENV === 'production',
     disableStats: true,
-    enabledTransports: ['ws', 'wss']
+    // enabledTransports: ['ws', 'wss']
 });
 
 

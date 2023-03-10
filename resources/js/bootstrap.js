@@ -37,12 +37,12 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     authEndpoint: process.env.MIX_BASE_URL + "/broadcasting/auth",
     wsHost: window.location.hostname,
-    wsPort: 6000,
-    wssPort: 6000,
+    wsPort: 3001,
+    wssPort: 3001,
     encrypted: process.env.NODE_ENV === 'production',
     forceTLS: process.env.NODE_ENV === 'production',
     disableStats: true,
-    // enabledTransports: ['ws', 'wss']
+    enabledTransports: ['ws', 'wss']
 });
 
 

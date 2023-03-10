@@ -346,7 +346,7 @@
 
             //socket: on viewer raise hand
             window.Echo.channel('user-raised-hand-' + batch_id)
-                .listen('ViewerRaisedHand', (e) => {
+                .listen('.viewer.raised.hand', (e) => {
                     toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
                     $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
                     $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);

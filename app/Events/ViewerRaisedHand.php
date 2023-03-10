@@ -30,6 +30,11 @@ class ViewerRaisedHand implements ShouldBroadcast
         ];
     }
 
+    public function broadcastAs(): string
+    {
+        return 'viewer.raised.hand';
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *

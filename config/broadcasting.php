@@ -39,7 +39,7 @@ return [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'useTLS' => env('APP_ENV') == 'production',
                 'encrypted' => env('APP_ENV') == 'production',
-                'host' => '127.0.0.1',
+                'host' => 'jefds.com',
                 'port' => 3002,
                 'scheme' => env('APP_ENV') == 'production' ? 'https' : 'http',
                 'curl_options' => [

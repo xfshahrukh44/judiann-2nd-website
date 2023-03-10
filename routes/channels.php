@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('streaming-channel.{id}', function ($user, $id) {
     //
-    return ($user->role_id == 1) ? $user : (\App\Models\CourseSession::where([
-        ['course_id', $id],
+    return ($user->role_id == 1) ? $user : (\App\Models\BatchSession::where([
+        ['batch_id', $id],
         ['user_id', $user->id],
     ])->exists() ? $user: null);
 });

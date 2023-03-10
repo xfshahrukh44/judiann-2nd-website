@@ -83,16 +83,19 @@
                                             <img width="50" src="{{\Illuminate\Support\Facades\Auth::user()->get_profile_picture()}}" alt="">
                                         </a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}">Contact Us</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.terms')}}">Terms & Conditions</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.policy')}}">Privacy Policy</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}">Schedule A Class</a>
+                                    <li class="nav-item">
+                                        <a type="button" class="nav-link text-white h5 btn"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
                                     </li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 </ul>
                             @endif
                             <span style="font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
                         </div>
-                        <span style="font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
                     </div>
                 </div>
             </div>
@@ -259,7 +262,6 @@
         });
     });
 </script>
-
 
 
 </body>

@@ -33,16 +33,20 @@ window.Pusher = require('pusher-js');
 //     });
 // }
 window.Echo = new Echo({
+    // broadcaster: 'pusher',
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    authEndpoint: process.env.MIX_BASE_URL + "/broadcasting/auth",
-    wsHost: window.location.hostname,
-    wsPort: 3008,
-    wssPort: 3008,
-    encrypted: process.env.NODE_ENV === 'production',
-    forceTLS: process.env.NODE_ENV === 'production',
-    disableStats: true,
-    enabledTransports: ['ws', 'wss']
+    key: '904ef0b44a29801830a8',
+    cluster: 'ap2',
+    forceTLS: true
+    // key: process.env.MIX_PUSHER_APP_KEY,
+    // authEndpoint: process.env.MIX_BASE_URL + "/broadcasting/auth",
+    // wsHost: window.location.hostname,
+    // wsPort: 3008,
+    // wssPort: 3008,
+    // encrypted: process.env.NODE_ENV === 'production',
+    // forceTLS: process.env.NODE_ENV === 'production',
+    // disableStats: true,
+    // enabledTransports: ['ws', 'wss']
 });
 
 

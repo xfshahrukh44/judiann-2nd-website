@@ -20,7 +20,7 @@ class ViewerRaisedHand implements ShouldBroadcast
      * @return void
      */
 
-    public $data, $batch_id, $customer;
+    public $data, $batch_id;
 
     public function __construct($customer, $batch_id)
     {
@@ -42,6 +42,6 @@ class ViewerRaisedHand implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('user-raised-hand-' . $this->batch_id);
+        return new PresenceChannel('streaming-channel.' . $this->batch_id);
     }
 }

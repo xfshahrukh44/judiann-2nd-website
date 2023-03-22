@@ -77,7 +77,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
             integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-{{--    <script src="{{asset('js/video-streaming-utils.js')}}"></script>--}}
+    {{--    <script src="{{asset('js/video-streaming-utils.js')}}"></script>--}}
     <script>
         let peer = null;
         let peer_calls = {};
@@ -101,7 +101,7 @@
                 const peer = new Peer('peer-course-user-' + auth_id, {
                     path: "/peerjs",
                     host: "/",
-                    port: "3001",
+                    port: "3009",
                 });
                 //when peer is opened
                 peer.on('open', function (id) {
@@ -136,7 +136,7 @@
                                         <div class="text-center" style="width: 100%;">
                                             <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
                                             <br />
-                                            <img src="`+img_req.responseText+`" style="background-color: white; max-width: 100px; max-height: 100px;">
+                                            <img src="` + img_req.responseText + `" style="background-color: white; max-width: 100px; max-height: 100px;">
                                             <h4 style="color:white;">` + user.name + `</h4>
                                             <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
                                         </div>
@@ -156,7 +156,7 @@
                                         <div class="text-center" style="width: 100%;">
                                             <i class="fa fa-hand-paper-o text-warning" id="raised_hand_` + user.id + `" hidden></i>
                                             <br />
-                                            <img src="`+img_req.responseText+`" style="background-color: white; max-width: 100px; max-height: 100px;">
+                                            <img src="` + img_req.responseText + `" style="background-color: white; max-width: 100px; max-height: 100px;">
                                             <h4 style="color:white;">` + user.name + `</h4>
                                             <button class="btn btn-primary btn-sm btn_allow_user_screen" id="btn_allow_user_screen_` + user.id + `" data-user="` + user.id + `" hidden>Allow screen share</button>
                                         </div>
@@ -168,6 +168,12 @@
                 // console.log(user.name, "Left");
                 $(`#viewer-id-${user.id}`).remove()
             });
+
+            channel.listen('.viewer.raised.hand', (e) => {
+                toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
+                $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
+                $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
+            })
 
             return channel;
         }
@@ -284,8 +290,8 @@
 
         const getUserProfilePicture = (user_id) => {
             return $.ajax({
-                type:'POST',
-                url:'{{route("admin.getUserProfilePicture")}}',
+                type: 'POST',
+                url: '{{route("admin.getUserProfilePicture")}}',
                 data: {
                     _token: '{{csrf_token()}}',
                     user_id: user_id
@@ -345,20 +351,21 @@
             // var call = peer.call('peer-batch-' + batch_id, userMediaPermission().then().catch());
 
             //socket: on viewer raise hand
-            window.Echo.channel('user-raised-hand-' + batch_id)
-                .listen('.viewer.raised.hand', (e) => {
-                    toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
-                    $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
-                    $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
-                });
+            // window.Echo.private('streaming-channel-2.' + batch_id)
+            //     .listen('.viewer.raised.hand', (e) => {
+            //         console.log('abc raised hand', e)
+            //         // toastr.warning('<i class="fa fa-hand-paper-o"></i>' + e.data.customer.name + ' has raised hand.');
+            //         // $('#raised_hand_' + e.data.customer.id).prop('hidden', false);
+            //         // $('#btn_allow_user_screen_' + e.data.customer.id).prop('hidden', false);
+            //     });
 
             //on allow screen click
-            $('body').on('click', '.btn_allow_user_screen', function() {
+            $('body').on('click', '.btn_allow_user_screen', function () {
                 //prep data
                 var customer_id = $(this).data('user');
 
                 //hide all buttons
-                $('.btn_allow_user_screen').each(function() {
+                $('.btn_allow_user_screen').each(function () {
                     $(this).prop('hidden', true);
                 });
                 $('#btn_revert_stream').prop('hidden', false);
@@ -372,17 +379,16 @@
 
                 console.log("calls", peer_calls, videoTrack, audioTrack)
 
-                for(let key in peer_calls){
-                    if(videoTrack){
+                for (let key in peer_calls) {
+                    if (videoTrack) {
                         const sender_video = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === videoTrack.kind);
                         sender_video.replaceTrack(videoTrack);
                     }
-                    if(audioTrack){
+                    if (audioTrack) {
                         const sender_audio = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === audioTrack.kind);
                         sender_audio.replaceTrack(audioTrack);
                     }
                 }
-
 
 
                 /*for(let track of broadcaster_stream.getTracks()){
@@ -431,7 +437,7 @@
             });
 
             //on revert stream click
-            $('body').on('click', '#btn_revert_stream', function() {
+            $('body').on('click', '#btn_revert_stream', function () {
                 //prep data
                 var customer_id = $(this).data('user');
 
@@ -445,12 +451,12 @@
 
                 console.log("calls", peer_calls, videoTrack, audioTrack)
 
-                for(let key in peer_calls){
-                    if(videoTrack){
+                for (let key in peer_calls) {
+                    if (videoTrack) {
                         const sender_video = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === videoTrack.kind);
                         sender_video.replaceTrack(videoTrack);
                     }
-                    if(audioTrack){
+                    if (audioTrack) {
                         const sender_audio = peer_calls[key].peerConnection.getSenders().find((s) => s.track.kind === audioTrack.kind);
                         sender_audio.replaceTrack(audioTrack);
                     }

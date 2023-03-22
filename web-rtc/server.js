@@ -25,7 +25,7 @@ const credentials = {key: privateKey, cert: certificate};
 const {PeerServer} = require("peer");
 const peerServer = PeerServer({
     host: '0.0.0.0',
-    port: 3003,
+    port: 3002,
     path: '/peerjs',
     ssl: credentials
 });

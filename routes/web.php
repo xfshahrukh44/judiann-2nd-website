@@ -181,7 +181,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //schedule
     Route::get('/schedule', 'FrontController@schedule')->name('front.schedule');
-    Route::post('/schedule-class', 'FrontController@schedule_class')->name('front.schedule_class');
+    Route::match(['get','post'],'/schedule-class', 'FrontController@schedule_class')->name('front.schedule_class');
 
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');

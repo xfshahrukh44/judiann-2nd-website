@@ -175,23 +175,7 @@
             const channel = echo.join(
                 `streaming-channel.${channel_id}`
             );
-            /*channel.here((users) => {
-                console.log("all users", users, is_peer_open)
-                if (auth_id) {
-                    const viewers = _.filter(users, (user) => {
-                        return user.id !== auth_id
-                    })
-                    _.each(viewers, (user) => {
-                        callingToViewer(user.id);
-                    })
-                }
-            });
-            channel.joining((user) => {
-                // callingToViewer(user.id);
-            });
-            channel.leaving((user) => {
-                console.log(user.name, "Left");
-            });*/
+
 
             return channel
         }

@@ -179,6 +179,10 @@ class FrontController extends Controller
 
     public function schedule_class(Request $request)
     {
+        if ($request->method() == 'GET') {
+            return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
+        }
+
         $this->validate($request, array(
             'first_name' => 'nullable|string|max:50',
             'last_name' => 'nullable|string|max:50',
@@ -193,10 +197,10 @@ class FrontController extends Controller
         $batch_session_arrays = [];
         $total = 0.0;
         foreach ($request->batch_ids as $key => $batch_id) {
-            if(!is_in_batch($batch_id)) {
+            if (!is_in_batch($batch_id)) {
                 $fees = floatval($request->fees[$key]);
                 $total += $fees;
-                $batch_session_arrays []= [
+                $batch_session_arrays [] = [
                     'user_id' => $user->id,
                     'batch_id' => $batch_id,
                     'class_type' => $request->class_types[$key],

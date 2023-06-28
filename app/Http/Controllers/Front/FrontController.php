@@ -181,6 +181,7 @@ class FrontController extends Controller
     {
         if ($request->method() == 'GET') {
             return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
+
         }
 
         $this->validate($request, array(

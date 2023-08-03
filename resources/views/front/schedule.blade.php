@@ -361,6 +361,16 @@
             //init online and physical calendars
             init_calendars();
 
+            $('.btn_online_batches').on('click', function() {
+               $('.select_course_type').val('Online');
+               $('.select_course_type').trigger('change');
+            });
+
+            $('.btn_physical_batches').on('click', function() {
+               $('.select_course_type').val('On-site');
+               $('.select_course_type').trigger('change');
+            });
+            
             $('.select_course_type').on('change', function () {
                 if ($(this).val() == 'Online') {
                     // $('.online_course_type').prop('hidden', false);

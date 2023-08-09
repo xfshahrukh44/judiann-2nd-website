@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Mail;
+
 trait PHPCustomMail
 {
     /**
@@ -28,11 +30,24 @@ trait PHPCustomMail
         $message = $html;
 
         // Sending email
-        if (mail($to, $subject, $message, $headers)) {
-            return true;
-        } else {
+        Mail::send([], [], function ($message) use ($to, $subject, $html) {
+            $message->to($to)
+                ->subject($subject)
+                ->setBody($html, 'text/html'); // for HTML rich messages
+        });
+
+        if (Mail::failures()) {
             return false;
         }
+
+        return true;
+
+//        // Sending email
+//        if (mail($to, $subject, $message, $headers)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
 
 }

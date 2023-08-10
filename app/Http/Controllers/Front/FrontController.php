@@ -287,13 +287,14 @@ class FrontController extends Controller
 
                         //create course session
                         $batch_session = BatchSession::create($batch_session_array);
+                        $batch_session = BatchSession::with('batch.course')->find($batch_session->id);
 
                         //send mail to customer
                         $data = [];
-                        $data['name'] = $user->name;
-                        $data['course_name'] = $batch_session->batch->course->name;
-                        $data['email'] = $user->email;
-                        $data['customer_portal_link'] = route('customer.dashboard');
+                        $data['name'] = $user->name ?? '';
+                        $data['course_name'] = $batch_session->batch->course->name ?? '';
+                        $data['email'] = $user->email ?? '';
+                        $data['customer_portal_link'] = route('customer.dashboard') ?? '';
                         $this->send_mail($data);
 
                     }
@@ -331,7 +332,7 @@ class FrontController extends Controller
             $name = $data['name'];
             $course_name = $data['course_name'];
             $email = $data['email'];
-            $password = $data['password'];
+            $password = $data['password'] ?? null;
             $customer_portal_link = $data['customer_portal_link'];
 
             $message = 'Dear ' . $name . "<br /><br />";

@@ -342,7 +342,8 @@ class FrontController extends Controller
             $message .= 'Regards,' . "<br />";
             $message .= 'Judiann';
 
-            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
+//            $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
+            $this->customMail('no-reply@jefds.com', $email, 'Course Booked', $message);
 
             return 1;
         } catch (\Exception $exception) {

@@ -5,6 +5,66 @@
 @section('keywords', '')
 
 @section('content')
+
+   <style>
+       /* Modal styles */
+       #batchModal {
+           background: rgba(0, 0, 0, 0.5);
+       }
+
+       .modal-content {
+           border-radius: 10px;
+           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+       }
+
+       .modal-header {
+           background-color: #007bff;
+           color: #fff;
+           border-top-left-radius: 10px;
+           border-top-right-radius: 10px;
+       }
+
+       .modal-title {
+           font-size: 1.25rem;
+       }
+
+       .modal-body {
+           padding: 20px;
+       }
+
+       .modal h3{
+           color: white;
+       }
+
+       .close {
+           color: #fff;
+           opacity: 1;
+       }
+
+       /* Button styles */
+       .btn-primary {
+           background-color: #007bff;
+           border-color: #007bff;
+       }
+
+       .btn-primary:hover {
+           background-color: #0056b3;
+           border-color: #0056b3;
+       }
+
+       /* Responsive styles */
+       @media (max-width: 768px) {
+           .modal-dialog {
+               max-width: 90%;
+               margin: 1.75rem auto;
+           }
+
+           .modal-content {
+               padding: 10px;
+           }
+       }
+
+   </style>
     <!-- Begin: Main Slider -->
 
     <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
@@ -60,14 +120,22 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+{{--                                    <figure>--}}
+{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+{{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
+                                             data-batches-url="{{ route('get_batches') }}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
+{{--                                    <figure>--}}
+{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+{{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
+                                             data-batches-url="{{ route('get_batches') }}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
@@ -106,14 +174,22 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+{{--                                    <figure>--}}
+{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+{{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
+                                             data-batches-url="{{ route('get_batches') }}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
+{{--                                    <figure>--}}
+{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+{{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">
+                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
+                                             data-batches-url="{{ route('get_batches') }}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
@@ -139,7 +215,74 @@
         </div>
     </section>
 
-    {{--Calendar & Form--}}
+
+{{--    {{modal work for all batches}}--}}
+{{--    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"--}}
+{{--         aria-hidden="true">--}}
+{{--        <div class="modal-dialog" role="document">--}}
+{{--            <div class="modal-content">--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title" id="batchModalLabel">All Batches</h5>--}}
+{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                        <span aria-hidden="true">&times;</span>--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--                <div class="modal-body">--}}
+{{--                    <!-- The content of all batches will be dynamically loaded here -->--}}
+{{--                </div>--}}
+{{--                <div class="modal-footer">--}}
+{{--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+    <!-- Modal -->
+{{--    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">--}}
+{{--        <div class="modal-dialog" role="document">--}}
+{{--            <div class="modal-content">--}}
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title" id="batchModalLabel">Batches</h5>--}}
+{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                        <span aria-hidden="true">&times;</span>--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--                <div class="modal-body">--}}
+{{--                    <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"--}}
+{{--                            type="button"--}}
+{{--                            role="tab" aria-controls="home" aria-selected="true">Online--}}
+{{--                    </button>--}}
+
+
+{{--                    <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"--}}
+{{--                            type="button"--}}
+{{--                            role="tab" aria-controls="profile" aria-selected="false">On-Site--}}
+{{--                    </button>--}}
+{{--                    <!-- Batch details will be populated here -->--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+   <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="batchModalLabel">Batches</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <div class="modal-body">
+
+
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+   {{--Calendar & Form--}}
     <section class="contactInnr">
         <div class="container-fluid">
             <div class="row align-items-center justify-content-center">
@@ -206,33 +349,33 @@
                                         </div>
                                     </div>
 
-                                    {{--                                <div class="col-12">--}}
-                                    {{--                                    <div class="form-group">--}}
-                                    {{--                                        <label>Select Course:</label>--}}
-                                    {{--                                        <select class="form-control course_type online_course_type"--}}
-                                    {{--                                                name="batch_id" required hidden>--}}
-                                    {{--                                            <option disabled selected value="">Select Course:</option>--}}
-                                    {{--                                            @foreach($online_batches as $batch)--}}
-                                    {{--                                                <option class="option_batch_type"--}}
-                                    {{--                                                        data-online="{{$batch->is_online}}"--}}
-                                    {{--                                                        data-physical="{{$batch->is_physical}}"--}}
-                                    {{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>--}}
-                                    {{--                                            @endforeach--}}
-                                    {{--                                        </select>--}}
-                                    {{--                                        <select class="form-control course_type physical_course_type"--}}
-                                    {{--                                                name="batch_id" hidden>--}}
-                                    {{--                                            <option disabled selected value="">Select Course:</option>--}}
-                                    {{--                                            @foreach($physical_batches as $batch)--}}
-                                    {{--                                                <option class="option_batch_type physical_option_batch"--}}
-                                    {{--                                                        {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}--}}
-                                    {{--                                                        data-online="{{$batch->is_online}}"--}}
-                                    {{--                                                        data-physical="{{$batch->is_physical}}"--}}
-                                    {{--                                                        data-physical-class-type="{{$batch->physical_class_type}}"--}}
-                                    {{--                                                        value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>--}}
-                                    {{--                                            @endforeach--}}
-                                    {{--                                        </select>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                </div>--}}
+                                 {{--                                   <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label>Select Course:</label>
+                                                                            <select class="form-control course_type online_course_type"
+                                                                                    name="batch_id" required hidden>
+                                                                                <option disabled selected value="">Select Course:</option>
+                                                                                @foreach($online_batches as $batch)
+                                                                                    <option class="option_batch_type"
+                                                                                            data-online="{{$batch->is_online}}"
+                                                                                            data-physical="{{$batch->is_physical}}"
+                                                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            <select class="form-control course_type physical_course_type"
+                                                                                    name="batch_id" hidden>
+                                                                                <option disabled selected value="">Select Course:</option>
+                                                                                @foreach($physical_batches as $batch)
+                                                                                    <option class="option_batch_type physical_option_batch"
+                                                                                            {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
+                                                                                            data-online="{{$batch->is_online}}"
+                                                                                            data-physical="{{$batch->is_physical}}"
+                                                                                            data-physical-class-type="{{$batch->physical_class_type}}"
+                                                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>--}}
 
                                     <input type="hidden" name="class_type" class="class_type" value="online">
                                     <input type="hidden" id="form_batch_id">
@@ -370,7 +513,7 @@
                $('.select_course_type').val('On-site');
                $('.select_course_type').trigger('change');
             });
-            
+
             $('.select_course_type').on('change', function () {
                 if ($(this).val() == 'Online') {
                     // $('.online_course_type').prop('hidden', false);
@@ -435,22 +578,24 @@
 
             $('#btn_register_course').on('click', function () {
                 let event = $(this).data('event');
-                console.log('EVENT', event.extendedProps);
+                // console.log('EVENT', event.extendedProps);
 
                 //prevent redundant items selection
-                if ($('#tr_batch_' + event.extendedProps.batch_id).length > 0) {
+                if ($('#tr_batch_' + event.extendedProps.batchId).length > 0) {
                     $('#event_detail_modal').modal('hide');
                     return alert('Item already selected.');
                 }
 
                 let login_check = '{{\Illuminate\Support\Facades\Auth::check()}}';
                 if (!login_check) {
+                    console.log('notLogin');
                     $('#event_detail_modal').modal('hide');
                     return $('#loginModal').modal('show');
                 } else {
+                    console.log('event.extendedProps', event.extendedProps);
                     //courses_wrapper
-                    $('#courses_wrapper').append(`<tr id="tr_batch_` + event.extendedProps.batch_id + `">
-                                                    <input type="hidden" name="batch_ids[]" value="` + event.extendedProps.batch_id + `">
+                    $('#courses_wrapper').append(`<tr id="tr_batch_` + event.extendedProps.batchId + `">
+                                                    <input type="hidden" name="batch_ids[]" value="` + event.extendedProps.batchId + `">
                                                     <input type="hidden" name="class_types[]" value="` + event.extendedProps.class_type + `">
                                                     <input type="hidden" name="physical_class_types[]" value="` + event.extendedProps.physical_class_type + `">
                                                     <input type="hidden" name="fees[]" class="input_fees" value="` + event.extendedProps.fees + `">
@@ -464,7 +609,7 @@
                                                         <div class="btnCont">
                                                             <span>
                                                                 <i class="fas fa-times"></i>
-                                                                <input type="radio" class="btn_remove_course" name="" id="" data-batch="` + event.extendedProps.batch_id + `">
+                                                                <input type="radio" class="btn_remove_course" name="" id="" data-batch="` + event.extendedProps.batchId + `">
                                                             </span>
                                                         </div>
                                                     </td>
@@ -586,4 +731,112 @@
             $('#btn_submit').prop('hidden', (total == 0.00));
         }
     </script>
+
+
+   {{-- <script>
+        $(document).ready(function () {
+            // Batch modal handler
+            $('.img-fluid').on('click', function (event) {
+                var imgSrc = $(this).attr('src');
+                var batchesUrl = $(this).data('batches-url');
+
+                // Set the image in the modal header
+                // $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+
+                // Fetch batches using AJAX
+                $.ajax({
+                    url: batchesUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        // Populate modal with batches
+                        $('#batchModal .modal-body').html(data);
+                        // Show the modal
+                        $('#batchModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error if needed
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Handle click event for "Online" button
+            $('#online-tab').on('click', function () {
+                $('#Online').show();    // Show online batches section
+                $('#OnSite').hide();    // Hide physical batches section
+            });
+
+            // Handle click event for "On-Site" button
+            $('#onsite-tab').on('click', function () {
+                $('#Online').hide();    // Hide online batches section
+                $('#OnSite').show();    // Show physical batches section
+            });
+
+
+            // Batch modal handler
+            $('.img-fluid').on('click', function (event) {
+                var imgSrc = $(this).attr('src');
+                var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
+
+                // Set the image in the modal header
+                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+
+                // Fetch batches using AJAX
+                $.ajax({
+                    url: batchesUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        // Populate modal with batches
+                        $('#batchModal .modal-body').html(data);
+                        // Show the modal
+                        $('#batchModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error if needed
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+    </script>--}}
+
+    <script>
+        $(document).ready(function () {
+
+            // Batch modal handler
+            $('.img-fluid').on('click', function (event) {
+                var imgSrc = $(this).attr('src');
+                var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
+
+                // Set the image in the modal header
+                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+
+                // Fetch batches using AJAX
+                $.ajax({
+                    url: batchesUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        // Populate modal with batches
+                        $('#batchModal .modal-body').html(data);
+                        // Show the modal
+                        $('#batchModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error if needed
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+
 @endsection

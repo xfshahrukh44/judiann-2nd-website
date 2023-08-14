@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Front\FrontController;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -171,6 +172,11 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     })->name('customer.getSubscriberToken');
     route::post('/stream/get-user-profile-picture', [SC::class, 'getUserProfilePicture'])->name('customer.getUserProfilePicture');
 });
+//Route::prefix('judiann-2nd-website/public')->group(function () {
+//    Route::get('/get-batch-details/{batchId}', [FrontController::class, 'getBatchDetails'])->name('batch.details');
+//});
+Route::get('/get-batch-details', [FrontController::class, 'getBatchDetails'])->name('batch.details');
+
 
 
 //Front routes
@@ -183,6 +189,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     Route::get('/schedule', 'FrontController@schedule')->name('front.schedule');
     Route::match(['get','post'],'/schedule-class', 'FrontController@schedule_class')->name('front.schedule_class');
 
+    //schedule modal
+    Route::get('/get_batches',[FrontController::class,'getBatches' ])->name('get_batches');
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
 

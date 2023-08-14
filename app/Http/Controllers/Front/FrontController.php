@@ -22,6 +22,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\FacadesLog;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\PHPCustomMail;
@@ -177,11 +179,78 @@ class FrontController extends Controller
         return view('front.schedule', compact('online_batches', 'physical_batches', 'online_events', 'physical_events', 'schedule', 'data'));
     }
 
+
+    public function getBatches(Request $request)
+    {
+        try {
+            // Fetch and pass batches to the modal view
+            $online_batches = Batch::where('is_online', 1)->get();
+            $physical_batches = Batch::where('is_physical', 1)->get();
+//            dd($online_batches);
+
+//            return view('front.batch_details_modal', [
+                return view('front.batch_details_modal', [
+                'online_batches' => $online_batches,
+                'physical_batches' => $physical_batches,
+            ]);
+        } catch (\Exception $e) {
+            // Log and handle the error
+            Log::error('Error in getBatches method: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+
+
+//    public function schedule_class(Request $request)
+//    {
+//        if ($request->method() == 'GET') {
+//            return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
+//
+//        }
+//
+//        $this->validate($request, array(
+//            'first_name' => 'nullable|string|max:50',
+//            'last_name' => 'nullable|string|max:50',
+//            'email' => 'nullable|email',
+//            'phone' => 'nullable',
+//            'class_type' => 'sometimes',
+//            'physical_class_type' => 'sometimes',
+//            'batch_ids' => 'required',
+//        ));
+//
+//        $user = Auth::user();
+//        $batch_session_arrays = [];
+//        $total = 0.0;
+//        foreach ($request->batch_ids as $key => $batch_id) {
+//            if (!is_in_batch($batch_id)) {
+//                $fees = floatval($request->fees[$key]);
+//                $total += $fees;
+//                $batch_session_arrays [] = [
+//                    'user_id' => $user->id,
+//                    'batch_id' => $batch_id,
+//                    'class_type' => $request->class_types[$key],
+//                    'physical_class_type' => $request->physical_class_types[$key] == 'null' ? null : $request->physical_class_types[$key],
+//                    'fees' => $fees,
+//                ];
+//            }
+//        }
+//
+//        session()->put('user', $user);
+//        session()->put('batch_session_arrays', $batch_session_arrays);
+//        session()->put('course_fees', $total);
+//
+//        return view('front.payment');
+//    }
+
+
     public function schedule_class(Request $request)
     {
+        Log::debug('schedule_class method called');
         if ($request->method() == 'GET') {
             return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
-
         }
 
         $this->validate($request, array(
@@ -195,12 +264,20 @@ class FrontController extends Controller
         ));
 
         $user = Auth::user();
+        Log::debug('User:', $user->toArray());
+
         $batch_session_arrays = [];
         $total = 0.0;
         foreach ($request->batch_ids as $key => $batch_id) {
             if (!is_in_batch($batch_id)) {
                 $fees = floatval($request->fees[$key]);
                 $total += $fees;
+
+                Log::debug('Processing batch_id: ' . $batch_id);
+                Log::debug('Fees: ' . $fees);
+                Log::debug('Class Type: ' . $request->class_types[$key]);
+                Log::debug('Physical Class Type: ' . ($request->physical_class_types[$key] == 'null' ? null : $request->physical_class_types[$key]));
+
                 $batch_session_arrays [] = [
                     'user_id' => $user->id,
                     'batch_id' => $batch_id,
@@ -211,13 +288,173 @@ class FrontController extends Controller
             }
         }
 
+        Log::debug('Batch Session Arrays:', $batch_session_arrays);
+
         session()->put('user', $user);
         session()->put('batch_session_arrays', $batch_session_arrays);
         session()->put('course_fees', $total);
+        Log::debug('Received batch_ids:', $request->batch_ids);
+        Log::debug('Received fees:', $request->fees);
+        Log::debug('Received class_types:', $request->class_types);
+        Log::debug('Received physical_class_types:', $request->physical_class_types);
 
         return view('front.payment');
     }
 
+    public function getBatchDetails(Request $request)
+    {
+        // Debug: Print the batchId received
+        $batchId = $request->input('batch_id');
+        Log::debug('Received batchId: ' . $batchId);
+
+        $batch = Batch::find($batchId);
+
+        // Debug: Print the retrieved batch
+        Log::debug('Retrieved batch:', $batch->toArray());
+
+        if (!$batch) {
+            // Debug: Print a message if batch is not found
+            Log::debug('Batch not found');
+
+            return response()->json(['error' => 'Batch not found'], 404);
+        }
+
+        // Debug: Print batch details
+        Log::debug('Batch details:', [
+            'batchId' => $batch->id,
+            'courseName' => $batch->course->name,
+            'formattedTime' => $batch->formatted_time,
+            'fees' => $batch->course->fees
+        ]);
+
+
+        $data = [
+            'course' => $batch->course->name,
+            'time' => $batch->date_range,
+            'description' => $batch->course->description,
+            'img_src' => $batch->course->image_url,
+            'class_type' => $batch->class_type,
+            'physical_class_type' => $batch->physical_class_type,
+            'fees' => $batch->course->fees,
+            'already_bought' => $batch->already_bought,
+            'batch_is_full' => $batch->batch_is_full,
+            'batch_id' => $batch->id,
+        ];
+
+        // Debug: Print the data to be returned
+        Log::debug('Response data:', $data);
+
+        return response()->json($data);
+    }
+
+
+
+//    public function process_payment(Request $request)
+//    {
+//        $inputs = $request->all();
+//        $validator = Validator::make($inputs, [
+//            'card_no' => 'required',
+//            'exp_mon' => 'required',
+//            'exp_year' => 'required',
+//            'cvv' => 'required'
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return [
+//                "status" => false,
+//                "data" => [],
+//                "errors" => $validator->messages(),
+//                "message" => "Unexpected Error occured."
+//            ];
+//        }
+//
+//        $stripe = get_payment_keys();
+//
+//        $user = session()->get('user');
+//        $batch_session_arrays = session()->get('batch_session_arrays');
+//
+//        try {
+//
+//            $cardStripe = \Stripe\Stripe::setApiKey($stripe['secret_key']);
+//
+//            $cardStripe = \Stripe\Token::create(array(
+//                "card" => array(
+//                    "number" => $request['card_no'],
+//                    "exp_month" => $request['exp_mon'],
+//                    "exp_year" => $request['exp_year'],
+//                    "cvc" => $request['cvv']
+//                )
+//            ));
+//
+//            if (!empty($cardStripe)) {
+//
+//                $customer = new \Stripe\StripeClient(
+//                    $stripe['secret_key']
+//                );
+//                $abc = $customer->customers->create([
+//                    'description' => 'Shopping',
+//                    'email' => $user->email,
+//                    'source' => $cardStripe['id'],
+//                ]);
+//
+//                $charge = \Stripe\Stripe::setApiKey($stripe['secret_key']);
+//
+//                foreach ($batch_session_arrays as $batch_session_array) {
+//                    $stripe_charge_amount = floatval($batch_session_array['fees']) * 100;
+//
+//                    if($stripe_charge_amount == 0) {
+//                        $charge = [
+//                            'status' => 'succeeded'
+//                        ];
+//                    } else {
+//                        $charge = \Stripe\Charge::create([
+//                            'amount' => intval($stripe_charge_amount),
+//                            'currency' => 'usd',
+//                            'customer' => $abc
+//                        ]);
+//                    }
+//
+//                    if ($charge['status'] === 'succeeded') {
+//
+//                        //create course session
+//                        $batch_session = BatchSession::create($batch_session_array);
+//
+//                        //send mail to customer
+//                        $data = [];
+//                        $data['name'] = $user->name;
+//                        $data['course_name'] = $batch_session->batch->course->name;
+//                        $data['email'] = $user->email;
+//                        $data['customer_portal_link'] = route('customer.dashboard');
+//                        $this->send_mail($data);
+//
+//                    }
+//
+//                }
+//
+//                //delete session variables
+//                session()->remove('user');
+//                session()->remove('batch_session_arrays');
+//                if (session()->has('used_voucher')) {
+//                    session()->remove('used_voucher');
+//                }
+//
+//                return [
+//                    "status" => true,
+//                    "errors" => [],
+//                    "message" => "Successfully added"
+//                ];
+//
+//            }
+//        } catch (\Exception $e) {
+//
+//            return [
+//                "status" => false,
+//                "errors" => [],
+//                "message" => $e->getMessage()
+//            ];
+////            throw $e;
+//        }
+//    }
     public function process_payment(Request $request)
     {
         $inputs = $request->all();
@@ -243,6 +480,9 @@ class FrontController extends Controller
         $batch_session_arrays = session()->get('batch_session_arrays');
 
         try {
+
+            Log::debug('User:', $user->toArray());
+            Log::debug('Batch Session Arrays:', $batch_session_arrays);
 
             $cardStripe = \Stripe\Stripe::setApiKey($stripe['secret_key']);
 
@@ -283,11 +523,19 @@ class FrontController extends Controller
                         ]);
                     }
 
+//                    Log::debug('Stripe Charge:', $charge);
+
                     if ($charge['status'] === 'succeeded') {
+
+                        Log::debug('Creating Batch Session:', $batch_session_array);
 
                         //create course session
                         $batch_session = BatchSession::create($batch_session_array);
                         $batch_session = BatchSession::with('batch.course')->find($batch_session->id);
+
+                        Log::debug('Batch Session Created:', $batch_session->toArray());
+                        $chargeArray = $charge->toArray();
+                        Log::debug('Stripe Charge:', $chargeArray);
 
                         //send mail to customer
                         $data = [];
@@ -317,12 +565,13 @@ class FrontController extends Controller
             }
         } catch (\Exception $e) {
 
+            Log::error('Error:', ['message' => $e->getMessage()]);
+
             return [
                 "status" => false,
                 "errors" => [],
                 "message" => $e->getMessage()
             ];
-//            throw $e;
         }
     }
 

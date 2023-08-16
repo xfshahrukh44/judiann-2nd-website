@@ -3,21 +3,61 @@
     .hide{
         display: none;
     }
-
+    .online-btn-box{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    }
+    #Online-box tr h6{
+        font-family: unset
+    }
+    #OnSite-box tr h6{
+        font-family: unset
+    }
+    #Online-box {
+    overflow-y: auto;
+    max-height: 500px;
+    }
+    #OnSite-box {
+    overflow-y: auto;
+    max-height: 500px;
+    }
 </style>
 
-<section>
-    <button class="nav-link active" id="online-tab" type="button"
+<section class="online-btn-box mb-4">
+    <button class="nav-link active btn btn-primary" id="online-tab" type="button"
             onclick="toggleContent('online')">Online
     </button>
-    <button class="nav-link" id="onsite-tab" type="button"
+    <button class="nav-link btn btn-primary" id="onsite-tab" type="button"
             onclick="toggleContent('onsite')">On-Site
     </button>
 </section>
 <div class="tab-content">
     <div class="" id="Online-box">
+        {{-- new code start --}}
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Timings</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+        {{-- new code end --}}
+
         @foreach($online_batches as $batch)
-            <div class="scheduleBox">
+        <tr>
+            <th scope="row">{{ $batch->name }}</th>
+            <td>{!! get_batch_timings($batch) !!}</td>
+            <td><button class="btn btn-primary btn-register-batch" 
+                data-batch-id="{{ $batch->id }}"
+                data-class-type="online">Register 
+                {{-- Batch --}}
+        </button></td>
+          </tr>
+            {{-- <div class="scheduleBox">
                 <h3>{{ $batch->name }}</h3>
                 <h4 class="text-white">TIMINGS</h4>
                 {!! get_batch_timings($batch) !!}
@@ -25,12 +65,49 @@
                         data-batch-id="{{ $batch->id }}"
                         data-class-type="online">Register Batch
                 </button>
-            </div>
+            </div> --}}
         @endforeach
+        {{-- new code start --}}
+    </tbody>
+</table>
+        {{-- new code end --}}
+
     </div>
     <div class="hide" id="OnSite-box">
+         {{-- new code start --}}
+         <table class="table">
+            <thead>
+              <tr>
+                <th scope="col ">#</th>
+                <th scope="col" style="width: 50%">Timings</th>
+                <th scope="col">No. Of Seats</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+        {{-- new code end --}}
+
         @foreach($physical_batches as $batch)
-            <div class="scheduleBox">
+        <tr>
+            <th scope="row">{{ $batch->name }}</th>
+            <td>{!! get_batch_timings($batch) !!}</td>
+            <td>
+                @if($batch->physical_class_type == 'group')
+                     {{ $batch->number_of_seats }}
+                @endif
+                @if(batch_is_full($batch))
+                    <h4 class="text-danger">SEATS FULL</h4>
+                @endif
+            </td>
+            <td>
+                <button class="btn btn-primary btn-register-batch"
+                data-batch-id="{{ $batch->id }}"
+                data-class-type="onsite">Register 
+                {{-- Batch --}}
+                </button>
+            </td>
+            </tr>
+            {{-- <div class="scheduleBox">
                 <h3>{{ $batch->name }}</h3>
                 <h4 class="text-white">TIMINGS</h4>
                 {!! get_batch_timings($batch) !!}
@@ -44,8 +121,12 @@
                         data-batch-id="{{ $batch->id }}"
                         data-class-type="onsite">Register Batch
                 </button>
-            </div>
+            </div> --}}
         @endforeach
+         {{-- new code start --}}
+    </tbody>
+</table>
+        {{-- new code end --}}
     </div>
 </div>
 </div>
@@ -111,8 +192,10 @@
 
 <!-- Include Bootstrap JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-<script>
+<script> 
     function toggleContent(tab) {
         console.log("tab", tab);
         if (tab === 'online') {

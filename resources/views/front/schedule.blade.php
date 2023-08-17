@@ -216,53 +216,53 @@
     </section>
 
 
-{{--    {{modal work for all batches}}--}}
-{{--    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"--}}
-{{--         aria-hidden="true">--}}
-{{--        <div class="modal-dialog" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="batchModalLabel">All Batches</h5>--}}
-{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                        <span aria-hidden="true">&times;</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <!-- The content of all batches will be dynamically loaded here -->--}}
-{{--                </div>--}}
-{{--                <div class="modal-footer">--}}
-{{--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+  {{--  {{modal work for all batches}}
+    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchModalLabel">All Batches</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- The content of all batches will be dynamically loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
-{{--    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">--}}
-{{--        <div class="modal-dialog" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="batchModalLabel">Batches</h5>--}}
-{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                        <span aria-hidden="true">&times;</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"--}}
-{{--                            type="button"--}}
-{{--                            role="tab" aria-controls="home" aria-selected="true">Online--}}
-{{--                    </button>--}}
+    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="batchModalLabel">Batches</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"
+                            type="button"
+                            role="tab" aria-controls="home" aria-selected="true">Online
+                    </button>
 
 
-{{--                    <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"--}}
-{{--                            type="button"--}}
-{{--                            role="tab" aria-controls="profile" aria-selected="false">On-Site--}}
-{{--                    </button>--}}
-{{--                    <!-- Batch details will be populated here -->--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+                    <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"
+                            type="button"
+                            role="tab" aria-controls="profile" aria-selected="false">On-Site
+                    </button>
+                    <!-- Batch details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>--}}
 
    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
        <div class="modal-dialog modal-lg" role="document">
@@ -382,17 +382,17 @@
                                     <input type="hidden" id="form_class_type">
                                     <input type="hidden" id="form_physical_class_type">
 
-                                    {{--                                <div class="col-12 physical_class_type_wrapper" hidden>--}}
-                                    {{--                                    <div class="form-group">--}}
-                                    {{--                                        <label>Select Physical Class Type:</label>--}}
-                                    {{--                                        <select class="form-control physical_class_type"--}}
-                                    {{--                                                placeholder="Select Class Type" name="physical_class_type">--}}
-                                    {{--                                            <option disabled selected>Select Physical Class Type:</option>--}}
-                                    {{--                                            <option value="group">Group classes</option>--}}
-                                    {{--                                            <option value="in_person">In-person</option>--}}
-                                    {{--                                        </select>--}}
-                                    {{--                                    </div>--}}
-                                    {{--                                </div>--}}
+                                  {{--                                  <div class="col-12 physical_class_type_wrapper" hidden>
+                                                                        <div class="form-group">
+                                                                            <label>Select Physical Class Type:</label>
+                                                                            <select class="form-control physical_class_type"
+                                                                                    placeholder="Select Class Type" name="physical_class_type">
+                                                                                <option disabled selected>Select Physical Class Type:</option>
+                                                                                <option value="group">Group classes</option>
+                                                                                <option value="in_person">In-person</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>--}}
 
                                     <div class="col-12">
                                         <div class="table-responsive courseTable">
@@ -499,6 +499,8 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             //init online and physical calendars
@@ -516,27 +518,27 @@
 
             $('.select_course_type').on('change', function () {
                 if ($(this).val() == 'Online') {
-                    // $('.online_course_type').prop('hidden', false);
-                    // $('.online_course_type').prop('required', true);
-                    // $('.physical_course_type').prop('hidden', true);
-                    // $('.physical_course_type').prop('required', false);
-                    // $('.class_type').val('online');
-                    // $('.physical_class_type').prop('required', false);
-                    // $('.physical_class_type').val('');
-                    // $('.physical_class_type_wrapper').prop('hidden', true);
+                 /*   $('.online_course_type').prop('hidden', false);
+                    $('.online_course_type').prop('required', true);
+                    $('.physical_course_type').prop('hidden', true);
+                    $('.physical_course_type').prop('required', false);
+                    $('.class_type').val('online');
+                    $('.physical_class_type').prop('required', false);
+                    $('.physical_class_type').val('');
+                    $('.physical_class_type_wrapper').prop('hidden', true);*/
                     $('.headTwo').html('On-line');
 
                     $('#online_calendar').prop('hidden', false);
                     $('#physical_calendar').prop('hidden', true);
                 } else if ($(this).val() == 'On-site') {
-                    // $('.online_course_type').prop('hidden', true);
-                    // $('.online_course_type').prop('required', false);
-                    // $('.physical_course_type').prop('hidden', false);
-                    // $('.physical_course_type').prop('required', true);
-                    // $('.class_type').val('physical');
-                    // $('.physical_class_type').prop('required', true);
-                    // $('.physical_class_type').val('');
-                    // $('.physical_class_type_wrapper').prop('hidden', false);
+                   /* $('.online_course_type').prop('hidden', true);
+                    $('.online_course_type').prop('required', false);
+                    $('.physical_course_type').prop('hidden', false);
+                    $('.physical_course_type').prop('required', true);
+                    $('.class_type').val('physical');
+                    $('.physical_class_type').prop('required', true);
+                    $('.physical_class_type').val('');
+                    $('.physical_class_type_wrapper').prop('hidden', false);*/
                     $('.headTwo').html('On-site');
 
                     $('#online_calendar').prop('hidden', true);
@@ -544,12 +546,12 @@
                 }
             });
 
-            // //online section
-            // $('.btn_online_batches').on('click', function () {
-            // });
-            //
-            // //physical section
-            // $('.btn_physical_batches').on('click', function () {
+            /*//online section
+            $('.btn_online_batches').on('click', function () {
+            });
+
+            //physical section
+            $('.btn_physical_batches').on('click', function () {*/
             // });
 
             //on physical_class_type change
@@ -681,6 +683,8 @@
                 events: online_calendar_events,
                 eventClick: function (info) {
                     console.log('info', info);
+                    console.log('info.event.extendedProps.batch_is_full:', info.event.extendedProps.batch_is_full);
+                    console.log('info.event.extendedProps.already_bought:', info.event.extendedProps.already_bought);
                     $('#event_course').html(info.event.title);
                     $('#event_time').html(info.event.extendedProps.time);
                     $('#event_description').html(info.event.extendedProps.description);
@@ -699,6 +703,9 @@
                 initialView: 'dayGridMonth',
                 events: physical_calendar_events,
                 eventClick: function (info) {
+                    console.log('info.event.extendedProps.batch_is_full:', info.event.extendedProps.batch_is_full);
+                    console.log('info.event.extendedProps.already_bought:', info.event.extendedProps.already_bought);
+
                     $('#event_course').html(info.event.title);
                     $('#event_time').html(info.event.extendedProps.time);
                     $('#event_description').html(info.event.extendedProps.description);

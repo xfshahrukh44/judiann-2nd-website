@@ -1,27 +1,32 @@
 <style>
 
-    .hide{
+    .hide {
         display: none;
     }
-    .online-btn-box{
+
+    .online-btn-box {
         display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
     }
-    #Online-box tr h6{
+
+    #Online-box tr h6 {
         font-family: unset
     }
-    #OnSite-box tr h6{
+
+    #OnSite-box tr h6 {
         font-family: unset
     }
+
     #Online-box {
-    overflow-y: auto;
-    max-height: 500px;
+        overflow-y: auto;
+        max-height: 500px;
     }
+
     #OnSite-box {
-    overflow-y: auto;
-    max-height: 500px;
+        overflow-y: auto;
+        max-height: 500px;
     }
 </style>
 
@@ -38,97 +43,98 @@
         {{-- new code start --}}
         <table class="table">
             <thead>
-              <tr>
+            <tr>
                 <th scope="col">#</th>
                 <th scope="col">Timings</th>
                 <th scope="col">Action</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
-        {{-- new code end --}}
+            {{-- new code end --}}
 
-        @foreach($online_batches as $batch)
-        <tr>
-            <th scope="row">{{ $batch->name }}</th>
-            <td>{!! get_batch_timings($batch) !!}</td>
-            <td><button class="btn btn-primary btn-register-batch"
-                data-batch-id="{{ $batch->id }}"
-                data-class-type="online">Register
-                {{-- Batch --}}
-        </button></td>
-          </tr>
-            {{-- <div class="scheduleBox">
-                <h3>{{ $batch->name }}</h3>
-                <h4 class="text-white">TIMINGS</h4>
-                {!! get_batch_timings($batch) !!}
-                <button class="btn btn-primary btn-register-batch"
-                        data-batch-id="{{ $batch->id }}"
-                        data-class-type="online">Register Batch
-                </button>
-            </div> --}}
-        @endforeach
-        {{-- new code start --}}
-    </tbody>
-</table>
+            @foreach($online_batches as $batch)
+                <tr>
+                    <th scope="row">{{ $batch->name }}</th>
+                    <td>{!! get_batch_timings($batch) !!}</td>
+                    <td>
+                        <button class="btn btn-primary btn-register-batch"
+                                data-batch-id="{{ $batch->id }}" data-dismiss="modal" aria-label="Close"
+                                data-class-type="online">Register
+                            {{-- Batch --}}
+                        </button>
+                    </td>
+                </tr>
+                {{-- <div class="scheduleBox">
+                    <h3>{{ $batch->name }}</h3>
+                    <h4 class="text-white">TIMINGS</h4>
+                    {!! get_batch_timings($batch) !!}
+                    <button class="btn btn-primary btn-register-batch"
+                            data-batch-id="{{ $batch->id }}"
+                            data-class-type="online">Register Batch
+                    </button>
+                </div> --}}
+            @endforeach
+            {{-- new code start --}}
+            </tbody>
+        </table>
         {{-- new code end --}}
 
     </div>
     <div class="hide" id="OnSite-box">
-         {{-- new code start --}}
-         <table class="table">
+        {{-- new code start --}}
+        <table class="table">
             <thead>
-              <tr>
+            <tr>
                 <th scope="col ">#</th>
                 <th scope="col" style="width: 50%">Timings</th>
                 <th scope="col">No. Of Seats</th>
                 <th scope="col">Action</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
-        {{-- new code end --}}
+            {{-- new code end --}}
 
-        @foreach($physical_batches as $batch)
-        <tr>
-            <th scope="row">{{ $batch->name }}</th>
-            <td>{!! get_batch_timings($batch) !!}</td>
-            <td>
-                @if($batch->physical_class_type == 'group')
-                     {{ $batch->number_of_seats }}
-                @endif
-                @if(batch_is_full($batch))
-                    <h4 class="text-danger">SEATS FULL</h4>
-                @endif
-            </td>
-            <td>
-                <button class="btn btn-primary btn-register-batch"
-                data-batch-id="{{ $batch->id }}"
-                data-class-type="onsite">Register
-                {{-- Batch --}}
-                </button>
-            </td>
-            </tr>
-            {{-- <div class="scheduleBox">
-                <h3>{{ $batch->name }}</h3>
-                <h4 class="text-white">TIMINGS</h4>
-                {!! get_batch_timings($batch) !!}
-                @if($batch->physical_class_type == 'group')
-                    <h4 class="text-white">Number of Seats: {{ $batch->number_of_seats }}</h4>
-                @endif
-                @if(batch_is_full($batch))
-                    <h4 class="text-danger">SEATS FULL</h4>
-                @endif
-                <button class="btn btn-primary btn-register-batch"
-                        data-batch-id="{{ $batch->id }}"
-                        data-class-type="onsite">Register Batch
-                </button>
-            </div> --}}
-        @endforeach
-         {{-- new code start --}}
-    </tbody>
-</table>
+            @foreach($physical_batches as $batch)
+                <tr>
+                    <th scope="row">{{ $batch->name }}</th>
+                    <td>{!! get_batch_timings($batch) !!}</td>
+                    <td>
+                        @if($batch->physical_class_type == 'group')
+                            {{ $batch->number_of_seats }}
+                        @endif
+                        @if(batch_is_full($batch))
+                            <h4 class="text-danger">SEATS FULL</h4>
+                        @endif
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-register-batch"
+                                data-batch-id="{{ $batch->id }}" data-dismiss="modal" aria-label="Close"
+                                data-class-type="onsite">Register
+                            {{-- Batch --}}
+                        </button>
+                    </td>
+                </tr>
+                 <div class="scheduleBox">
+                    <h3>{{ $batch->name }}</h3>
+                    <h4 class="text-white">TIMINGS</h4>
+                    {!! get_batch_timings($batch) !!}
+                    @if($batch->physical_class_type == 'group')
+                        <h4 class="text-white">Number of Seats: {{ $batch->number_of_seats }}</h4>
+                    @endif
+                    @if(batch_is_full($batch))
+                        <h4 class="text-danger">SEATS FULL</h4>
+                    @endif
+                    <button class="btn btn-primary btn-register-batch"
+                            data-batch-id="{{ $batch->id }}"
+                            data-class-type="onsite">Register Batch
+                    </button>
+                </div>
+            @endforeach
+            {{-- new code start --}}
+            </tbody>
+        </table>
         {{-- new code end --}}
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="event_detail_modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -192,8 +198,12 @@
 
 <!-- Include Bootstrap JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 
 <script>
     function toggleContent(tab) {
@@ -223,7 +233,7 @@
                 },
                 success: function (data) {
                     console.log('data', data);
-
+                    // $('.batchModal').modal('hide');
                     $('#event_detail_modal1').modal('show');
                     // Update modal content with batch details and show the modal
                     $('#event_course').html(data.course);
@@ -316,6 +326,22 @@
         });
     });
 
+
+
+
+
 </script>
 
+{{--batchModal--}}
+<script>
+//     $('document').ready(function(){
+// $('.btn-register-batch').click(function (){
+//     $('#batchModal').hide();
+//     $('#event_detail_modal1').show();
+//
+//     console.log("modal closed");
+// })
+//
+//     })
 
+</script>

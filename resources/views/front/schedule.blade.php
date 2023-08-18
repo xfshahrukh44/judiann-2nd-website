@@ -6,67 +6,66 @@
 
 @section('content')
 
-   <style>
-       /* Modal styles */
-       #batchModal {
-           background: rgba(0, 0, 0, 0.5);
-       }
+    <style>
+        /* Modal styles */
+        #batchModal {
+            background: rgba(0, 0, 0, 0.5);
+        }
 
-       .modal-content {
-           border-radius: 10px;
-           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-       }
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
 
-       .modal-header {
-           background-color: #007bff;
-           color: #fff;
-           border-top-left-radius: 10px;
-           border-top-right-radius: 10px;
-       }
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
 
-       .modal-title {
-           font-size: 1.25rem;
-       }
+        .modal-title {
+            font-size: 1.25rem;
+        }
 
-       .modal-body {
-           padding: 20px;
-       }
+        .modal-body {
+            padding: 20px;
+        }
 
-       .modal h3{
-           color: white;
-       }
+        .modal h3 {
+            color: white;
+        }
 
-       .close {
-           color: #fff;
-           opacity: 1;
-       }
+        .close {
+            color: #fff;
+            opacity: 1;
+        }
 
-       /* Button styles */
-       .btn-primary {
-           background-color: #007bff;
-           border-color: #007bff;
-       }
+        /* Button styles */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
 
-       .btn-primary:hover {
-           background-color: #0056b3;
-           border-color: #0056b3;
-       }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
 
-       /* Responsive styles */
-       @media (max-width: 768px) {
-           .modal-dialog {
-               max-width: 90%;
-               margin: 1.75rem auto;
-           }
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .modal-dialog {
+                max-width: 90%;
+                margin: 1.75rem auto;
+            }
 
-           .modal-content {
-               padding: 10px;
-           }
-       }
+            .modal-content {
+                padding: 10px;
+            }
+        }
 
-   </style>
+    </style>
     <!-- Begin: Main Slider -->
-
     <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
     <div hidden id="physical_events" data-events="{{json_encode($physical_events)}}"></div>
     <div class="main-slider inner">
@@ -120,9 +119,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-{{--                                    <figure>--}}
-{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-{{--                                    </figure>--}}
+                                    {{--                                    <figure>--}}
+                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+                                    {{--                                    </figure>--}}
                                     <figure>
                                         <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
                                              data-batches-url="{{ route('get_batches') }}" alt="img">
@@ -130,9 +129,9 @@
                                 </div>
                             @else
                                 <div class="col-md-6">
-{{--                                    <figure>--}}
-{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-{{--                                    </figure>--}}
+                                    {{--                                    <figure>--}}
+                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+                                    {{--                                    </figure>--}}
                                     <figure>
                                         <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
                                              data-batches-url="{{ route('get_batches') }}" alt="img">
@@ -174,9 +173,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-{{--                                    <figure>--}}
-{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-{{--                                    </figure>--}}
+                                    {{--                                    <figure>--}}
+                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+                                    {{--                                    </figure>--}}
                                     <figure>
                                         <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
                                              data-batches-url="{{ route('get_batches') }}" alt="img">
@@ -184,9 +183,9 @@
                                 </div>
                             @else
                                 <div class="col-md-6">
-{{--                                    <figure>--}}
-{{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-{{--                                    </figure>--}}
+                                    {{--                                    <figure>--}}
+                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
+                                    {{--                                    </figure>--}}
                                     <figure>
                                         <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
                                              data-batches-url="{{ route('get_batches') }}" alt="img">
@@ -216,30 +215,57 @@
     </section>
 
 
-  {{--  {{modal work for all batches}}
-    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="batchModalLabel">All Batches</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- The content of all batches will be dynamically loaded here -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{--  {{modal work for all batches}}
+      <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
+           aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="batchModalLabel">All Batches</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <!-- The content of all batches will be dynamically loaded here -->
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+      <!-- Modal -->
+      <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="batchModalLabel">Batches</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"
+                              type="button"
+                              role="tab" aria-controls="home" aria-selected="true">Online
+                      </button>
+
+
+                      <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"
+                              type="button"
+                              role="tab" aria-controls="profile" aria-selected="false">On-Site
+                      </button>
+                      <!-- Batch details will be populated here -->
+                  </div>
+              </div>
+          </div>
+      </div>--}}
+
+    <div class="modal fade batchModal" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="batchModalLabel">Batches</h5>
@@ -248,41 +274,68 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"
-                            type="button"
-                            role="tab" aria-controls="home" aria-selected="true">Online
-                    </button>
 
 
-                    <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"
-                            type="button"
-                            role="tab" aria-controls="profile" aria-selected="false">On-Site
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   {{-- <div class="modal fade" id="event_detail_modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                    <!-- Batch details will be populated here -->
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="text-center" colspan="2">
+                                <img id="event_img" class="w-100" src="" alt="">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Course:</th>
+                            <td id="event_course"></td>
+                        </tr>
+                        <tr>
+                            <th>Time:</th>
+                            <td id="event_time"></td>
+                        </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td id="event_description"></td>
+                        </tr>
+                        <tr>
+                            <th>Class Type:</th>
+                            <td id="event_class_type"></td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-footer">
+                        <button type="button" id="btn_register_course" class="btn btn-primary" data-event="">Register
+                            Course
+                        </button>
+                        <button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL
+                        </button>
+                        <button type="button" id="btn_already_bought" class="btn btn-success" data-dismiss="modal">ALREADY
+                            BOUGHT
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>--}}
 
-   <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
-       <div class="modal-dialog modal-lg" role="document">
-           <div class="modal-content">
-               <div class="modal-header">
-                   <h5 class="modal-title" id="batchModalLabel">Batches</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-               </div>
-               <div class="modal-body">
-
-
-               </div>
-           </div>
-       </div>
-   </div>
-
-
-   {{--Calendar & Form--}}
+    {{--Calendar & Form--}}
     <section class="contactInnr">
         <div class="container-fluid">
             <div class="row align-items-center justify-content-center">
@@ -349,50 +402,50 @@
                                         </div>
                                     </div>
 
-                                 {{--                                   <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <label>Select Course:</label>
-                                                                            <select class="form-control course_type online_course_type"
-                                                                                    name="batch_id" required hidden>
-                                                                                <option disabled selected value="">Select Course:</option>
-                                                                                @foreach($online_batches as $batch)
-                                                                                    <option class="option_batch_type"
-                                                                                            data-online="{{$batch->is_online}}"
-                                                                                            data-physical="{{$batch->is_physical}}"
-                                                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            <select class="form-control course_type physical_course_type"
-                                                                                    name="batch_id" hidden>
-                                                                                <option disabled selected value="">Select Course:</option>
-                                                                                @foreach($physical_batches as $batch)
-                                                                                    <option class="option_batch_type physical_option_batch"
-                                                                                            {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
-                                                                                            data-online="{{$batch->is_online}}"
-                                                                                            data-physical="{{$batch->is_physical}}"
-                                                                                            data-physical-class-type="{{$batch->physical_class_type}}"
-                                                                                            value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>--}}
+                                    {{--                                   <div class="col-12">
+                                                                           <div class="form-group">
+                                                                               <label>Select Course:</label>
+                                                                               <select class="form-control course_type online_course_type"
+                                                                                       name="batch_id" required hidden>
+                                                                                   <option disabled selected value="">Select Course:</option>
+                                                                                   @foreach($online_batches as $batch)
+                                                                                       <option class="option_batch_type"
+                                                                                               data-online="{{$batch->is_online}}"
+                                                                                               data-physical="{{$batch->is_physical}}"
+                                                                                               value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
+                                                                                   @endforeach
+                                                                               </select>
+                                                                               <select class="form-control course_type physical_course_type"
+                                                                                       name="batch_id" hidden>
+                                                                                   <option disabled selected value="">Select Course:</option>
+                                                                                   @foreach($physical_batches as $batch)
+                                                                                       <option class="option_batch_type physical_option_batch"
+                                                                                               {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
+                                                                                               data-online="{{$batch->is_online}}"
+                                                                                               data-physical="{{$batch->is_physical}}"
+                                                                                               data-physical-class-type="{{$batch->physical_class_type}}"
+                                                                                               value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
+                                                                                   @endforeach
+                                                                               </select>
+                                                                           </div>
+                                                                       </div>--}}
 
                                     <input type="hidden" name="class_type" class="class_type" value="online">
                                     <input type="hidden" id="form_batch_id">
                                     <input type="hidden" id="form_class_type">
                                     <input type="hidden" id="form_physical_class_type">
 
-                                  {{--                                  <div class="col-12 physical_class_type_wrapper" hidden>
-                                                                        <div class="form-group">
-                                                                            <label>Select Physical Class Type:</label>
-                                                                            <select class="form-control physical_class_type"
-                                                                                    placeholder="Select Class Type" name="physical_class_type">
-                                                                                <option disabled selected>Select Physical Class Type:</option>
-                                                                                <option value="group">Group classes</option>
-                                                                                <option value="in_person">In-person</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>--}}
+                                    {{--                                  <div class="col-12 physical_class_type_wrapper" hidden>
+                                                                          <div class="form-group">
+                                                                              <label>Select Physical Class Type:</label>
+                                                                              <select class="form-control physical_class_type"
+                                                                                      placeholder="Select Class Type" name="physical_class_type">
+                                                                                  <option disabled selected>Select Physical Class Type:</option>
+                                                                                  <option value="group">Group classes</option>
+                                                                                  <option value="in_person">In-person</option>
+                                                                              </select>
+                                                                          </div>
+                                                                      </div>--}}
 
                                     <div class="col-12">
                                         <div class="table-responsive courseTable">
@@ -499,46 +552,50 @@
 @endsection
 
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             //init online and physical calendars
             init_calendars();
 
-            $('.btn_online_batches').on('click', function() {
-               $('.select_course_type').val('Online');
-               $('.select_course_type').trigger('change');
+            $('.btn_online_batches').on('click', function () {
+                $('.select_course_type').val('Online');
+                $('.select_course_type').trigger('change');
             });
 
-            $('.btn_physical_batches').on('click', function() {
-               $('.select_course_type').val('On-site');
-               $('.select_course_type').trigger('change');
+            $('.btn_physical_batches').on('click', function () {
+                $('.select_course_type').val('On-site');
+                $('.select_course_type').trigger('change');
             });
 
             $('.select_course_type').on('change', function () {
                 if ($(this).val() == 'Online') {
-                 /*   $('.online_course_type').prop('hidden', false);
-                    $('.online_course_type').prop('required', true);
-                    $('.physical_course_type').prop('hidden', true);
-                    $('.physical_course_type').prop('required', false);
-                    $('.class_type').val('online');
-                    $('.physical_class_type').prop('required', false);
-                    $('.physical_class_type').val('');
-                    $('.physical_class_type_wrapper').prop('hidden', true);*/
+                    /*   $('.online_course_type').prop('hidden', false);
+                       $('.online_course_type').prop('required', true);
+                       $('.physical_course_type').prop('hidden', true);
+                       $('.physical_course_type').prop('required', false);
+                       $('.class_type').val('online');
+                       $('.physical_class_type').prop('required', false);
+                       $('.physical_class_type').val('');
+                       $('.physical_class_type_wrapper').prop('hidden', true);*/
                     $('.headTwo').html('On-line');
 
                     $('#online_calendar').prop('hidden', false);
                     $('#physical_calendar').prop('hidden', true);
                 } else if ($(this).val() == 'On-site') {
-                   /* $('.online_course_type').prop('hidden', true);
-                    $('.online_course_type').prop('required', false);
-                    $('.physical_course_type').prop('hidden', false);
-                    $('.physical_course_type').prop('required', true);
-                    $('.class_type').val('physical');
-                    $('.physical_class_type').prop('required', true);
-                    $('.physical_class_type').val('');
-                    $('.physical_class_type_wrapper').prop('hidden', false);*/
+                    /* $('.online_course_type').prop('hidden', true);
+                     $('.online_course_type').prop('required', false);
+                     $('.physical_course_type').prop('hidden', false);
+                     $('.physical_course_type').prop('required', true);
+                     $('.class_type').val('physical');
+                     $('.physical_class_type').prop('required', true);
+                     $('.physical_class_type').val('');
+                     $('.physical_class_type_wrapper').prop('hidden', false);*/
                     $('.headTwo').html('On-site');
 
                     $('#online_calendar').prop('hidden', true);
@@ -636,7 +693,6 @@
             var physical_calendar_events = [];
             var online_events = $('#online_events').data('events');
             var physical_events = $('#physical_events').data('events');
-
             online_events.forEach(function (item) {
                 online_calendar_events.push({
                     title: item.title,
@@ -740,78 +796,78 @@
     </script>
 
 
-   {{-- <script>
-        $(document).ready(function () {
-            // Batch modal handler
-            $('.img-fluid').on('click', function (event) {
-                var imgSrc = $(this).attr('src');
-                var batchesUrl = $(this).data('batches-url');
+    {{-- <script>
+         $(document).ready(function () {
+             // Batch modal handler
+             $('.img-fluid').on('click', function (event) {
+                 var imgSrc = $(this).attr('src');
+                 var batchesUrl = $(this).data('batches-url');
 
-                // Set the image in the modal header
-                // $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+                 // Set the image in the modal header
+                 // $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
 
-                // Fetch batches using AJAX
-                $.ajax({
-                    url: batchesUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        // Populate modal with batches
-                        $('#batchModal .modal-body').html(data);
-                        // Show the modal
-                        $('#batchModal').modal('show');
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error if needed
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
+                 // Fetch batches using AJAX
+                 $.ajax({
+                     url: batchesUrl,
+                     method: 'GET',
+                     success: function (data) {
+                         // Populate modal with batches
+                         $('#batchModal .modal-body').html(data);
+                         // Show the modal
+                         $('#batchModal').modal('show');
+                     },
+                     error: function (xhr, status, error) {
+                         // Handle error if needed
+                         console.log(xhr.responseText);
+                     }
+                 });
+             });
+         });
 
-    </script>
+     </script>
 
-    <script>
-        $(document).ready(function () {
-            // Handle click event for "Online" button
-            $('#online-tab').on('click', function () {
-                $('#Online').show();    // Show online batches section
-                $('#OnSite').hide();    // Hide physical batches section
-            });
+     <script>
+         $(document).ready(function () {
+             // Handle click event for "Online" button
+             $('#online-tab').on('click', function () {
+                 $('#Online').show();    // Show online batches section
+                 $('#OnSite').hide();    // Hide physical batches section
+             });
 
-            // Handle click event for "On-Site" button
-            $('#onsite-tab').on('click', function () {
-                $('#Online').hide();    // Hide online batches section
-                $('#OnSite').show();    // Show physical batches section
-            });
+             // Handle click event for "On-Site" button
+             $('#onsite-tab').on('click', function () {
+                 $('#Online').hide();    // Hide online batches section
+                 $('#OnSite').show();    // Show physical batches section
+             });
 
 
-            // Batch modal handler
-            $('.img-fluid').on('click', function (event) {
-                var imgSrc = $(this).attr('src');
-                var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
+             // Batch modal handler
+             $('.img-fluid').on('click', function (event) {
+                 var imgSrc = $(this).attr('src');
+                 var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
 
-                // Set the image in the modal header
-                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+                 // Set the image in the modal header
+                 $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
 
-                // Fetch batches using AJAX
-                $.ajax({
-                    url: batchesUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        // Populate modal with batches
-                        $('#batchModal .modal-body').html(data);
-                        // Show the modal
-                        $('#batchModal').modal('show');
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error if needed
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
+                 // Fetch batches using AJAX
+                 $.ajax({
+                     url: batchesUrl,
+                     method: 'GET',
+                     success: function (data) {
+                         // Populate modal with batches
+                         $('#batchModal .modal-body').html(data);
+                         // Show the modal
+                         $('#batchModal').modal('show');
+                     },
+                     error: function (xhr, status, error) {
+                         // Handle error if needed
+                         console.log(xhr.responseText);
+                     }
+                 });
+             });
+         });
 
-    </script>--}}
+     </script>--}}
 
     <script>
         $(document).ready(function () {

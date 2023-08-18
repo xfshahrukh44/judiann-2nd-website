@@ -83,10 +83,10 @@ class FrontController extends Controller
         foreach ($online_batches as $batchKey => $batch) {
             $random_index = array_rand($online_colors);
 
-            if(is_null($batch->date_range)) {
+            if (is_null($batch->date_range)) {
                 foreach ($batch->batch_dates as $batch_date) {
                     $online_events[] = [
-                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'title' => $batch->course->name . ' (' . $batch->name . ')',
                         'date' => $batch_date->date,
                         'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                         'color' => $online_colors[$random_index],
@@ -104,7 +104,7 @@ class FrontController extends Controller
                 $current_date = Carbon::parse($batch->date_range_from);
                 while ($current_date <= Carbon::parse($batch->date_range_to)) {
                     $online_events[] = [
-                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'title' => $batch->course->name . ' (' . $batch->name . ')',
                         'date' => $current_date,
                         'time' => $batch->time_from . ' to ' . $batch->time_to,
                         'color' => $online_colors[$random_index],
@@ -126,11 +126,11 @@ class FrontController extends Controller
         foreach ($physical_batches as $batch) {
             $random_index = array_rand($physical_colors);
 
-            if(is_null($batch->date_range)) {
+            if (is_null($batch->date_range)) {
                 foreach ($batch->batch_dates as $batch_date) {
                     if ($batch->course) {
                         $physical_events[] = [
-                            'title' => $batch->course->name . ' ('.$batch->name.')',
+                            'title' => $batch->course->name . ' (' . $batch->name . ')',
                             'date' => $batch_date->date,
                             'time' => $batch_date->time_from . ' to ' . $batch_date->time_to,
                             'color' => $physical_colors[$random_index],
@@ -149,7 +149,7 @@ class FrontController extends Controller
                 $current_date = Carbon::parse($batch->date_range_from);
                 while ($current_date <= Carbon::parse($batch->date_range_to)) {
                     $physical_events[] = [
-                        'title' => $batch->course->name . ' ('.$batch->name.')',
+                        'title' => $batch->course->name . ' (' . $batch->name . ')',
                         'date' => $current_date,
                         'time' => $batch->time_from . ' to ' . $batch->time_to,
                         'color' => $physical_colors[$random_index],
@@ -188,8 +188,18 @@ class FrontController extends Controller
             $physical_batches = Batch::where('is_physical', 1)->get();
 //            dd($online_batches);
 
+
+            foreach ($online_batches as $batch) {
+                $batch->already_bought = is_in_batch($batch->id);
+            }
+
+            foreach ($physical_batches as $batch) {
+                $batch->already_bought = is_in_batch($batch->id);
+            }
+
+
 //            return view('front.batch_details_modal', [
-                return view('front.batch_details_modal', [
+            return view('front.batch_details_modal', [
                 'online_batches' => $online_batches,
                 'physical_batches' => $physical_batches,
             ]);
@@ -250,7 +260,7 @@ class FrontController extends Controller
     {
         Log::debug('schedule_class method called');
         if ($request->method() == 'GET') {
-            return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
+            return redirect()->route('front.schedule')->with("error", "Oops! It looks like you're not logged in yet. Please log in to schedule classes");
         }
 
         $this->validate($request, array(
@@ -511,7 +521,7 @@ class FrontController extends Controller
                 foreach ($batch_session_arrays as $batch_session_array) {
                     $stripe_charge_amount = floatval($batch_session_array['fees']) * 100;
 
-                    if($stripe_charge_amount == 0) {
+                    if ($stripe_charge_amount == 0) {
                         $charge = [
                             'status' => 'succeeded'
                         ];
@@ -727,7 +737,7 @@ class FrontController extends Controller
                 'physical_class_type' => $batch_session_array['physical_class_type'],
                 'fees' => $fees_after_discount,
             ];
-            $new_batch_session_arrays []= $new_batch_session_array;
+            $new_batch_session_arrays [] = $new_batch_session_array;
             $new_total += $fees_after_discount;
         }
         session()->put('batch_session_arrays', $new_batch_session_arrays);

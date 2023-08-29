@@ -5,10 +5,17 @@
 @section('keywords', '')
 
 @section('content')
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
+
 
     <style>
         /* Modal styles */
-        #batchModal {
+
+        .batch-item {
+            text-align: center;
+        }
+
+        .batchModal {
             background: rgba(0, 0, 0, 0.5);
         }
 
@@ -18,7 +25,7 @@
         }
 
         .modal-header {
-            background-color: #007bff;
+            background-color: #e2571c;
             color: #fff;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
@@ -65,145 +72,85 @@
         }
 
     </style>
+
     <!-- Begin: Main Slider -->
     <div hidden id="online_events" data-events="{{json_encode($online_events)}}"></div>
     <div hidden id="physical_events" data-events="{{json_encode($physical_events)}}"></div>
     <div class="main-slider inner">
         <img class="img-fluid w-100"
-             src="{{!empty($schedule) ? (!empty($data->banner_image) ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg')) : asset('front/images/BannerImg.jpg')}}"
+             src="{{ !empty($schedule) ? (!empty($data->banner_image)
+                    ? asset('front/images/cms/'.$data->banner_image) : asset('front/images/BannerImg.jpg'))
+                    : asset('front/images/BannerImg.jpg') }}"
              alt="First slide">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="slideContent">
-                            <h2 class="headOne">{{!empty($schedule) ? (!empty($data->banner_title) ? $data->banner_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
+                            <h2 class="headOne">{{ !empty($schedule)
+                                ? (!empty($data->banner_title) ? $data->banner_title : 'Schedule A Class')
+                                : 'Schedule A Class' }}</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- END: Main Slider -->
 
     <section class="contactInnr">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online"
+                {{--<button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online"
                         type="button"
                         role="tab" aria-controls="home" aria-selected="true">Online
+                </button>--}}
+                <button class="nav-link btn_physical_batches"
+                        role="tab" aria-controls="home" aria-selected="true">All Courses
                 </button>
             </li>
-            <li class="nav-item" role="presentation">
+            {{--<li>
                 <button class="nav-link btn_physical_batches" id="profile-tab" data-toggle="tab" data-target="#onsite"
                         type="button"
                         role="tab" aria-controls="profile" aria-selected="false">On-Site
                 </button>
-            </li>
+            </li>--}}
         </ul>
         <div class="tab-content" id="myTabContent">
-            {{--online--}}
             <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
-                    @foreach($online_batches as $key => $batch)
+                    @foreach($courses as $key => $course)
                         <div class="row">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
+                                        <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
+                                        <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
+                                        {{--{!! get_batch_timings($course) !!}--}}
+                                        <h4 class="text-white">Fees: ${{round($course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{--                                    <figure>--}}
-                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-                                    {{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
-                                             data-batches-url="{{ route('get_batches') }}" alt="img">
+                                        <img class="img-fluid" src="{{ $course->get_course_image() }}"
+                                             data-id="{{ $course->id }}" alt="img">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
-                                    {{--                                    <figure>--}}
-                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-                                    {{--                                    </figure>--}}
                                     <figure>
-                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
-                                             data-batches-url="{{ route('get_batches') }}" alt="img">
+                                        <img class="img-fluid" src="{{ $course->get_course_image() }}"
+                                             data-id="{{ $course->id }}" alt="img">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
+                                        <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
+                                        <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            {{--physical--}}
-            <div class="tab-pane fade" id="onsite" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="container">
-                    @foreach($physical_batches as $key => $batch)
-                        <div class="row">
-                            @if($key % 2 == 0)
-                                <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
-                                        <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        @if($batch->physical_class_type == 'group')
-                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
-                                        @endif
-                                        @if(batch_is_full($batch))
-                                            <h4 class="text-danger">SEATS FULL</h4>
-                                        @endif
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    {{--                                    <figure>--}}
-                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-                                    {{--                                    </figure>--}}
-                                    <figure>
-                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
-                                             data-batches-url="{{ route('get_batches') }}" alt="img">
-                                    </figure>
-                                </div>
-                            @else
-                                <div class="col-md-6">
-                                    {{--                                    <figure>--}}
-                                    {{--                                        <img class="img-fluid" src="{{$batch->course->get_course_image()}}" alt="img">--}}
-                                    {{--                                    </figure>--}}
-                                    <figure>
-                                        <img class="img-fluid" src="{{ $batch->course->get_course_image() }}"
-                                             data-batches-url="{{ route('get_batches') }}" alt="img">
-                                    </figure>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
-                                        <h3>{{$batch->course->name . ' (Batch: '.$batch->name.')'}}</h3>
-                                        <p>{!! get_readable_description($batch->course->description) !!}</p>
-                                        <h4 class="text-white">TIMINGS</h4>
-                                        {!! get_batch_timings($batch) !!}
-                                        @if($batch->physical_class_type == 'group')
-                                            <h4 class="text-white">Number of Seats: {{$batch->number_of_seats}}</h4>
-                                        @endif
-                                        @if(batch_is_full($batch))
-                                            <h4 class="text-danger">SEATS FULL</h4>
-                                        @endif
-                                        <h4 class="text-white">Fees: ${{round($batch->course->fees, 2)}}</h4>
+                                        {{--{!! get_batch_timings($course) !!}--}}
+                                        <h4 class="text-white">Fees: ${{round($course->fees, 2)}}</h4>
                                     </div>
                                 </div>
                             @endif
@@ -214,133 +161,36 @@
         </div>
     </section>
 
-
-    {{--  {{modal work for all batches}}
-      <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
-           aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="batchModalLabel">All Batches</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <!-- The content of all batches will be dynamically loaded here -->
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="batchModalLabel">Batches</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <button class="nav-link active btn_online_batches" id="online-tab" data-toggle="tab" data-target="#Online"
-                              type="button"
-                              role="tab" aria-controls="home" aria-selected="true">Online
-                      </button>
-
-
-                      <button class="nav-link btn_physical_batches" id="onsite-tab" data-toggle="tab" data-target="#OnSite"
-                              type="button"
-                              role="tab" aria-controls="profile" aria-selected="false">On-Site
-                      </button>
-                      <!-- Batch details will be populated here -->
-                  </div>
-              </div>
-          </div>
-      </div>--}}
-
-    <div class="modal fade batchModal" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel"
+    {{-- Batch Modal Start --}}
+    <div class="modal fade batchModal text-secondary" id="batchModal" tabindex="-1" role="dialog"
+         aria-labelledby="batchModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="batchModalLabel">Batches</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-   {{-- <div class="modal fade" id="event_detail_modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th class="text-center" colspan="2">
-                                <img id="event_img" class="w-100" src="" alt="">
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Course:</th>
-                            <td id="event_course"></td>
-                        </tr>
-                        <tr>
-                            <th>Time:</th>
-                            <td id="event_time"></td>
-                        </tr>
-                        <tr>
-                            <th>Description:</th>
-                            <td id="event_description"></td>
-                        </tr>
-                        <tr>
-                            <th>Class Type:</th>
-                            <td id="event_class_type"></td>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <div class="modal-footer">
-                        <button type="button" id="btn_register_course" class="btn btn-primary" data-event="">Register
-                            Course
-                        </button>
-                        <button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL
-                        </button>
-                        <button type="button" id="btn_already_bought" class="btn btn-success" data-dismiss="modal">ALREADY
-                            BOUGHT
-                        </button>
+                    <div class="batch-list" id="batchList">
+                        @include('front.batch-modal')
                     </div>
                 </div>
             </div>
         </div>
-    </div>--}}
+    </div>
+    {{-- Batch Modal End --}}
 
     {{--Calendar & Form--}}
     <section class="contactInnr">
         <div class="container-fluid">
             <div class="row align-items-center justify-content-center">
                 <div class="col-12">
-                    <h2 class="headOne text-center mt-5">{{!empty($schedule) ? (!empty($data->section_title) ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
+                    <h2 class="headOne text-center mt-5">{{!empty($schedule)
+                        ? (!empty($data->section_title)
+                        ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>
                     <h3 class="text-white text-center mt-3 mb-5">
                         Students may continually add multiple courses of both the online and onsite course
                         types.
@@ -351,7 +201,7 @@
                     @endif
                 </div>
                 <div class="col-md-6">
-                    <form method="post" action="{{route('front.schedule_class')}}" class="hf-form hf-form-57 "
+                    <form method="post" action="{{route('front.schedule.class')}}" class="hf-form hf-form-57 "
                           data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"
                           data-message-success="Thank you! We will be in touch soon."
                           data-message-invalid-email="Sorry, that email address looks invalid."
@@ -402,50 +252,10 @@
                                         </div>
                                     </div>
 
-                                    {{--                                   <div class="col-12">
-                                                                           <div class="form-group">
-                                                                               <label>Select Course:</label>
-                                                                               <select class="form-control course_type online_course_type"
-                                                                                       name="batch_id" required hidden>
-                                                                                   <option disabled selected value="">Select Course:</option>
-                                                                                   @foreach($online_batches as $batch)
-                                                                                       <option class="option_batch_type"
-                                                                                               data-online="{{$batch->is_online}}"
-                                                                                               data-physical="{{$batch->is_physical}}"
-                                                                                               value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')'}} </option>
-                                                                                   @endforeach
-                                                                               </select>
-                                                                               <select class="form-control course_type physical_course_type"
-                                                                                       name="batch_id" hidden>
-                                                                                   <option disabled selected value="">Select Course:</option>
-                                                                                   @foreach($physical_batches as $batch)
-                                                                                       <option class="option_batch_type physical_option_batch"
-                                                                                               {!! batch_is_full($batch) ? 'disabled style="color: red;"' : '' !!}
-                                                                                               data-online="{{$batch->is_online}}"
-                                                                                               data-physical="{{$batch->is_physical}}"
-                                                                                               data-physical-class-type="{{$batch->physical_class_type}}"
-                                                                                               value="{{$batch->id}}">{{$batch->course->name . ' (Batch: '.$batch->name.')' . (batch_is_full($batch) ? ' (SEATS FULL)' : '')}} </option>
-                                                                                   @endforeach
-                                                                               </select>
-                                                                           </div>
-                                                                       </div>--}}
-
                                     <input type="hidden" name="class_type" class="class_type" value="online">
                                     <input type="hidden" id="form_batch_id">
                                     <input type="hidden" id="form_class_type">
                                     <input type="hidden" id="form_physical_class_type">
-
-                                    {{--                                  <div class="col-12 physical_class_type_wrapper" hidden>
-                                                                          <div class="form-group">
-                                                                              <label>Select Physical Class Type:</label>
-                                                                              <select class="form-control physical_class_type"
-                                                                                      placeholder="Select Class Type" name="physical_class_type">
-                                                                                  <option disabled selected>Select Physical Class Type:</option>
-                                                                                  <option value="group">Group classes</option>
-                                                                                  <option value="in_person">In-person</option>
-                                                                              </select>
-                                                                          </div>
-                                                                      </div>--}}
 
                                     <div class="col-12">
                                         <div class="table-responsive courseTable">
@@ -463,7 +273,6 @@
                                                 <tfoot>
                                                 <tr>
                                                     <td><b>Total Price</b></td>
-                                                    {{--                                                            <td></td>--}}
                                                     <td id="td_total_price"><b>$0.00</b></td>
                                                 </tr>
                                                 </tfoot>
@@ -537,7 +346,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn_register_course" class="btn btn-primary" data-event="">Register
+                    <button type="button" id="btn_register_course" class="btn btn-primary btn_register_course"
+                            data-event="">Register
                         Course
                     </button>
                     <button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL
@@ -549,6 +359,8 @@
             </div>
         </div>
     </div>
+    {{--event detail modal--}}
+
 @endsection
 
 @section('script')
@@ -558,9 +370,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
+
     <script>
         $(document).ready(function () {
-            //init online and physical calendars
+            $('.img-fluid').on('click', function () {
+                let component = $(this);
+                let imgSrc = component.attr('src');
+                let courseId = component.data('id');
+
+                $('.batchModal').show();
+                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+
+                $.ajax({
+                    url: `{{ route('get.batches') }}`,
+                    method: 'GET',
+                    // dataType: 'json',
+                    data: {
+                        courseId: courseId,
+                    },
+                    success: function (data) {
+                        $('.batchModal').modal('show');
+                        var modalBody = $('.modal-body');
+                        var batchList = $('#batchList');
+                        modalBody.html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+
+            $('.modal-close').on('click', function () {
+                $('.batchModal').hide();
+                $('.modal-backdrop').hide();
+            });
+            $('.modal-backdrop').hide();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
             init_calendars();
 
             $('.btn_online_batches').on('click', function () {
@@ -603,14 +453,6 @@
                 }
             });
 
-            /*//online section
-            $('.btn_online_batches').on('click', function () {
-            });
-
-            //physical section
-            $('.btn_physical_batches').on('click', function () {*/
-            // });
-
             //on physical_class_type change
             $('.physical_class_type').on('change', function () {
                 if ($(this).val() == 'group') {
@@ -635,40 +477,38 @@
                 }
             })
 
-            $('#btn_register_course').on('click', function () {
+            $('body').on('click', '.btn_register_course', function () {
                 let event = $(this).data('event');
-                // console.log('EVENT', event.extendedProps);
+                let batch_id = $(this).data('batch-id');
+                let class_type = $(this).data('class-type');
+                let course_price = $(this).data('course-price');
+                let batch_name = $(this).data('batch-name');
 
-                //prevent redundant items selection
-                if ($('#tr_batch_' + event.extendedProps.batchId).length > 0) {
-                    $('#event_detail_modal').modal('hide');
+                if ($('#tr_batch_' + batch_id).length > 0) {
+                    $('.batchModal').modal('hide');
                     return alert('Item already selected.');
                 }
 
                 let login_check = '{{\Illuminate\Support\Facades\Auth::check()}}';
                 if (!login_check) {
-                    console.log('notLogin');
-                    $('#event_detail_modal').modal('hide');
+                    $('.batchModal').modal('hide');
                     return $('#loginModal').modal('show');
                 } else {
-                    console.log('event.extendedProps', event.extendedProps);
-                    //courses_wrapper
-                    $('#courses_wrapper').append(`<tr id="tr_batch_` + event.extendedProps.batchId + `">
-                                                    <input type="hidden" name="batch_ids[]" value="` + event.extendedProps.batchId + `">
-                                                    <input type="hidden" name="class_types[]" value="` + event.extendedProps.class_type + `">
-                                                    <input type="hidden" name="physical_class_types[]" value="` + event.extendedProps.physical_class_type + `">
-                                                    <input type="hidden" name="fees[]" class="input_fees" value="` + event.extendedProps.fees + `">
+                    $('#courses_wrapper').append(`<tr id="tr_batch_" class="batch-remove"` + batch_id + `">
+                                                    <input type="hidden" name="batch_ids[]" value="` + batch_id + `">
+                                                    <input type="hidden" name="class_types[]" value="` + class_type + `">
+                                                    <input type="hidden" name="fees[]" class="input_fees" value="` + course_price + `">
                                                     <td>
-                                                        ` + event.title + `
+                                                        ` + batch_name + `
                                                     </td>
                                                     <td>
-                                                        $` + event.extendedProps.fees + `
+                                                        $` + course_price + `
                                                     </td>
                                                     <td>
                                                         <div class="btnCont">
                                                             <span>
                                                                 <i class="fas fa-times"></i>
-                                                                <input type="radio" class="btn_remove_course" name="" id="" data-batch="` + event.extendedProps.batchId + `">
+                                                                <input type="radio" class="btn_remove_course" name="batch_id" id="" data-batch-id="` + batch_id + `">
                                                             </span>
                                                         </div>
                                                     </td>
@@ -676,15 +516,50 @@
 
 
                     calculate_total();
-                    return $('#event_detail_modal').modal('hide');
+                    $('.modal-backdrop').hide();
+                    $('.batchModal').hide();
+                    return toastr.success('Course successfully added');
                 }
             });
+        });
 
-            $('body').on('click', '.btn_remove_course', function () {
-                let batch_id = $(this).data('batch');
-                console.log("$('#tr_batch_' + batch_id)", $('#tr_batch_' + batch_id));
-                $('#tr_batch_' + batch_id).remove();
-                calculate_total();
+        $(document).ready(function () {
+            $('body').on('click', '.btn_remove_course', function (e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to Delete Batch?')) {
+                    let batch_id = $(this).data('batch-id');
+                    let parent = $(this).parent().parent().parent().parent();
+                    $.ajax({
+                        method: "POST",
+                        url: `{{ route('remove.batch') }}`,
+                        data: {
+                            "_token": $('#csrf-token')[0].content,
+                            batch_id: batch_id,
+                        },
+                        success: function (response) {
+                            console.log('response.batch', response.batchId);
+
+                            if (response.batchId.length > 0) {
+                                toastr.success('Batch Deleted Successfully');
+
+                                // Remove the specific batch using the class selector
+                                parent.remove();
+
+                                calculate_total();
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                            toastr.error(error);
+                        }
+                    });
+                } else {
+                    return false;
+                }
+                // $('#tr_batch_' + batch_id).remove();
+                // calculate_total();
             });
         });
 
@@ -693,42 +568,48 @@
             var physical_calendar_events = [];
             var online_events = $('#online_events').data('events');
             var physical_events = $('#physical_events').data('events');
-            online_events.forEach(function (item) {
-                online_calendar_events.push({
-                    title: item.title,
-                    start: new Date(item.date),
-                    time: item.time,
-                    backgroundColor: item.color,
-                    borderColor: item.color,
-                    allDay: true,
-                    description: item.description,
-                    img_src: item.img_src,
-                    batch_id: item.batch_id,
-                    class_type: item.class_type,
-                    physical_class_type: item.physical_class_type,
-                    batch_is_full: item.batch_is_full,
-                    already_bought: item.already_bought,
-                    fees: item.fees,
+
+            if (online_events) {
+                online_events.forEach(function (item) {
+                    online_calendar_events.push({
+                        title: item.title,
+                        start: new Date(item.date),
+                        time: item.time,
+                        backgroundColor: item.color,
+                        borderColor: item.color,
+                        allDay: true,
+                        description: item.description,
+                        img_src: item.img_src,
+                        batch_id: item.batch_id,
+                        class_type: item.class_type,
+                        physical_class_type: item.physical_class_type,
+                        batch_is_full: item.batch_is_full,
+                        already_bought: item.already_bought,
+                        fees: item.fees,
+                    });
                 });
-            });
-            physical_events.forEach(function (item) {
-                physical_calendar_events.push({
-                    title: item.title,
-                    start: new Date(item.date),
-                    time: item.time,
-                    backgroundColor: item.color,
-                    borderColor: item.color,
-                    allDay: true,
-                    description: item.description,
-                    img_src: item.img_src,
-                    batch_id: item.batch_id,
-                    class_type: item.class_type,
-                    physical_class_type: item.physical_class_type,
-                    batch_is_full: item.batch_is_full,
-                    already_bought: item.already_bought,
-                    fees: item.fees,
+            }
+
+            if (physical_events) {
+                physical_events.forEach(function (item) {
+                    physical_calendar_events.push({
+                        title: item.title,
+                        start: new Date(item.date),
+                        time: item.time,
+                        backgroundColor: item.color,
+                        borderColor: item.color,
+                        allDay: true,
+                        description: item.description,
+                        img_src: item.img_src,
+                        batch_id: item.batch_id,
+                        class_type: item.class_type,
+                        physical_class_type: item.physical_class_type,
+                        batch_is_full: item.batch_is_full,
+                        already_bought: item.already_bought,
+                        fees: item.fees,
+                    });
                 });
-            });
+            }
 
             var online_calendarEl = document.getElementById('online_calendar');
             var physical_calendarEl = document.getElementById('physical_calendar');
@@ -747,8 +628,8 @@
                     $('#event_img').prop('src', info.event.extendedProps.img_src);
                     $('#event_class_type').html(info.event.extendedProps.class_type);
                     $('.event_physical_class_type').prop('hidden', true);
-                    $('#btn_register_course').prop('hidden', info.event.extendedProps.already_bought);
-                    $('#btn_register_course').data('event', info.event);
+                    $('.btn_register_course').prop('hidden', info.event.extendedProps.already_bought);
+                    $('.btn_register_course').data('event', info.event);
                     $('#btn_seats_full').prop('hidden', true);
                     $('#btn_already_bought').prop('hidden', !info.event.extendedProps.already_bought);
                     $('#event_detail_modal').modal('show');
@@ -769,8 +650,8 @@
                     $('#event_class_type').html(info.event.extendedProps.class_type);
                     $('.event_physical_class_type').prop('hidden', !info.event.extendedProps.physical_class_type);
                     $('#event_physical_class_type').html(info.event.extendedProps.physical_class_type == 'group' ? 'Group' : 'In Person');
-                    $('#btn_register_course').prop('hidden', info.event.extendedProps.batch_is_full || info.event.extendedProps.already_bought);
-                    $('#btn_register_course').data('event', info.event);
+                    $('.btn_register_course').prop('hidden', info.event.extendedProps.batch_is_full || info.event.extendedProps.already_bought);
+                    $('.btn_register_course').data('event', info.event);
                     $('#btn_seats_full').prop('hidden', !info.event.extendedProps.batch_is_full || info.event.extendedProps.already_bought);
                     $('#btn_already_bought').prop('hidden', !info.event.extendedProps.already_bought);
                     $('#event_detail_modal').modal('show');
@@ -794,112 +675,5 @@
             $('#btn_submit').prop('hidden', (total == 0.00));
         }
     </script>
-
-
-    {{-- <script>
-         $(document).ready(function () {
-             // Batch modal handler
-             $('.img-fluid').on('click', function (event) {
-                 var imgSrc = $(this).attr('src');
-                 var batchesUrl = $(this).data('batches-url');
-
-                 // Set the image in the modal header
-                 // $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
-
-                 // Fetch batches using AJAX
-                 $.ajax({
-                     url: batchesUrl,
-                     method: 'GET',
-                     success: function (data) {
-                         // Populate modal with batches
-                         $('#batchModal .modal-body').html(data);
-                         // Show the modal
-                         $('#batchModal').modal('show');
-                     },
-                     error: function (xhr, status, error) {
-                         // Handle error if needed
-                         console.log(xhr.responseText);
-                     }
-                 });
-             });
-         });
-
-     </script>
-
-     <script>
-         $(document).ready(function () {
-             // Handle click event for "Online" button
-             $('#online-tab').on('click', function () {
-                 $('#Online').show();    // Show online batches section
-                 $('#OnSite').hide();    // Hide physical batches section
-             });
-
-             // Handle click event for "On-Site" button
-             $('#onsite-tab').on('click', function () {
-                 $('#Online').hide();    // Hide online batches section
-                 $('#OnSite').show();    // Show physical batches section
-             });
-
-
-             // Batch modal handler
-             $('.img-fluid').on('click', function (event) {
-                 var imgSrc = $(this).attr('src');
-                 var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
-
-                 // Set the image in the modal header
-                 $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
-
-                 // Fetch batches using AJAX
-                 $.ajax({
-                     url: batchesUrl,
-                     method: 'GET',
-                     success: function (data) {
-                         // Populate modal with batches
-                         $('#batchModal .modal-body').html(data);
-                         // Show the modal
-                         $('#batchModal').modal('show');
-                     },
-                     error: function (xhr, status, error) {
-                         // Handle error if needed
-                         console.log(xhr.responseText);
-                     }
-                 });
-             });
-         });
-
-     </script>--}}
-
-    <script>
-        $(document).ready(function () {
-
-            // Batch modal handler
-            $('.img-fluid').on('click', function (event) {
-                var imgSrc = $(this).attr('src');
-                var batchesUrl = $(this).data('batches-url'); // Replace with the URL to fetch batches for the clicked image
-
-                // Set the image in the modal header
-                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
-
-                // Fetch batches using AJAX
-                $.ajax({
-                    url: batchesUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        // Populate modal with batches
-                        $('#batchModal .modal-body').html(data);
-                        // Show the modal
-                        $('#batchModal').modal('show');
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle error if needed
-                        console.log(xhr.responseText);
-                    }
-                });
-            });
-        });
-
-
-    </script>
-
 
 @endsection

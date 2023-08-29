@@ -187,10 +187,11 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //schedule
     Route::get('/schedule', 'FrontController@schedule')->name('front.schedule');
-    Route::match(['get','post'],'/schedule-class', 'FrontController@schedule_class')->name('front.schedule_class');
+    Route::match(['get','post'],'/schedule-class', [FrontController::class,'scheduleClass'])->name('front.schedule.class');
 
     //schedule modal
-    Route::get('/get_batches',[FrontController::class,'getBatches' ])->name('get_batches');
+    Route::get('/get/batch',[FrontController::class,'getBatches' ])->name('get.batches');
+    Route::post('/remove/batch',[FrontController::class,'removeBatch' ])->name('remove.batch');
     //payments
     Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
 
@@ -256,4 +257,6 @@ Route::get('/temp', function () {
 //        $course->opentok_session_id = get_fresh_opentok_session_id();
 //        $course->save();
 //    }
+
+    echo get_batch_timings(\App\Models\Batch::find(20));
 });

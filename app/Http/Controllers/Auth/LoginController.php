@@ -43,11 +43,11 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ( $user->role_id == 1 ) {
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Login Successfully');
         }
 
         if ( $user->role_id == 2 ) {
-            return redirect()->route('customer.dashboard');
+            return redirect()->route('customer.dashboard')->with('success', 'Login Successfully');
         }
 
         return redirect('/home');

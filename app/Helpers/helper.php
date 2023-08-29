@@ -113,6 +113,32 @@ function get_batch_timings($batch) {
     return $string;
 }
 
+function get_batch_timings_by_id($batch_id) {
+    if (!$batch = \App\Models\Batch::find($batch_id)) {
+        return null;
+    }
+
+    //if batch has multiple dates
+    if(is_null($batch->date_range)) {
+        $string = "";
+        foreach ($batch->batch_dates as $batch_date)
+        {
+            $date = Carbon::parse($batch_date->date)->format('d M Y');
+            $time_from = Carbon::parse($batch_date->time_from)->format('g:i A');
+            $time_to = Carbon::parse($batch_date->time_to)->format('g:i A');
+            $string .= "<h6 class='text-white'>".$date." [".$time_from." - ".$time_to."]"."</h6>";
+        }
+    } else {
+        $date_from = Carbon::parse($batch->date_range_from)->format('d M Y');
+        $date_to = Carbon::parse($batch->date_range_to)->format('d M Y');
+        $time_from = Carbon::parse($batch->time_from)->format('g:i A');
+        $time_to = Carbon::parse($batch->time_to)->format('g:i A');
+        $string = "<h6 class='text-white'>".$date_from." to ".$date_to." [".$time_from." - ".$time_to."]"."</h6>";
+    }
+
+    return $string;
+}
+
 function get_batch_title($batch) {
     $course_name = ('Course: '.$batch->course->name.', ') ?? '';
     $batch_name = ('Batch: '.$batch->name) ?? '';

@@ -49,6 +49,7 @@ class FrontController extends Controller
 
     public function schedule(Request $request)
     {
+        $courses = Course::with('batches')->get();
         $online_batches = Batch::whereHas('course')->where('is_online', 1)->where('has_ended', 0)->get();
         $physical_batches = Batch::whereHas('course')->where('is_physical', 1)->where('has_ended', 0)->get();
 
@@ -176,42 +177,43 @@ class FrontController extends Controller
             $data = json_decode($schedule->content);
         }
 
-        return view('front.schedule', compact('online_batches', 'physical_batches', 'online_events', 'physical_events', 'schedule', 'data'));
+        return view('front.schedule',
+            compact('online_batches', 'physical_batches', 'online_events', 'physical_events', 'schedule', 'data', 'courses'));
     }
 
 
     public function getBatches(Request $request)
     {
         try {
-            // Fetch and pass batches to the modal view
-            $online_batches = Batch::where('is_online', 1)->get();
-            $physical_batches = Batch::where('is_physical', 1)->get();
-//            dd($online_batches);
+            $courseId = $request->input('courseId');
+            $onlineBatches = Batch::with('course')->where(['course_id' => $courseId, 'is_online' => 1])->get();
+            $physicalBatches = Batch::with('course')->where(['course_id' => $courseId, 'is_physical' => 1])->get();
 
-
-            foreach ($online_batches as $batch) {
-                $batch->already_bought = is_in_batch($batch->id);
-            }
-
-            foreach ($physical_batches as $batch) {
-                $batch->already_bought = is_in_batch($batch->id);
-            }
-
-
-//            return view('front.batch_details_modal', [
-            return view('front.batch_details_modal', [
-                'online_batches' => $online_batches,
-                'physical_batches' => $physical_batches,
+            return view('front.batch-modal', [
+                'onlineBatches' => $onlineBatches,
+                'physicalBatches' => $physicalBatches,
             ]);
+
         } catch (\Exception $e) {
-            // Log and handle the error
             Log::error('Error in getBatches method: ' . $e->getMessage());
 
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
 
+    public function removeBatch(Request $request)
+    {
+        $batchId = $request->input('batch_id');
 
+        if (!is_null($batchId)) {
+            return response()->json([
+                'success' => true,
+                'batchId' => $batchId,
+            ]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to delete batch.']);
+        }
+    }
 
 
 //    public function schedule_class(Request $request)
@@ -255,8 +257,7 @@ class FrontController extends Controller
 //        return view('front.payment');
 //    }
 
-
-    public function schedule_class(Request $request)
+    public function scheduleClass(Request $request)
     {
         Log::debug('schedule_class method called');
         if ($request->method() == 'GET') {
@@ -279,6 +280,7 @@ class FrontController extends Controller
         $batch_session_arrays = [];
         $total = 0.0;
         foreach ($request->batch_ids as $key => $batch_id) {
+            dd($batch_id);
             if (!is_in_batch($batch_id)) {
                 $fees = floatval($request->fees[$key]);
                 $total += $fees;
@@ -322,6 +324,7 @@ class FrontController extends Controller
         // Debug: Print the retrieved batch
         Log::debug('Retrieved batch:', $batch->toArray());
 
+
         if (!$batch) {
             // Debug: Print a message if batch is not found
             Log::debug('Batch not found');
@@ -357,114 +360,6 @@ class FrontController extends Controller
         return response()->json($data);
     }
 
-
-
-//    public function process_payment(Request $request)
-//    {
-//        $inputs = $request->all();
-//        $validator = Validator::make($inputs, [
-//            'card_no' => 'required',
-//            'exp_mon' => 'required',
-//            'exp_year' => 'required',
-//            'cvv' => 'required'
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return [
-//                "status" => false,
-//                "data" => [],
-//                "errors" => $validator->messages(),
-//                "message" => "Unexpected Error occured."
-//            ];
-//        }
-//
-//        $stripe = get_payment_keys();
-//
-//        $user = session()->get('user');
-//        $batch_session_arrays = session()->get('batch_session_arrays');
-//
-//        try {
-//
-//            $cardStripe = \Stripe\Stripe::setApiKey($stripe['secret_key']);
-//
-//            $cardStripe = \Stripe\Token::create(array(
-//                "card" => array(
-//                    "number" => $request['card_no'],
-//                    "exp_month" => $request['exp_mon'],
-//                    "exp_year" => $request['exp_year'],
-//                    "cvc" => $request['cvv']
-//                )
-//            ));
-//
-//            if (!empty($cardStripe)) {
-//
-//                $customer = new \Stripe\StripeClient(
-//                    $stripe['secret_key']
-//                );
-//                $abc = $customer->customers->create([
-//                    'description' => 'Shopping',
-//                    'email' => $user->email,
-//                    'source' => $cardStripe['id'],
-//                ]);
-//
-//                $charge = \Stripe\Stripe::setApiKey($stripe['secret_key']);
-//
-//                foreach ($batch_session_arrays as $batch_session_array) {
-//                    $stripe_charge_amount = floatval($batch_session_array['fees']) * 100;
-//
-//                    if($stripe_charge_amount == 0) {
-//                        $charge = [
-//                            'status' => 'succeeded'
-//                        ];
-//                    } else {
-//                        $charge = \Stripe\Charge::create([
-//                            'amount' => intval($stripe_charge_amount),
-//                            'currency' => 'usd',
-//                            'customer' => $abc
-//                        ]);
-//                    }
-//
-//                    if ($charge['status'] === 'succeeded') {
-//
-//                        //create course session
-//                        $batch_session = BatchSession::create($batch_session_array);
-//
-//                        //send mail to customer
-//                        $data = [];
-//                        $data['name'] = $user->name;
-//                        $data['course_name'] = $batch_session->batch->course->name;
-//                        $data['email'] = $user->email;
-//                        $data['customer_portal_link'] = route('customer.dashboard');
-//                        $this->send_mail($data);
-//
-//                    }
-//
-//                }
-//
-//                //delete session variables
-//                session()->remove('user');
-//                session()->remove('batch_session_arrays');
-//                if (session()->has('used_voucher')) {
-//                    session()->remove('used_voucher');
-//                }
-//
-//                return [
-//                    "status" => true,
-//                    "errors" => [],
-//                    "message" => "Successfully added"
-//                ];
-//
-//            }
-//        } catch (\Exception $e) {
-//
-//            return [
-//                "status" => false,
-//                "errors" => [],
-//                "message" => $e->getMessage()
-//            ];
-////            throw $e;
-//        }
-//    }
     public function process_payment(Request $request)
     {
         $inputs = $request->all();
@@ -554,6 +449,7 @@ class FrontController extends Controller
                         $data['email'] = $user->email ?? '';
                         $data['customer_portal_link'] = route('customer.dashboard') ?? '';
                         $this->send_mail($data);
+                        $this->send_mail_admin($data);
 
                     }
 
@@ -605,6 +501,29 @@ class FrontController extends Controller
             $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
 //            $this->customMail('no-reply@jefds.com', $email, 'Course Booked', $message);
 
+//            return 1;
+            return redirect()->back()->with('errors', 'Thank you for booking our course.');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('errors', $exception->getMessage());
+        }
+    }
+
+    public function send_mail_admin($data)
+    {
+        try {
+            $course_name = $data['course_name'];
+            $email = $data['email'];
+            $name = $data['name'];
+            $adminEmail = 'admin@judiann.com';
+
+            $message = 'Dear Admin,<br /><br />';
+            $message .= 'User name: ' . $name . '<br />';
+            $message .= 'User email: ' . $email . '<br />';
+            $message .= 'This user has enrolled in the ' . $course_name . ' course. Kindly check to admin portal<br /><br />';
+            $message .= 'Regards,<br />';
+            $message .= 'Judiann';
+
+            $this->customMail('no-reply@judiannsfashiondesignstudios.com', $adminEmail, 'New Course Enrollment', $message);
             return 1;
         } catch (\Exception $exception) {
             return redirect()->back()->with('errors', $exception->getMessage());

@@ -808,7 +808,7 @@ footer {
 .contactInnr button {
     background-color: #e2571c;
     height: 3.75rem;
-    border: 1px solid #e2571c;
+    border: 2px solid;
     color: var(--black);
     text-align: center;
     width: 100%;
@@ -819,8 +819,8 @@ footer {
 .contactInnr img {
     height: 450px;
     width: 100%;
-    /*object-fit: cover;*/
     object-fit: cover;
+    cursor: pointer;
 }
 
 .contactInnr .row + .row {
@@ -1459,6 +1459,10 @@ div.switcher label input:checked + span small {
     font-size: 1rem;
 }
 
+.contactInnr .nav-tabs button:focus {
+    outline: none;
+}
+
 .fc .fc-toolbar-title {
     color: #fff;
 }
@@ -1502,6 +1506,10 @@ div.switcher label input:checked + span small {
 
 .modal-content .modal-header * {
     color: #fff;
+}
+
+.modal-header .close:focus {
+    outline: none;
 }
 
 .lastBox.slick-slide {

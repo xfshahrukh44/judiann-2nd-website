@@ -193,7 +193,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     Route::get('/get/batch',[FrontController::class,'getBatches' ])->name('get.batches');
     Route::post('/remove/batch',[FrontController::class,'removeBatch' ])->name('remove.batch');
     //payments
-    Route::post('/process_payment', 'FrontController@process_payment')->name('front.process_payment');
+    Route::post('/process_payment', [FrontController::class, 'processPayment'])->name('front.process.payment');
 
     //apply voucher
     Route::post('/apply-voucher', 'FrontController@applyVoucher')->name('front.applyVoucher');

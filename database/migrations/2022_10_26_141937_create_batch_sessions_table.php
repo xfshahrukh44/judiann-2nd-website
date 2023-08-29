@@ -17,7 +17,7 @@ class CreateBatchSessionsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('batch_id');
-            $table->enum('class_type', ['online', 'physical']);
+            $table->string('class_type');
             $table->enum('physical_class_type', ['group', 'in_person'])->nullable();
             $table->timestamps();
         });

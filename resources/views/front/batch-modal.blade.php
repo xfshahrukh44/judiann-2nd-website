@@ -121,7 +121,7 @@
                         <td>
                             <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
                                     data-batch-id="{{ $onlineBatch->id }}"
-                                    data-class-type="{{ $onlineBatch->is_physical }}"
+                                    data-class-type="online"
                                     data-batch-name="{{ $onlineBatch->name }}"
                                     data-course-price="{{ $onlineBatch['course']['fees'] }}">Register Batch
                             </button>
@@ -158,7 +158,7 @@
                         <td>
                             <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
                                     data-batch-id="{{ $physicalBatch->id }}"
-                                    data-class-type="{{ $physicalBatch->is_physical }}"
+                                    data-class-type="physical"
                                     data-batch-name="{{ $physicalBatch->name }}"
                                     data-course-price="{{ $physicalBatch['course']['fees'] }}">Register Batch
                             </button>

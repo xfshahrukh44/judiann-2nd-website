@@ -92,7 +92,7 @@
                 let errors = ''
                 $.ajax({
                     type: 'post',
-                    url: "{{route('front.process_payment')}}",
+                    url: "{{route('front.process.payment')}}",
                     data: $('#paidTournamentForm').serialize(),
                     success: function (result) {
                         if (result?.status) {

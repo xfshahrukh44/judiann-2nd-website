@@ -240,7 +240,7 @@
                                                    readonly {{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    {{--<div class="col-12">
                                         <div class="form-group">
                                             <label>Select Course Type:</label>
                                             <select class="form-control select_course_type"
@@ -250,7 +250,7 @@
                                                 <option value="On-site">On-site</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>--}}
 
                                     <input type="hidden" name="class_type" class="class_type" value="online">
                                     <input type="hidden" id="form_batch_id">
@@ -483,6 +483,7 @@
                 let class_type = $(this).data('class-type');
                 let course_price = $(this).data('course-price');
                 let batch_name = $(this).data('batch-name');
+                let user_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
 
                 if ($('#tr_batch_' + batch_id).length > 0) {
                     $('.batchModal').modal('hide');
@@ -494,9 +495,12 @@
                     $('.batchModal').modal('hide');
                     return $('#loginModal').modal('show');
                 } else {
+                    console.log('class_type', class_type)
                     $('#courses_wrapper').append(`<tr id="tr_batch_" class="batch-remove"` + batch_id + `">
-                                                    <input type="hidden" name="batch_ids[]" value="` + batch_id + `">
-                                                    <input type="hidden" name="class_types[]" value="` + class_type + `">
+                                                    <input type="hidden" name="user_id" value="` + user_id + `">
+                                                    <input type="hidden" name="batch_id[]" value="` + batch_id + `">
+                                                    <input type="hidden" name="class_type[]" value="` + class_type + `">
+
                                                     <input type="hidden" name="fees[]" class="input_fees" value="` + course_price + `">
                                                     <td>
                                                         ` + batch_name + `
@@ -675,5 +679,4 @@
             $('#btn_submit').prop('hidden', (total == 0.00));
         }
     </script>
-
 @endsection

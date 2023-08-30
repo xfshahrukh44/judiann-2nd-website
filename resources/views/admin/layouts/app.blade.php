@@ -207,6 +207,15 @@
                             <p>Registered Students</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('batch.session')}}"
+                           class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-angle-double-right"></i>
+                            <p>Registered Courses</p>
+                        </a>
+                    </li>
+
                         {{--CMS--}}
                     <li class="nav-item has-treeview {{ request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-us') || request()->IS('admin/cms/about-judiann') || request()->IS('admin/cms/contact') || request()->IS('admin/cms/portfolio') || request()->IS('admin/cms/faq') || request()->IS('admin/student') || request()->IS('admin/cms/terms') || request()->IS('admin/cms/policy') ? 'menu-is-opening menu-open' : '' }}">
                         <a href="#" class="nav-link ">
@@ -325,13 +334,6 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{route('customer')}}"
-                           class="nav-link {{ request()->IS('admin/customer') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-angle-double-right"></i>
-                            <p>Registered Students</p>
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a href="{{route('latest-update')}}"
                            class="nav-link {{ request()->IS('admin/latest-update') ? 'active' : '' }}">

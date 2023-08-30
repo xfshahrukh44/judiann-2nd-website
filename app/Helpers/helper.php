@@ -156,8 +156,28 @@ function batch_is_full($batch) {
     return $batch_sessions_count >= $batch->number_of_seats;
 }
 
-function is_in_batch ($batch_id) {
+function batch_is_full_by_id($batch_id) {
+    if (!$batch = \App\Models\Batch::find($batch_id)) {
+        return false;
+    }
+    if(!$batch->is_physical || $batch->physical_class_type == 'in_person') {
+        return false;
+    }
+
+    $batch_sessions_count = BatchSession::where('batch_id', $batch_id)->where('class_type', 'physical')->where('physical_class_type', 'in_person')->count();
+
+    return $batch_sessions_count >= $batch->number_of_seats;
+}
+
+function is_in_batch($batch_id) {
+
     $batch_check = BatchSession::where('user_id', Auth::id())->where('batch_id', $batch_id)->first();
 
     return (bool)$batch_check;
+}
+
+function is_in_batch_by_id($batch_id) {
+    $batch_check = BatchSession::where('user_id', Auth::id())->where('batch_id', $batch_id)->first();
+
+    return dd((bool)$batch_check);
 }

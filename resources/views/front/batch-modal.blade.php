@@ -118,14 +118,24 @@
                         <td>{{ $onlineBatch->name }}</td>
                         <td>{!! get_batch_timings_by_id($onlineBatch->id) !!}</td>
                         <td>${{ $onlineBatch['course']['fees'] }}</td>
-                        <td>
-                            <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
-                                    data-batch-id="{{ $onlineBatch->id }}"
-                                    data-class-type="online"
-                                    data-batch-name="{{ $onlineBatch->name }}"
-                                    data-course-price="{{ $onlineBatch['course']['fees'] }}">Register Batch
-                            </button>
-                        </td>
+                        @if(is_in_batch($onlineBatch->id))
+                            <td>
+                                <button type="button" id="btn_already_bought" class="btn btn-info"
+                                        data-dismiss="modal" disabled>
+                                    ALREADY BOUGHT
+                                </button>
+                            </td>
+                        @else
+                            <td>
+                                <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
+                                        data-batch-id="{{ $onlineBatch->id }}"
+                                        data-class-type="online"
+                                        data-physical-class-type="{{ $onlineBatch->physical_class_type }}"
+                                        data-batch-name="{{ $onlineBatch->name }}"
+                                        data-course-price="{{ $onlineBatch['course']['fees'] }}">Register Batch
+                                </button>
+                            </td>
+                        @endif
                     </tr>
                 @empty
                     <tr class="batch-item">
@@ -143,6 +153,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Timings</th>
+                <th scope="col">Seats</th>
                 <th scope="col">Price</th>
                 <th scope="col">Action</th>
             </tr>
@@ -154,20 +165,39 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $physicalBatch->name }}</td>
                         <td>{!! get_batch_timings_by_id($physicalBatch->id) !!}</td>
-                        <td>${{ $physicalBatch['course']['fees'] }}</td>
                         <td>
-                            <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
-                                    data-batch-id="{{ $physicalBatch->id }}"
-                                    data-class-type="physical"
-                                    data-batch-name="{{ $physicalBatch->name }}"
-                                    data-course-price="{{ $physicalBatch['course']['fees'] }}">Register Batch
-                            </button>
-                            {{--<button type="button" id="btn_seats_full" class="btn btn-danger" data-dismiss="modal">SEATS FULL
-                            </button>
-                            <button type="button" id="btn_already_bought" class="btn btn-success" data-dismiss="modal">ALREADY
-                                BOUGHT
-                            </button>--}}
+                            @if($physicalBatch->physical_class_type == 'group')
+                                {{ $physicalBatch->number_of_seats }}
+                            @endif
                         </td>
+                        <td>${{ $physicalBatch['course']['fees'] }}</td>
+                        @if(is_in_batch($physicalBatch->id))
+                            <td>
+                                <button type="button" id="btn_already_bought" class="btn btn-info"
+                                        data-dismiss="modal" disabled>
+                                    ALREADY BOUGHT
+                                </button>
+                            </td>
+                        @else
+                            <td>
+                                <button class="btn btn-primary btn-register-batch batch-detail btn_register_course"
+                                        data-batch-id="{{ $physicalBatch->id }}"
+                                        data-class-type="physical"
+                                        data-physical-class-type="{{ $physicalBatch->physical_class_type }}"
+                                        data-batch-name="{{ $physicalBatch->name }}"
+                                        data-course-price="{{ $physicalBatch['course']['fees'] }}">Register Batch
+                                </button>
+                            </td>
+                        @endif
+                        @if(batch_is_full_by_id($physicalBatch->id))
+                            <td>
+                                <button type="button" id="btn_seats_full" class="btn btn-danger my-2"
+                                        data-dismiss="modal"
+                                        disabled>
+                                    SEATS FULL
+                                </button>
+                            </td>
+                        @endif
                     </tr>
                 @empty
                     <tr class="batch-item">

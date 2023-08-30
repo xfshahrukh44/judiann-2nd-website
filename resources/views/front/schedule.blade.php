@@ -127,7 +127,7 @@
                                         <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
                                         <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {{--{!! get_batch_timings($course) !!}--}}
+                                        {!! get_batch_timings_by_id($course->id) !!}
                                         <h4 class="text-white">Fees: ${{round($course->fees, 2)}}</h4>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                         <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
                                         <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
-                                        {{--{!! get_batch_timings($course) !!}--}}
+                                        {!! get_batch_timings_by_id($course->id) !!}
                                         <h4 class="text-white">Fees: ${{round($course->fees, 2)}}</h4>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@
     {{-- Batch Modal End --}}
 
     {{--Calendar & Form--}}
-    <section class="contactInnr">
+    <section class="contactInnr schedule-form">
         <div class="container-fluid">
             <div class="row align-items-center justify-content-center">
                 <div class="col-12">
@@ -294,11 +294,11 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
+                {{--<div class="col-md-6">
                     <h2 class="headTwo">On-line</h2>
                     <div id="online_calendar"></div>
                     <div id="physical_calendar"></div>
-                </div>
+                </div>--}}
             </div>
         </div>
     </section>
@@ -407,6 +407,114 @@
             });
             $('.modal-backdrop').hide();
         });
+
+        $(document).ready(function () {
+            $('body').on('click', '.btn_register_course', function () {
+                let event = $(this).data('event');
+                let batch_id = $(this).data('batch-id');
+                let class_type = $(this).data('class-type');
+                let physical_class_type = $(this).data('physical-class-type');
+                let course_price = $(this).data('course-price');
+                let batch_name = $(this).data('batch-name');
+                let user_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
+                var section = $('.schedule-form');
+
+                if ($('#tr_batch_' + batch_id).length > 0) {
+                    $('.batchModal').modal('hide');
+                    return toastr.error('Course Is Already Owned.');
+                    alert('Item already selected.');
+                }
+
+                let login_check = '{{\Illuminate\Support\Facades\Auth::check()}}';
+                if (!login_check) {
+                    $('.batchModal').modal('hide');
+                    return $('#loginModal').modal('show');
+                } else {
+                    console.log('class_type', physical_class_type)
+                    $('#courses_wrapper').append(`<tr id="tr_batch_" class="batch-remove"` + batch_id + `">
+                                                    <input type="hidden" name="user_id" value="` + user_id + `">
+                                                    <input type="hidden" name="batch_id[]" value="` + batch_id + `">
+                                                    <input type="hidden" name="class_type[]" value="` + class_type + `">
+                                                    <input type="hidden" name="physical_class_type[]" value="` + physical_class_type + `">
+
+                                                    <input type="hidden" name="fees[]" class="input_fees" value="` + course_price + `">
+                                                    <td>
+                                                        ` + batch_name + `
+                                                    </td>
+                                                    <td>
+                                                        $` + course_price + `
+                                                    </td>
+                                                    <td>
+                                                        <div class="btnCont">
+                                                            <span>
+                                                                <i class="fas fa-times"></i>
+                                                                <input type="radio" class="btn_remove_course" name="batch_id" id="" data-batch-id="` + batch_id + `">
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>`);
+
+                    if (section.length > 0) {
+                        $('html, body').animate({
+                            scrollTop: section.offset().top + section.outerHeight() - $(window).height()
+                        }, "slow");
+                    }
+                    console.log('section', section);
+                    calculate_total();
+                    $('.modal-backdrop').hide();
+                    $('.batchModal').hide();
+                    return toastr.success('Course Successfully Added');
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('body').on('click', '.btn_remove_course', function (e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to Delete Batch?')) {
+                    let batch_id = $(this).data('batch-id');
+                    let parent = $(this).parent().parent().parent().parent();
+                    $.ajax({
+                        method: "POST",
+                        url: `{{ route('remove.batch') }}`,
+                        data: {
+                            "_token": $('#csrf-token')[0].content,
+                            batch_id: batch_id,
+                        },
+                        success: function (response) {
+                            console.log('response.batch', response.batchId);
+
+                            if (response.batchId.length > 0) {
+                                toastr.success('Batch Successfully Deleted');
+                                parent.remove();
+                                calculate_total();
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                            toastr.error(error);
+                        }
+                    });
+                } else {
+                    return false;
+                }
+                // $('#tr_batch_' + batch_id).remove();
+                // calculate_total();
+            });
+        });
+
+        function calculate_total() {
+            let total = 0.00;
+            $('.input_fees').each(function () {
+                total += parseFloat($(this).val()) ?? 0.00;
+            });
+
+            $('#td_total_price').html(`<b>$` + total + `</b>`);
+
+            $('#btn_submit').prop('hidden', (total == 0.00));
+        }
     </script>
 
     <script>
@@ -477,7 +585,7 @@
                 }
             })
 
-            $('body').on('click', '.btn_register_course', function () {
+            /*$('body').on('click', '.btn_register_course', function () {
                 let event = $(this).data('event');
                 let batch_id = $(this).data('batch-id');
                 let class_type = $(this).data('class-type');
@@ -522,49 +630,10 @@
                     calculate_total();
                     $('.modal-backdrop').hide();
                     $('.batchModal').hide();
+                    $('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
                     return toastr.success('Course successfully added');
                 }
-            });
-        });
-
-        $(document).ready(function () {
-            $('body').on('click', '.btn_remove_course', function (e) {
-                e.preventDefault();
-                if (confirm('Are you sure you want to Delete Batch?')) {
-                    let batch_id = $(this).data('batch-id');
-                    let parent = $(this).parent().parent().parent().parent();
-                    $.ajax({
-                        method: "POST",
-                        url: `{{ route('remove.batch') }}`,
-                        data: {
-                            "_token": $('#csrf-token')[0].content,
-                            batch_id: batch_id,
-                        },
-                        success: function (response) {
-                            console.log('response.batch', response.batchId);
-
-                            if (response.batchId.length > 0) {
-                                toastr.success('Batch Deleted Successfully');
-
-                                // Remove the specific batch using the class selector
-                                parent.remove();
-
-                                calculate_total();
-                            } else {
-                                toastr.error(response.message);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(error);
-                            toastr.error(error);
-                        }
-                    });
-                } else {
-                    return false;
-                }
-                // $('#tr_batch_' + batch_id).remove();
-                // calculate_total();
-            });
+            });*/
         });
 
         function init_calendars() {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BatchController;
+use App\Http\Controllers\Admin\BatchSessionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Front\FrontController;
 use App\Models\Page;
@@ -61,6 +62,10 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('/admin')->middleware('ad
     //order
     Route::get('order', 'BatchSessionController@index')->name('order');
     Route::get('/order-view/{id}', 'BatchSessionController@show')->name('order-view');
+
+    //CourseSession (registered courses)
+    Route::get('registered-courses', 'BatchSessionController@indexCourse')->name('batch.session');
+    Route::get('/registered-course-view/{id?}', 'BatchSessionController@showCourse')->name('registered-course-view');
 
     //testimonial
     Route::get('testimonial', 'TestimonialController@index')->name('testimonial');

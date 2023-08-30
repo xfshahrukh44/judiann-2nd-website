@@ -215,64 +215,22 @@ class FrontController extends Controller
         }
     }
 
-
-//    public function schedule_class(Request $request)
-//    {
-//        if ($request->method() == 'GET') {
-//            return redirect()->route('front.schedule')->with("error","Oops! It looks like you're not logged in yet. Please log in to schedule classes");
-//
-//        }
-//
-//        $this->validate($request, array(
-//            'first_name' => 'nullable|string|max:50',
-//            'last_name' => 'nullable|string|max:50',
-//            'email' => 'nullable|email',
-//            'phone' => 'nullable',
-//            'class_type' => 'sometimes',
-//            'physical_class_type' => 'sometimes',
-//            'batch_ids' => 'required',
-//        ));
-//
-//        $user = Auth::user();
-//        $batch_session_arrays = [];
-//        $total = 0.0;
-//        foreach ($request->batch_ids as $key => $batch_id) {
-//            if (!is_in_batch($batch_id)) {
-//                $fees = floatval($request->fees[$key]);
-//                $total += $fees;
-//                $batch_session_arrays [] = [
-//                    'user_id' => $user->id,
-//                    'batch_id' => $batch_id,
-//                    'class_type' => $request->class_types[$key],
-//                    'physical_class_type' => $request->physical_class_types[$key] == 'null' ? null : $request->physical_class_types[$key],
-//                    'fees' => $fees,
-//                ];
-//            }
-//        }
-//
-//        session()->put('user', $user);
-//        session()->put('batch_session_arrays', $batch_session_arrays);
-//        session()->put('course_fees', $total);
-//
-//        return view('front.payment');
-//    }
-
     public function scheduleClass(Request $request)
     {
         Log::debug('schedule_class method called');
-//        if ($request->method() == 'GET') {
-//            return redirect()->route('front.schedule')->with("error", "Oops! It looks like you're not logged in yet. Please log in to schedule classes");
-//        }
-//
-//        $this->validate($request, array(
-//            'first_name' => 'nullable|string|max:50',
-//            'last_name' => 'nullable|string|max:50',
-//            'email' => 'nullable|email',
-//            'phone' => 'nullable',
-//            'class_type' => 'sometimes',
-//            'physical_class_type' => 'sometimes',
-//            'batch_ids' => 'required',
-//        ));
+        if (!Auth::user()) {
+            return redirect()->route('front.schedule')->with("error", "Oops! It looks like you're not logged in yet. Please log in to schedule classes");
+        }
+
+        /*$this->validate($request, array(
+            'first_name' => 'nullable|string|max:50',
+            'last_name' => 'nullable|string|max:50',
+            'email' => 'nullable|email',
+            'phone' => 'nullable',
+            'class_type' => 'sometimes',
+            'physical_class_type' => 'sometimes',
+            'batch_ids' => 'required',
+        ));*/
 
         $user = Auth::user();
         Log::debug('User:', $user->toArray());
@@ -281,14 +239,17 @@ class FrontController extends Controller
 
         $batchIds = $request->input('batch_id');
         $classTypes = $request->input('class_type');
+        $physicalClassType = $request->input('physical_class_type');
         $fees = $request->input('fees');
         $total = 0;
 
         foreach ($batchIds as $key => $batch_id) {
             $class_type = $classTypes[$key];
+            $physical_class_type = $physicalClassType[$key];
             $batchSessionArray = [
                 'batch_id' => $batch_id,
                 'class_type' => $class_type,
+                'physical_class_type' => $physical_class_type,
                 'fees' => $fees[$key],
             ];
 
@@ -300,14 +261,13 @@ class FrontController extends Controller
 
         Log::debug('Batch Session Arrays:', $batchSessionArrays);
 
-//        dd($request->class_types);
         session()->put('user', $user);
         session()->put('batch_session_arrays', $batchSessionArrays);
         session()->put('course_fees', $total);
         Log::debug('Received batch_id:', ['batch_id' => $batch_id]);
         Log::debug('Received fees:', ['fees' => $request->fees]);
         Log::debug('Received class_type:', ['class_type' => $class_type]);
-//        Log::debug('Received physical_class_types:', $request->physical_class_types);
+        Log::debug('Received physical_class_types:', ['physical_class_type' => $physical_class_type]);
 
         return view('front.payment');
     }
@@ -346,14 +306,13 @@ class FrontController extends Controller
             'description' => $batch->course->description,
             'img_src' => $batch->course->image_url,
             'class_type' => $batch->class_type,
-//            'physical_class_type' => $batch->physical_class_type,
+            'physical_class_type' => $batch->physical_class_type,
             'fees' => $batch->course->fees,
             'already_bought' => $batch->already_bought,
             'batch_is_full' => $batch->batch_is_full,
             'batch_id' => $batch->id,
         ];
 
-        // Debug: Print the data to be returned
         Log::debug('Response data:', $data);
 
         return response()->json($data);
@@ -382,7 +341,6 @@ class FrontController extends Controller
 
         $user = session()->get('user');
         $batch_session_arrays = session()->get('batch_session_arrays');
-//        dd($batch_session_arrays);
 
         try {
 
@@ -433,25 +391,22 @@ class FrontController extends Controller
                     if ($charge['status'] === 'succeeded') {
 
                         $class_type = $batch_session_array['class_type'];
-                        /*dd([
-                            '$class_type' => $class_type,
-                            '$batch_session_array' => $batch_session_array,
-                        ]);*/
+                        $physical_class_type = $batch_session_array['physical_class_type'];
                         $batch_session_array['class_type'] = $class_type;
+                        $batch_session_array['physical_class_type'] = $physical_class_type;
 
                         Log::debug('Creating Batch Session:', $batch_session_array);
 
                         //create course session
-//                        dd($batch_session_array);
                         $batch_session = BatchSession::create([
                             'user_id' => $user->id,
                             'batch_id' => $batch_session_array['batch_id'],
                             'class_type' => $class_type,
+                            'physical_class_type' => $physical_class_type,
                             'fees' => $batch_session_array['fees'],
                         ]);
 
                         $batch_session = BatchSession::with('batch.course')->find($batch_session->id);
-//                        dd($batch_session);
 
                         Log::debug('Batch Session Created:', $batch_session->toArray());
                         $chargeArray = $charge->toArray();
@@ -463,8 +418,8 @@ class FrontController extends Controller
                         $data['course_name'] = $batch_session->batch->course->name ?? '';
                         $data['email'] = $user->email ?? '';
                         $data['customer_portal_link'] = route('customer.dashboard') ?? '';
-//                        $this->send_mail($data);
-//                        $this->send_mail_admin($data);
+                        $this->send_mail($data);
+                        $this->send_mail_admin($data);
 
                     }
 
@@ -529,7 +484,7 @@ class FrontController extends Controller
             $course_name = $data['course_name'];
             $email = $data['email'];
             $name = $data['name'];
-            $adminEmail = 'admin@judiann.com';
+            $adminEmail = 'jefds@jefds.com';
 
             $message = 'Dear Admin,<br /><br />';
             $message .= 'User name: ' . $name . '<br />';

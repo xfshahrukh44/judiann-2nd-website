@@ -19,6 +19,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -630,6 +631,31 @@ class FrontController extends Controller
             $new_total += $fees_after_discount;
         }
         session()->put('batch_session_arrays', $new_batch_session_arrays);
+
+        //amend cart item
+        $cart_content = Cart::content()->toArray();
+        foreach ($cart_content as $item) {
+            $batch = Batch::find($item['options']['batch_id']);
+
+            //check if voucher is valid for batch
+            if ($batch->course_id == $voucher->course_id) {
+                $rowId = $item['rowId'];
+                $selected_item = $item;
+            }
+        }
+
+        if(isset($rowId)) {
+            $fees_after_discount = $selected_item['price'] - ($selected_item['price'] * ($voucher->discount_rate / 100));
+
+            Cart::update($rowId, [
+                'price' => $fees_after_discount
+            ]);
+            Cart::update($rowId, [
+                'options' => [
+                    'fees' => $fees_after_discount
+                ]
+            ]);
+        }
 
         return response()->json([
             'success' => true,

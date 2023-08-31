@@ -1670,3 +1670,24 @@ a.signupBtn:hover{
         opacity: 0.55;
     }
 }
+
+.logoutCont {
+    flex-direction: row !important;
+    gap: 1rem!important;
+}
+.navbar-nav .nav-link.cart {
+    position: relative;
+}
+
+.navbar-nav .nav-link.cart span {
+    position: absolute;
+    background: rgb(235, 88, 40);
+    font-size: 14px;
+    font-weight: 900;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    top: -5px;
+    right: -15px;
+}

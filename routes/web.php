@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BatchController;
 use App\Http\Controllers\Admin\BatchSessionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\FrontController;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
@@ -214,6 +215,11 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
     //testimonial
     Route::match(['get', 'post'], '/testimonial', 'FrontController@testimonial')->name('front.testimonial');
 
+    //cart
+    Route::get('/cart', [CartController::class, 'cart'])->name('front.cart');
+    Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('front.addToCart');
+    Route::get('/remove-from-cart/{rowId}', [CartController::class, 'removeFromCart'])->name('front.removeFromCart');
+
 //    return view('front.contact');
 });
 
@@ -263,5 +269,5 @@ Route::get('/temp', function () {
 //        $course->save();
 //    }
 
-    echo get_batch_timings(\App\Models\Batch::find(20));
+//    echo get_batch_timings(\App\Models\Batch::find(20));
 });

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Settings;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,8 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*', function ($view) {
+            $cart_count = Cart::count();
             $setting = Settings::find(1);
             $view->with('setting', $setting);
+            $view->with('cart_count', $cart_count ?? 0);
         });
     }
 }

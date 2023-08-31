@@ -71,12 +71,13 @@
                                 <a href="{{route('front.signup')}}" class="signupBtn"> Sign Up</a>
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
-                                    {{--                                    <li class="nav-item">--}}
-                                    {{--                                        <a type="button" class="nav-link text-white h5 btn"--}}
-                                    {{--                                           href="{{route('customer.dashboard')}}">--}}
-                                    {{--                                            Customer Portal--}}
-                                    {{--                                        </a>--}}
-                                    {{--                                    </li>--}}
+                                    <li class="nav-item">
+                                        <a type="button" class="nav-link text-white h5 btn cart"
+                                           href="{{route('front.cart')}}">
+                                            <span>{{$cart_count}}</span>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
                                            href="{{route('customer.dashboard')}}">

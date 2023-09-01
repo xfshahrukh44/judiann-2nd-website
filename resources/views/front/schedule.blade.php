@@ -19,12 +19,13 @@
         }
 
         .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(5px);
         }
 
         .modal-header {
-            background-color: #e2571c;
+            /*background-color: #e2571c;*/
             color: #fff;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
@@ -58,6 +59,14 @@
             border-color: #0056b3;
         }
 
+        .modal-img {
+            box-shadow: 0 0 10px 10px #5b5a5a;
+        }
+
+        .scheduleBox {
+            cursor: pointer;
+        }
+
         /* Responsive styles */
         @media (max-width: 768px) {
             .modal-dialog {
@@ -87,6 +96,7 @@
                     <div class="col-md-8">
                         <div class="slideContent">
                             <h2 class="headOne">{{ !empty($schedule)
+
                                 ? (!empty($data->banner_title) ? $data->banner_title : 'Schedule A Class')
                                 : 'Schedule A Class' }}</h2>
                         </div>
@@ -113,7 +123,9 @@
                         <div class="row">
                             @if($key % 2 == 0)
                                 <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
+                                    <div class="lastBox scheduleBox" data-id="{{ $course->id }}"
+                                         data-img="{{ $course->get_course_image() }}"
+                                         style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
                                         <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
@@ -123,19 +135,23 @@
                                 </div>
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{ $course->get_course_image() }}"
-                                             data-id="{{ $course->id }}" alt="img">
+                                        <img class="img-fluid mimg" src="{{ $course->get_course_image() }}"
+                                             data-id="{{ $course->id }}" alt="img"
+                                             data-img="{{ $course->get_course_image() }}">
                                     </figure>
                                 </div>
                             @else
                                 <div class="col-md-6">
                                     <figure>
-                                        <img class="img-fluid" src="{{ $course->get_course_image() }}"
-                                             data-id="{{ $course->id }}" alt="img">
+                                        <img class="img-fluid mimg" src="{{ $course->get_course_image() }}"
+                                             data-id="{{ $course->id }}" alt="img"
+                                             data-img="{{ $course->get_course_image() }}">
                                     </figure>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="lastBox scheduleBox" style="height: 450px; overflow-y: scroll;">
+                                    <div class="lastBox scheduleBox" data-id="{{ $course->id }}"
+                                         data-img="{{ $course->get_course_image() }}"
+                                         style="height: 450px; overflow-y: scroll;">
                                         <h3>{{$course->name . ' (Batch: '.$course->name.')'}}</h3>
                                         <p>{!! $course->description !!}</p>
                                         <h4 class="text-white">TIMINGS</h4>
@@ -163,7 +179,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body batchModalBody">
                     <div class="batch-list" id="batchList">
                         @include('front.batch-modal')
                     </div>
@@ -242,14 +258,18 @@
             crossorigin="anonymous"></script>
 
     <script>
+
+
         $(document).ready(function () {
-            $('.img-fluid').on('click', function () {
+            $(document).on('click', '.img-fluid, .scheduleBox', function () {
                 let component = $(this);
                 let imgSrc = component.attr('src');
                 let courseId = component.data('id');
+                let imgModal = component.data('img');
 
                 $('.batchModal').show();
-                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgSrc + '" alt="img">');
+                $('#batchModalLabel').html('<img class="img-fluid" src="' + imgModal + '" alt="img">');
+                $('.mimg').addClass('modal-img')
 
                 $.ajax({
                     url: `{{ route('get.batches') }}`,
@@ -260,7 +280,7 @@
                     },
                     success: function (data) {
                         $('.batchModal').modal('show');
-                        var modalBody = $('.modal-body');
+                        var modalBody = $('.batchModalBody');
                         var batchList = $('#batchList');
                         modalBody.html(data);
                     },
@@ -274,7 +294,15 @@
             $('.modal-close').on('click', function () {
                 $('.batchModal').hide();
                 $('.modal-backdrop').hide();
+                $('.mimg').removeClass('modal-img')
+
             });
+
+            $('.login-modal-close').on('click', function () {
+                $('.loginModal').hide();
+                $('.modal-backdrop').hide();
+            });
+
             $('.modal-backdrop').hide();
         });
 
@@ -288,19 +316,21 @@
                 let batch_name = $(this).data('batch-name');
                 let user_id = `{{ \Illuminate\Support\Facades\Auth::id() }}`;
                 var section = $('.schedule-form');
+                const login_check = `{{ Auth::check() }}`;
 
                 if ($('#tr_batch_' + batch_id).length > 0) {
                     $('.batchModal').modal('hide');
                     return toastr.error('Course Is Already Owned.');
-                    alert('Item already selected.');
                 }
 
-                let login_check = '{{\Illuminate\Support\Facades\Auth::check()}}';
+
                 if (!login_check) {
-                    $('.batchModal').modal('hide');
-                    return $('#loginModal').modal('show');
+                    $('.batchModal').hide();
+                    $('#courses_wrapper').empty();
+                    $('.loginModal').modal('show');
+                    $('.mimg').addClass('modal-img')
+                    return toastr.error('Please Logg In First.');
                 } else {
-                    console.log('class_type', physical_class_type)
                     $('#courses_wrapper').append(`<tr id="tr_batch_" class="batch-remove"` + batch_id + `">
                                                     <input type="hidden" name="user_id" value="` + user_id + `">
                                                     <input type="hidden" name="batch_id[]" value="` + batch_id + `">
@@ -330,6 +360,7 @@
                     calculate_total();
                     $('.modal-backdrop').hide();
                     $('.batchModal').hide();
+                    $('.mimg').removeClass('modal-img')
                     // return toastr.success('Course Successfully Added');
                 }
             });

@@ -17,9 +17,11 @@
         | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
+
 @yield('css')
 
 <body>
+
 <!-- Begin: Header -->
 <header class="wow fadeInDown" data-wow-delay="0.5s">
     <div class="main-navigate">
@@ -29,8 +31,7 @@
                     <div class="col-lg-6 col-sm-6 ">
                         <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
-                                           style="width: 300px; height: 150px;" class="logo" loop
-                                           autoplay></lottie-player>
+                                           style="width: 300px; height: 150px;" class="logo" loop autoplay></lottie-player>
                         </a>
                     </div>
                     <div class="col-lg-6 col-sm-6">
@@ -69,8 +70,10 @@
                         </div>
                         <div class="loginArea">
                             @if(!\Illuminate\Support\Facades\Auth::check())
-                                <a href="#" id="btn_sign_in" type="button" class="loginBtn"><i class="fas fa-globe"></i>
-                                    Sign In</a>
+                                <a href="#" id="btn_sign_in" type="button" class="loginBtn btn_sign_in">
+                                    <i class="fas fa-globe"></i>
+                                    Sign In
+                                </a>
                                 <a href="{{route('front.signup')}}" class="signupBtn"> Sign Up</a>
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
@@ -108,26 +111,18 @@
         </div>
     </div>
 </header>
-
 <!-- END: Header -->
 
 @yield('content')
-
-<!-- <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12"></div>
-                </div>
-            </div>
-        </section> -->
 
 <!-- Begin: Footer -->
 <footer>
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-2">
-                <a href="{{route('front.home')}}" class="ftrLogo"><img src="{{asset('front/images/logo.png')}}"
-                                                                       class="img-fluid" alt="img"></a>
+                <a href="{{route('front.home')}}" class="ftrLogo">
+                    <img src="{{asset('front/images/logo.png')}}" class="img-fluid" alt="img">
+                </a>
             </div>
             <div class="col-md-2">
                 <div class="ftrContent">
@@ -165,9 +160,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+
     <div class="copyRght">
         <div class="container">
             <div class="row align-items-center">
@@ -186,10 +180,11 @@
                                     class="fab fa-facebook-f"></i></a></li>
                         <li><a href="https://www.instagram.com/j.ebyjudiann/"><i class="fab fa-twitter"></i></a></li>
                         <li><a href="https://twitter.com/JudiannEchezab1"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.tiktok.com/@j.ebyjudiann?_t=8VH4jKe6Im9&_r=1"><img width="16"
-                                                                                                    height="16"
-                                                                                                    src="{{asset('front/images/tiktokLogo.jpg')}}"
-                                                                                                    alt=""></a></li>
+                        <li>
+                            <a href="https://www.tiktok.com/@j.ebyjudiann?_t=8VH4jKe6Im9&_r=1">
+                                <img width="16" height="16" src="{{asset('front/images/tiktokLogo.jpg')}}" alt="">
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -200,12 +195,13 @@
 <!-- END: Footer -->
 
 <!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade loginModal" id="" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-top-0">
                 <h5 class="modal-title" id="staticBackdropLabel">Login</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white login-modal-close" data-dismiss="modal"
+                        aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -245,7 +241,7 @@
                                     Login
                                 </button>
                                 <div class="d-flex flex-column justify-content-end text-right">
-                                    {{--                                    <a href="{{route('front.forget')}}" class="text-white">Forget Password</a>--}}
+                                    {{--<a href="{{route('front.forget')}}" class="text-white">Forget Password</a>--}}
                                     <a href="{{route('front.signup')}}" class="text-white">Not a member? Signup</a>
                                 </div>
                             </div>
@@ -256,7 +252,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -279,13 +274,11 @@
 @yield('script')
 <script>
     $(document).ready(function () {
-        $('#btn_sign_in').on('click', function () {
-            $('#loginModal').modal('show');
+        $('.btn_sign_in').on('click', function () {
+            $('.loginModal').modal('show');
         });
     });
 </script>
 
-
 </body>
-
 </html>

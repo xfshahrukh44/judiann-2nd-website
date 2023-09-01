@@ -8,8 +8,9 @@
 @endsection
 
 @section('content')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel="stylesheet" href="{{URL::asset('admin/plugins/toastr/toastr.min.css')}}">
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -253,7 +254,8 @@
             border-radius: 0.5rem;
             outline: none;
         }
-        .inputField input:focus{
+
+        .inputField input:focus {
             border-color: #fda504;
         }
     </style>
@@ -294,71 +296,83 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @forelse($cart_items as $cart_item)
-                                    <tr>
-                                        <td class="cart-product-thumbnail">
+                            @forelse($cart_items as $cart_item)
+                                <tr>
+                                    <td class="cart-product-thumbnail">
+                                        <a href="javascript:void(0)">
+                                            <figure>
+                                                <img src="{{ $cart_item['image'] }}" class="img-responsive"
+                                                     alt="cart-1"/>
+                                            </figure>
+                                        </a>
+                                        <div class="cart-product-content">
                                             <a href="javascript:void(0)">
-                                                <figure>
-                                                    <img src="{{$cart_item['image']}}" class="img-responsive"
-                                                         alt="cart-1" />
-                                                </figure>
+                                                <h4>{{ $cart_item['name'] }}</h4>
                                             </a>
-                                            <div class="cart-product-content">
-                                                <a href="javascript:void(0)">
-                                                    <h4>{{$cart_item['name']}}</h4>
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <h3 class="color-green">{{$cart_item['fees']}}</h3>
-                                        </td>
-                                        <td>
-                                            <div class="cart-delete">
-                                                <a href="{{route('front.removeFromCart', $cart_item['rowId'])}}" class="color-green btn_remove_course">
-                                                    <i class="fa fa-times"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr class="text-center">
-                                        <td colspan="3">No items in cart.</td>
-                                    </tr>
-                                @endforelse
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h3 class="color-green">{{ $cart_item['fees'] }}</h3>
+                                    </td>
+                                    <td>
+                                        <div class="cart-delete">
+                                            <a href="{{route('front.removeFromCart', $cart_item['rowId'])}}"
+                                               class="color-green btn_remove_course">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td colspan="3">No items in cart.</td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="contact">
-                        <form id="form_proceed_to_checkout" action="{{route('front.schedule.class')}}" class="contact__form">
+                        <form id="form_proceed_to_checkout" action="{{route('front.schedule.class')}}"
+                              class="contact__form">
                             @csrf
                             <div class="row no-gutters">
                                 @foreach($cart_items as $cart_item)
                                     <input type="hidden" name="user_id" value="{{$cart_item['user_id']}}">
                                     <input type="hidden" name="batch_id[]" value="{{$cart_item['batch_id']}}">
                                     <input type="hidden" name="class_type[]" value="{{$cart_item['class_type']}}">
-                                    <input type="hidden" name="physical_class_type[]" value="{{$cart_item['physical_class_type']}}">
-                                    <input type="hidden" name="fees[]" class="input_fees" value="{{$cart_item['fees']}}">
+                                    <input type="hidden" name="physical_class_type[]"
+                                           value="{{$cart_item['physical_class_type']}}">
+                                    <input type="hidden" name="fees[]" class="input_fees"
+                                           value="{{$cart_item['fees']}}">
                                 @endforeach
                                 <div class="col-12 col-lg-6">
                                     <div class="inputField">
-                                        <input type="text" placeholder="First Name" value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}" name="first_name"/>
+                                        <input type="text" placeholder="First Name"
+                                               value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}"
+                                               name="first_name"/>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="inputField">
-                                        <input type="text" placeholder="Last Name" value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}" name="last_name"/>
+                                        <input type="text" placeholder="Last Name"
+                                               value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}"
+                                               name="last_name"/>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="inputField">
-                                        <input type="email" placeholder="Email Address" value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}" name="email"/>
+                                        <input type="email" placeholder="Email Address"
+                                               value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}"
+                                               name="email"/>
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <div class="inputField">
-                                        <input type="text" readonly value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}" placeholder="Phone Number" name="phone"/>
+                                        <input type="text" readonly
+                                               value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}"
+                                               placeholder="Phone Number" name="phone"/>
                                     </div>
                                 </div>
                             </div>
@@ -377,7 +391,8 @@
                                 Proceed to checkout
                             </a>
                         @else
-                            <a id="btn_proceed_to_checkout" href="javascript:void(0)" class="themeBtn px-0 w-100 text-center">
+                            <a id="btn_proceed_to_checkout" href="javascript:void(0)"
+                               class="themeBtn px-0 w-100 text-center">
                                 Proceed to checkout
                             </a>
                         @endif
@@ -399,12 +414,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
+    <script src="{{URL:: asset('admin/plugins/toastr/toastr.min.js')}}"></script>
 
     <script>
         $(document).ready(function () {
             $('#btn_proceed_to_checkout').on('click', function () {
                 $('#form_proceed_to_checkout').submit();
             });
+
             // function calculate_total() {
             //     let total = 0.00;
             //     $('.input_fees').each(function () {

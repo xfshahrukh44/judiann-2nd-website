@@ -387,8 +387,6 @@ class FrontController extends Controller
                         ]);
                     }
 
-//                    Log::debug('Stripe Charge:', $charge);
-
                     if ($charge['status'] === 'succeeded') {
 
                         $class_type = $batch_session_array['class_type'];
@@ -412,6 +410,7 @@ class FrontController extends Controller
                         Log::debug('Batch Session Created:', $batch_session->toArray());
                         $chargeArray = $charge->toArray();
                         Log::debug('Stripe Charge:', $chargeArray);
+                        Cart::destroy();
 
                         //send mail to customer or admin
                         $data = [];
@@ -421,9 +420,7 @@ class FrontController extends Controller
                         $data['customer_portal_link'] = route('customer.dashboard') ?? '';
                         $this->send_mail($data);
                         $this->send_mail_admin($data);
-
                     }
-
                 }
 
                 //delete session variables
@@ -470,9 +467,7 @@ class FrontController extends Controller
             $message .= 'Judiann';
 
             $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Course Booked', $message);
-//            $this->customMail('no-reply@jefds.com', $email, 'Course Booked', $message);
 
-//            return 1;
             return redirect()->back()->with('errors', 'Thank you for booking our course.');
         } catch (\Exception $exception) {
             return redirect()->back()->with('errors', $exception->getMessage());
@@ -525,8 +520,6 @@ class FrontController extends Controller
             $message .= 'Message: ' . $msg . "<br />";
 
             $email = (Settings::find(1))->email;
-
-//            \mail($email,"Contact Request From Website",$message);
 
             $this->customMail('info@judiannsfashiondesignstudios.com', $email, 'Contact Request From Website', $message);
 
@@ -582,8 +575,8 @@ class FrontController extends Controller
 
     public function applyVoucher(Request $request)
     {
+        $uesrId = Auth::id();
         $code = $request->code;
-
         $voucher_check = Voucher::where('code', $code)->whereDate('valid_until', '>=', Carbon::today())->first();
 
         if (!$voucher_check) {
@@ -621,7 +614,7 @@ class FrontController extends Controller
             }
 
             $new_batch_session_array = [
-                'user_id' => $batch_session_array['user_id'],
+                'user_id' => $uesrId,
                 'batch_id' => $batch_session_array['batch_id'],
                 'class_type' => $batch_session_array['class_type'],
                 'physical_class_type' => $batch_session_array['physical_class_type'],
@@ -644,7 +637,7 @@ class FrontController extends Controller
             }
         }
 
-        if(isset($rowId)) {
+        if (isset($rowId)) {
             $fees_after_discount = $selected_item['price'] - ($selected_item['price'] * ($voucher->discount_rate / 100));
 
             Cart::update($rowId, [

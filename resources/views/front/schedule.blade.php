@@ -7,7 +7,6 @@
 @section('content')
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
 
-
     <style>
         /* Modal styles */
 
@@ -101,21 +100,12 @@
     <section class="contactInnr">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                {{--<button class="nav-link active btn_online_batches" id="home-tab" data-toggle="tab" data-target="#Online"
-                        type="button"
-                        role="tab" aria-controls="home" aria-selected="true">Online
-                </button>--}}
                 <button class="nav-link btn_physical_batches"
                         role="tab" aria-controls="home" aria-selected="true">All Courses
                 </button>
             </li>
-            {{--<li>
-                <button class="nav-link btn_physical_batches" id="profile-tab" data-toggle="tab" data-target="#onsite"
-                        type="button"
-                        role="tab" aria-controls="profile" aria-selected="false">On-Site
-                </button>
-            </li>--}}
         </ul>
+
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Online" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
@@ -182,126 +172,6 @@
         </div>
     </div>
     {{-- Batch Modal End --}}
-
-{{--    --}}{{--Calendar & Form--}}
-{{--    <section class="contactInnr schedule-form">--}}
-{{--        <div class="container-fluid">--}}
-{{--            <div class="row align-items-center justify-content-center">--}}
-{{--                <div class="col-12">--}}
-{{--                    <h2 class="headOne text-center mt-5">{{!empty($schedule)--}}
-{{--                        ? (!empty($data->section_title)--}}
-{{--                        ? $data->section_title : 'Schedule A Class') : 'Schedule A Class'}}</h2>--}}
-{{--                    <h3 class="text-white text-center mt-3 mb-5">--}}
-{{--                        Students may continually add multiple courses of both the online and onsite course--}}
-{{--                        types.--}}
-{{--                    </h3>--}}
-{{--                    @if(!\Illuminate\Support\Facades\Auth::check())--}}
-{{--                        <p class="blink">Please Sign-up and make an account first to register a course</p>--}}
-{{--                        <a href="{{route('front.signup')}}" class="themeBtn">sign up</a>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--                <div class="col-md-6">--}}
-{{--                    <form method="post" action="{{route('front.schedule.class')}}" class="hf-form hf-form-57 "--}}
-{{--                          data-id="57" data-title="Schedule Class Form" data-slug="schedule-class-form"--}}
-{{--                          data-message-success="Thank you! We will be in touch soon."--}}
-{{--                          data-message-invalid-email="Sorry, that email address looks invalid."--}}
-{{--                          data-message-required-field-missing="Please fill in the required fields."--}}
-{{--                          data-message-error="Oops. An error occurred.">--}}
-{{--                        @csrf--}}
-{{--                        <div class="hf-fields-wrap">--}}
-{{--                            <div>--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="text" class="form-control" placeholder=" First  Name"--}}
-{{--                                                   name="first_name" readonly--}}
-{{--                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[0] ?? '') : ''}}">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="text" class="form-control" placeholder="Last Name"--}}
-{{--                                                   name="last_name" readonly--}}
-{{--                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (explode(' ', Auth::user()->name)[1] ?? '') : ''}}">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="email" class="form-control" placeholder="Email"--}}
-{{--                                                   name="email"--}}
-{{--                                                   readonly--}}
-{{--                                                   value="{{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->email ?? '') : ''}}">--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="text" class="form-control" placeholder="Contact"--}}
-{{--                                                   name="phone"--}}
-{{--                                                   readonly {{Illuminate\Support\Facades\Auth::check() ? (Auth::user()->phone ?? '') : ''}}>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    --}}{{--<div class="col-12">--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <label>Select Course Type:</label>--}}
-{{--                                            <select class="form-control select_course_type"--}}
-{{--                                                    name="batch_id" required>--}}
-{{--                                                <option disabled selected value="">Select Course Type:</option>--}}
-{{--                                                <option value="Online" selected>Online</option>--}}
-{{--                                                <option value="On-site">On-site</option>--}}
-{{--                                            </select>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                    <input type="hidden" name="class_type" class="class_type" value="online">--}}
-{{--                                    <input type="hidden" id="form_batch_id">--}}
-{{--                                    <input type="hidden" id="form_class_type">--}}
-{{--                                    <input type="hidden" id="form_physical_class_type">--}}
-
-{{--                                    <div class="col-12">--}}
-{{--                                        <div class="table-responsive courseTable">--}}
-{{--                                            <table class="table table-striped table-bordered">--}}
-{{--                                                <thead>--}}
-{{--                                                <tr>--}}
-{{--                                                    <th>Select Courses</th>--}}
-{{--                                                    <th>Price</th>--}}
-{{--                                                    <th>Action</th>--}}
-{{--                                                </tr>--}}
-{{--                                                </thead>--}}
-{{--                                                <tbody id="courses_wrapper">--}}
-
-{{--                                                </tbody>--}}
-{{--                                                <tfoot>--}}
-{{--                                                <tr>--}}
-{{--                                                    <td><b>Total Price</b></td>--}}
-{{--                                                    <td id="td_total_price"><b>$0.00</b></td>--}}
-{{--                                                </tr>--}}
-{{--                                                </tfoot>--}}
-{{--                                            </table>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-12 mt-5">--}}
-{{--                                        @if(\Illuminate\Support\Facades\Auth::check())--}}
-{{--                                            <button type="submit" id="btn_submit" hidden>Send Now</button>--}}
-{{--                                        @else--}}
-{{--                                            <button type="submit" data-toggle="modal" data-target="#loginModal">--}}
-{{--                                                Send Now--}}
-{{--                                            </button>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <noscript>Please enable JavaScript for this form to work.</noscript>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--                --}}{{--<div class="col-md-6">--}}
-{{--                    <h2 class="headTwo">On-line</h2>--}}
-{{--                    <div id="online_calendar"></div>--}}
-{{--                    <div id="physical_calendar"></div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
 
     {{--event detail modal--}}
     <div class="modal fade" id="event_detail_modal" tabindex="-1" role="dialog"
@@ -454,13 +324,6 @@
                                                     </td>
                                                 </tr>`);
 
-                    // //scroll
-                    // if (section.length > 0) {
-                    //     $('html, body').animate({
-                    //         scrollTop: section.offset().top + section.outerHeight() - $(window).height()
-                    //     }, "slow");
-                    // }
-
                     addToCart(user_id, batch_id, batch_name, class_type, physical_class_type, course_price);
 
                     console.log('section', section);
@@ -520,12 +383,12 @@
             $('#btn_submit').prop('hidden', (total == 0.00));
         }
 
-        function addToCart (user_id, batch_id, batch_name, class_type, physical_class_type, fees,) {
+        function addToCart(user_id, batch_id, batch_name, class_type, physical_class_type, fees) {
             $.ajax({
                 url: `{{ route('front.addToCart') }}`,
                 method: 'POST',
                 data: {
-                    '_token': '{{csrf_token()}}',
+                    '_token': '{{ csrf_token() }}',
                     user_id,
                     batch_id,
                     batch_name,
@@ -534,8 +397,9 @@
                     fees,
                 },
                 success: function (data) {
-                    if (data == true) {
+                    if (data) {
                         toastr.success('Course added to cart!')
+                        $('.cart-count').html(data.count)
                     } else {
                         toastr.error('Unable to add to cart.')
                     }

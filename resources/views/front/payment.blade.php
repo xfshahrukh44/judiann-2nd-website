@@ -122,7 +122,7 @@
 
                 if(!voucher_code.val()) {
                     voucher_code.focus();
-                    return alert('Please Enter Voucher Code First');
+                    return toastr.error('Please Enter Voucher Code First');
                 }
 
                 $.ajax({
@@ -133,13 +133,14 @@
                         'code': voucher_code.val()
                     },
                     success: function (response) {
+                        console.log('response', response)
                         if(!response.success) {
                             voucher_code.val('');
                             voucher_code.focus();
-                            return alert(response.message);
+                            return toastr.error(response.message);
                         }
 
-                        alert(response.message);
+                        toastr.success(response.message);
                         $('.headTwo').html('Amount: $' + response.new_total);
                     },
                     error: function (err) {

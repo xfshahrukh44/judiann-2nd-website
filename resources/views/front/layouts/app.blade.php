@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="{{asset('front/css/custom.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}"/>
     <link rel="stylesheet" href="{{URL::asset('admin/plugins/toastr/toastr.min.css')}}">
-    <title>@yield('title') | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
+    <title>@yield('title')
+        | {{(isset($setting) && !is_null($setting['site_title'])) ? $setting['site_title'] : 'Judiann 2nd Website'}}</title>
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
-    @yield('css')
+@yield('css')
 
 <body>
 <!-- Begin: Header -->
@@ -28,7 +29,8 @@
                     <div class="col-lg-6 col-sm-6 ">
                         <a href="{{route('front.home')}}">
                             <lottie-player src="{{asset('front/images/logo.json')}}" background="transparent" speed="1"
-                                           style="width: 300px; height: 150px;" class="logo" loop autoplay></lottie-player>
+                                           style="width: 300px; height: 150px;" class="logo" loop
+                                           autoplay></lottie-player>
                         </a>
                     </div>
                     <div class="col-lg-6 col-sm-6">
@@ -67,21 +69,24 @@
                         </div>
                         <div class="loginArea">
                             @if(!\Illuminate\Support\Facades\Auth::check())
-                                <a href="#" id="btn_sign_in" type="button" class="loginBtn"><i class="fas fa-globe"></i> Sign In</a>
+                                <a href="#" id="btn_sign_in" type="button" class="loginBtn"><i class="fas fa-globe"></i>
+                                    Sign In</a>
                                 <a href="{{route('front.signup')}}" class="signupBtn"> Sign Up</a>
                             @else
                                 <ul class="navbar-nav d-inline-flex justify-content-end mr-3 logoutCont">
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn cart"
                                            href="{{route('front.cart')}}">
-                                            <span>{{$cart_count}}</span>
+                                            <span class="cart-count">{{ $cart_count }}</span>
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a type="button" class="nav-link text-white h5 btn"
                                            href="{{route('customer.dashboard')}}">
-                                            <img width="50" src="{{\Illuminate\Support\Facades\Auth::user()->get_profile_picture()}}" alt="">
+                                            <img width="50"
+                                                 src="{{\Illuminate\Support\Facades\Auth::user()->get_profile_picture()}}"
+                                                 alt="">
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -121,22 +126,30 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-md-2">
-                <a href="{{route('front.home')}}" class="ftrLogo"><img src="{{asset('front/images/logo.png')}}" class="img-fluid" alt="img"></a>
+                <a href="{{route('front.home')}}" class="ftrLogo"><img src="{{asset('front/images/logo.png')}}"
+                                                                       class="img-fluid" alt="img"></a>
             </div>
             <div class="col-md-2">
                 <div class="ftrContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="{{route('front.home')}}"><span>Home</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.home')}}"><span>Home</span></a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="{{route('front.about-judiann')}}"><span>About Judiann</span></a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('front.about-us')}}"><span>About Us</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}"><span>Faq’s</span></a></li>
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{route('front.judiann-portfolio')}}"><span>Judiann’s Portfolio</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('front.services')}}"><span>Services</span></a></li>
+                                                href="{{route('front.about-us')}}"><span>About Us</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{route('front.faqs')}}"><span>Faq’s</span></a>
+                        </li>
                         <li class="nav-item"><a class="nav-link"
-                                                href="{{route('front.students-work')}}"><span>Student’s Work</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{route('front.contact')}}"><span>Contact Us</span></a></li>
+                                                href="{{route('front.judiann-portfolio')}}"><span>Judiann’s Portfolio</span></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="{{route('front.services')}}"><span>Services</span></a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="{{route('front.students-work')}}"><span>Student’s Work</span></a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="{{route('front.contact')}}"><span>Contact Us</span></a></li>
                         <li class="nav-item"><a class="nav-link" href="{{route('front.schedule')}}"><span>Schedule A Class</span></a>
                         <li class="nav-item"><a class="nav-link" href="{{route('front.testimonial')}}"><span>Testimonials</span></a>
                         </li>
@@ -169,10 +182,14 @@
                 </div>
                 <div class="col-md-4">
                     <ul class="ftrSocial">
-                        <li><a href="https://www.facebook.com/profile.php?id=100085857340410"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=100085857340410"><i
+                                    class="fab fa-facebook-f"></i></a></li>
                         <li><a href="https://www.instagram.com/j.ebyjudiann/"><i class="fab fa-twitter"></i></a></li>
                         <li><a href="https://twitter.com/JudiannEchezab1"><i class="fab fa-instagram"></i></a></li>
-                        <li><a href="https://www.tiktok.com/@j.ebyjudiann?_t=8VH4jKe6Im9&_r=1"><img width="16" height="16" src="{{asset('front/images/tiktokLogo.jpg')}}" alt=""></a></li>
+                        <li><a href="https://www.tiktok.com/@j.ebyjudiann?_t=8VH4jKe6Im9&_r=1"><img width="16"
+                                                                                                    height="16"
+                                                                                                    src="{{asset('front/images/tiktokLogo.jpg')}}"
+                                                                                                    alt=""></a></li>
                     </ul>
                 </div>
             </div>
@@ -249,10 +266,14 @@
 <script src="{{asset('front/js/custom.min.js')}}"></script>
 <script src="{{URL:: asset('admin/plugins/toastr/toastr.min.js')}}"></script>
 @if(session()->has('success'))
-    <script type="text/javascript">  toastr.success('{{ session('success')}}');</script>
+    <script type="text/javascript">
+        toastr.success('{{ session('success')}}');
+    </script>
 @endif
 @if(session()->has('error'))
-    <script type="text/javascript"> toastr.error('{{ session('error')}}');</script>
+    <script type="text/javascript">
+        toastr.error('{{ session('error')}}');
+    </script>
 @endif
 
 @yield('script')

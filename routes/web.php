@@ -168,11 +168,11 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
     //stream
     route::get('/stream/{batch_id}', [SC::class, 'stream'])->name('customer.stream');
     route::get('/raise-hand/{batch_id}', [SC::class, 'raiseHand'])->name('customer.raise_hand');
-    route::get('/stream/get-publisher-token/{session_id}', function($session_id) {
+    route::get('/stream/get-publisher-token/{session_id}', function ($session_id) {
         session()->put('publisher_token', get_fresh_publisher_opentok_token($session_id));
 //        return get_fresh_publisher_opentok_token($session_id);
     })->name('customer.getPublisherToken');
-    route::get('/stream/get-subscriber-token/{session_id}', function($session_id) {
+    route::get('/stream/get-subscriber-token/{session_id}', function ($session_id) {
         session()->put('subscriber_token', get_fresh_subscriber_opentok_token($session_id));
 //        return get_fresh_subscriber_opentok_token($session_id);
     })->name('customer.getSubscriberToken');
@@ -184,7 +184,6 @@ Route::namespace('App\Http\Controllers\Customer')->prefix('/customer')->middlewa
 Route::get('/get-batch-details', [FrontController::class, 'getBatchDetails'])->name('batch.details');
 
 
-
 //Front routes
 Route::namespace('App\Http\Controllers\Front')->group(function () {
 
@@ -193,16 +192,16 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //schedule
     Route::get('/schedule', 'FrontController@schedule')->name('front.schedule');
-    Route::match(['get','post'],'/schedule-class', [FrontController::class,'scheduleClass'])->name('front.schedule.class');
+    Route::match(['get', 'post'], '/schedule-class', [FrontController::class, 'scheduleClass'])->name('front.schedule.class');
 
     //schedule modal
-    Route::get('/get/batch',[FrontController::class,'getBatches' ])->name('get.batches');
-    Route::post('/remove/batch',[FrontController::class,'removeBatch' ])->name('remove.batch');
+    Route::get('/get/batch', [FrontController::class, 'getBatches'])->name('get.batches');
+    Route::post('/remove/batch', [FrontController::class, 'removeBatch'])->name('remove.batch');
     //payments
     Route::post('/process_payment', [FrontController::class, 'processPayment'])->name('front.process.payment');
 
     //apply voucher
-    Route::post('/apply-voucher', 'FrontController@applyVoucher')->name('front.applyVoucher');
+    Route::post('/apply-voucher', [FrontController::class, 'applyVoucher'])->name('front.applyVoucher');
 
     //student work
     Route::get('/students-work', 'FrontController@studentsWork')->name('front.students-work');
@@ -217,10 +216,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function () {
 
     //cart
     Route::get('/cart', [CartController::class, 'cart'])->name('front.cart');
+
     Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('front.addToCart');
     Route::get('/remove-from-cart/{rowId}', [CartController::class, 'removeFromCart'])->name('front.removeFromCart');
-
-//    return view('front.contact');
 });
 
 Route::get('/about-judiann', 'App\Http\Controllers\Front\IndexController@aboutJudiann')->name('front.about-judiann');

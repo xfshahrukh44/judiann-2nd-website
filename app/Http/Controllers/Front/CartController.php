@@ -4,18 +4,14 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
-use App\Models\Faq;
-use App\Models\Page;
-use App\Models\Portfolio;
-use App\Models\Services;
-use App\Models\Settings;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
 
-    public function cart(Request $request) {
+    public function cart(Request $request)
+    {
         $cart_content = Cart::content()->toArray();
         $cart_items = [];
         $total = 0;
@@ -28,7 +24,7 @@ class CartController extends Controller
             $batch = Batch::find($item['options']['batch_id']);
             $record['image'] = $batch->course->get_course_image();
 
-            $cart_items []= $record;
+            $cart_items [] = $record;
         }
 
         return view('front.cart', compact('cart_items', 'total'));
@@ -53,8 +49,11 @@ class CartController extends Controller
                     'fees' => $price
                 ]
             ]);
+            $cart = Cart::count();
 
-            return true;
+            return response()->json([
+                'count' => $cart,
+            ]);
         } catch (\Exception $e) {
             return false;
         }
@@ -64,6 +63,6 @@ class CartController extends Controller
     {
         Cart::remove($rowId);
 
-        return redirect()->route('front.cart');
+        return redirect()->back()->with('success', 'Cart Remove Successfully.');
     }
 }

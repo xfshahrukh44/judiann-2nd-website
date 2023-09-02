@@ -1691,3 +1691,25 @@ a.signupBtn:hover{
     top: -5px;
     right: -15px;
 }
+.batchModal .modal-header{
+    width: 1000px;
+    margin: auto;
+}
+.batchModalBody {
+    width: 1000px;
+}
+.batchModal .modal-header img{
+
+    height: 300px;
+    width: 100%;
+}
+.batchModal .modal-content{
+    width: 1000px;
+}
+.batchModal .modal-title{
+    margin: auto;
+}
+.batchModal .modal-header .close {
+
+   margin: 0;
+}
